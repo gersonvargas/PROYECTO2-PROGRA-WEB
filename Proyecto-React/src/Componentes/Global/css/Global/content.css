@@ -1,0 +1,43 @@
+body {
+  font-family: "Roboto", sans-serif; }
+
+.container {
+  max-width: 100%; }
+
+.modal-dialog-centered-y {
+  margin-top: 9em; }
+
+.modal-dialog-job-centered-y {
+  margin-top: 20em !important; }
+
+.margenes-contenido {
+  padding: 15px 200px 18px 200px;
+  width: 100%; }
+
+.btn-primary {
+  background-color: #4C50C2; }
+
+button hover {
+  background-color: #6d70b6; }
+
+.content {
+  padding: 0px 15px 0px 15px; }
+
+@media screen and (max-width: 1200px) {
+  .margenes-contenido {
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 30px; }
+
+  .container {
+    max-width: 100%;
+    padding: 0px 0px 0px 0px; } }
+@media screen and (min-width: 1200px) {
+  .margenes-contenido {
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 30px; }
+
+  .container {
+    width: 100%;
+    padding: 0px 0px 0px 0px; } }
+
+/*# sourceMappingURL=content.css.map */

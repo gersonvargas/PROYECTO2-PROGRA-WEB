@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": ";;AACA,aAAa;EACX,UAAU,EAAE,OAAO;EACnB,KAAK,EAAE,OAAO;;AAGd,eAAC;EACC,KAAK,EAAE,OAAO;EACd,eAAe,EAAE,IAAI;;AAIrB,qBAAK;EACH,KAAK,EAAE,OAAO;;AAEpB,gBAAgB;EACd,MAAM,EAAE,6BAA6B;;AAEvC,qCAAqC;EACnC,gBAAgB;IACd,MAAM,EAAE,eAAe;IACvB,OAAO,EAAE,gBAAgB",
+"sources": ["footer.sass"],
+"names": [],
+"file": "global.css"
+}
