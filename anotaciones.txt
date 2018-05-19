@@ -1,7 +1,7 @@
 
 
 Propiedad:
-
+NUMERO_PROPIEDAD
 nombre 
 autor(persona o empresa)
 fecha
@@ -13,8 +13,7 @@ tipodisponibilidad (alquiler, vennta, ambos)
 costo
 metros 2 de construccion
 estado de la construccion
-nombre del contacto
-fecha de publicacion
+
 
 
 En caso de ser vivienda o apartamento 
