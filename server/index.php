@@ -2,6 +2,8 @@
 
 require("Toro.php");
 require("login.php");
+require("propiedades.php");
+
 class DBHandler {
     function init() {
         try {
@@ -205,18 +207,20 @@ class DBHandler {
             echo $e->getMessage();
         }
     }
-    function get($id1 = null) {
+    function get($id = null) {
        // $_GET = json_decode(file_get_contents('php://input'), True);
         $metodo=$_GET['metodo'];
+        //echo 'hola mundo';
         if ($metodo) {
             if ($metodo == 'login') {//OBTENER LOGIN
                 $email=$_GET['email'];
                 $password=$_GET['password'];
                return Login::obtenerusuario($email, $password);
+            }else if ($metodo == 'getpropiedades'){
+               // echo 'hola mundo';
+                return Propiedad::obtenerPropiedades();
             }
-            if ($metodo == 2) {
-                $this->getProductos($id);
-            }
+            
         }
          
     }
@@ -271,8 +275,8 @@ class DBHandler {
 }
 
 Toro::serve(array(
-    "/country/:alpha" => "DBHandler",
     "/login/:alpha" => "DBHandler",
+    "/propiedad/:alpha" => "DBHandler",
     "/country/:alpha/:alpha" => "DBHandler",
 ));
 

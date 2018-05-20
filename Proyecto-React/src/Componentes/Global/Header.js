@@ -57,7 +57,6 @@ class Header extends Component {
                     </nav>
                 </div>
                 <div className="row mt-3">
-
                     <Carrusel />
                 </div>
 

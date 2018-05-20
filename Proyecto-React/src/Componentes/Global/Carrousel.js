@@ -15,7 +15,7 @@ class Carrusel extends React.Component {
         this.state={}
     }
     onSelect= (active,direction)=>{
-        console.log(`active=${active} && direction=${direction}`);
+       // console.log(`active=${active} && direction=${direction}`);
     }
     slideNext=()=>{
       this.slider.slideNext();

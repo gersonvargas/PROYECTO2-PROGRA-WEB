@@ -1,22 +1,22 @@
 export default [
   {
-    title: 'Home',
+    title: 'Inicio',
     url: '/'
   },
   {
-    title: 'Search Job',
+    title: 'Buscar',
     url: '/search'
   },
   {
-    title: 'About Us',
+    title: 'Sobre nosotros',
     url: '/about'
   },
   {
-    title: 'Contact Us',
+    title: 'Contacto',
     url: '/contact'
   },
   {
-    title: 'Register',
+    title: 'Registrarse',
     url: '/register'
   }
   
