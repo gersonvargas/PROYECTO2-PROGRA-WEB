@@ -18,14 +18,17 @@ class About extends Component {
                         </div>
                 
                         <div className='col-md-6 mt-3'>
-                            <h1>About us</h1>
-                            <p>Founded in April of 2018, job search by Delta is trusted web site to search jobs from GitHub from anyplace of the world.</p>
-                            <p>Job search by Delta connects people to jobs and it is the easiest way for this people to search this information by differents ways, for example, by categories.</p>
+                            <h1>Nuestro sitio:</h1>
+                            <p><small>Look it, find it...</small></p>
+                            <p>Fundado el 20 de mayo de 2018, nuestro sitio brinda 
+                                el servicio de bienes raíces, una fuente confiable, en donde puede encontrar
+                                su casa, apartamento sonñado.</p>
+                            <p>Trabajamos para brindar un excelente servicio e información altamente confiable.</p>
+                            <h3>Nuestros desarrolladores:</h3>
+                            <CardGroup/>
                         </div>
                 
-                        <h1> Desarrolladores de nuestro sitio web </h1>
-                
-                        <CardGroup/>
+                       
                     </div>
                 </div>
                 );

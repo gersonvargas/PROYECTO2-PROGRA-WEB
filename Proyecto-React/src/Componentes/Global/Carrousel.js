@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'react-bootstrap-carousel/dist/react-bootstrap-carousel.css';
 import {React_Bootstrap_Carousel} from 'react-bootstrap-carousel';
-import slide1 from './images/banner-jobs.jpg';
-import slide2 from './images/banner-jobs2.jpg';
-import slide3 from './images/banner-jobs3.jpg';
-import slide4 from './images/banner-jobs4.jpg';
-import slide5 from './images/banner-jobs5.jpg';
+import slide1 from './images/house.png';
+import slide2 from './images/edificio.jpg';
+import slide3 from './images/hospedaje.jpg';
+import slide4 from './images/apartamentos.png';
+//import slide5 from './images/banner-jobs5.jpg';
 
 class Carrusel extends React.Component {
     constructor(props) {
@@ -44,7 +44,7 @@ class Carrusel extends React.Component {
     render() {
       let {leftIcon,rightIcon}=this.state;
       return(
-        <div className="container-fluid">
+        <div className="container-fluid mt-3">
           <div className="row">
             
             <div className="col-md-12">
@@ -63,7 +63,7 @@ class Carrusel extends React.Component {
                     src={slide1}
                   />
                   <div className="carousel-caption">
-                    - The best website to find a job - 
+                    - Perfecta Ubicación - 
                   </div>
                 </div>
                 <div style={{height:300}}>
@@ -72,7 +72,7 @@ class Carrusel extends React.Component {
                     src={slide2}
                   />
                   <div className="carousel-caption">
-                    - Highly qualified jobs -
+                    - Comodidad -
                   </div>
                 </div>
                 <div style={{height:300}}>
@@ -81,7 +81,7 @@ class Carrusel extends React.Component {
                     src={slide3}
                   />
                   <div className="carousel-caption">
-                    - Globally recognized companies -
+                    - Hospedaje disponible -
                   </div>
                 </div>
                 <div style={{height:300}}>
@@ -90,16 +90,7 @@ class Carrusel extends React.Component {
                     src={slide4}
                   />
                   <div className="carousel-caption">
-                    - Get the best results -
-                  </div>
-                </div>
-                <div style={{height:300}}>
-                  <img
-                    style={{width:"100%",height:"100%"}}
-                    src={slide5}
-                  />
-                  <div className="carousel-caption">
-                    - Here you can find all types of jobs -
+                    - Apartamentos disponibles -
                   </div>
                 </div>
               </React_Bootstrap_Carousel>

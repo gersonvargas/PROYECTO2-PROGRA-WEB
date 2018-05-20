@@ -63,20 +63,14 @@ class CardGroup extends Component {
     //marcoc22
     //NAchoAvalos
     //frander170896
-    axios.get('https://api.github.com/users/marcoc22')
+    axios.get('https://api.github.com/users/Jupagar77')
       .then(function (response) {
 
         self.setState({ marco: response.data })
       }).catch(function (res) {
 
       });
-    axios.get('https://api.github.com/users/NAchoAvalos')
-      .then(function (response) {
-
-        self.setState({ nacho: response.data })
-      }).catch(function (res) {
-
-      });
+   
     axios.get('https://api.github.com/users/gersonvargas')
       .then(function (response) {
 
@@ -84,20 +78,7 @@ class CardGroup extends Component {
       }).catch(function (res) {
 
       });
-    axios.get('https://api.github.com/users/frander170896')
-      .then(function (response) {
-
-        self.setState({ frander: response.data })
-      }).catch(function (res) {
-
-      });
-    axios.get('https://api.github.com/users/AnuardLuna')
-      .then(function (response) {
-
-        self.setState({ anuard: response.data })
-      }).catch(function (res) {
-
-      });
+    
   }
 
   render() {
@@ -106,7 +87,7 @@ class CardGroup extends Component {
 
         {this.state.marco ? <Card usuario={this.state.marco}
           red_social={'https://www.facebook.com'}
-          trabajo_git={'https://github.com/marcoc22'}
+          trabajo_git={'https://github.com/Jupagar77'}
           about_me={'I am working as developer and I am studying at UNA, Costa Rica.'} /> : ''}
 
         {this.state.gerson ? <Card usuario={this.state.gerson}
@@ -114,20 +95,7 @@ class CardGroup extends Component {
           trabajo_git={'https://github.com/gersonvargas'}
           about_me={'I am working as an Oracle DBA at GBSYS company. Also, I am studying at UNA, Costa Rica.'} /> : ''}
 
-        {this.state.frander ? <Card usuario={this.state.frander}
-          red_social={'https://www.facebook.com'}
-          trabajo_git={'https://github.com/frander170896'}
-          about_me={'I am working as a developer, graduated from UNA. Currently I am studying at UNA, Costa Rica.'} /> : ''}
-
-        {this.state.nacho ? <Card usuario={this.state.nacho}
-          red_social={'https://www.facebook.com'}
-          trabajo_git={'https://github.com/NachoAvalos'}
-          about_me={'Currently I am studying at UNA, Costa Rica.'} /> : ''}
-
-        {this.state.anuard ? <Card usuario={this.state.anuard}
-          red_social={'https://www.facebook.com'}
-          trabajo_git={'https://github.com/AnuarLuna'}
-          about_me={'I am working and studying at UNA.'} /> : ''}
+       
       </div>
     );
   }

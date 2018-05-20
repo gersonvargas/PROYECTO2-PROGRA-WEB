@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import './css/Global/footer.css';
 import './css/Global/header.css';
-import banner from "./images/banner-jobs3.jpg";
 import user from "./icons/usuario.png";
 
 import logoHeader from "./icons/reunion.png";
@@ -57,7 +56,7 @@ class Header extends Component {
                         
                     </nav>
                 </div>
-                <div className="row mt-0">
+                <div className="row mt-3">
 
                     <Carrusel />
                 </div>
