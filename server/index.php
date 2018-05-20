@@ -1,9 +1,8 @@
 <?php
 
 require("Toro.php");
-
+require("login.php");
 class DBHandler {
-
     function init() {
         try {
             $dbh = new PDO('sqlite:base.db');
@@ -206,15 +205,20 @@ class DBHandler {
             echo $e->getMessage();
         }
     }
-    function get($metodo = null, $id = null) {
+    function get($id1 = null) {
+       // $_GET = json_decode(file_get_contents('php://input'), True);
+        $metodo=$_GET['metodo'];
         if ($metodo) {
-            if ($metodo == 1) {
-                $this->getFacturas($id);
+            if ($metodo == 'login') {//OBTENER LOGIN
+                $email=$_GET['email'];
+                $password=$_GET['password'];
+               return Login::obtenerusuario($email, $password);
             }
             if ($metodo == 2) {
                 $this->getProductos($id);
             }
         }
+         
     }
 
     function put($id = null) {
@@ -230,7 +234,6 @@ class DBHandler {
     }
 
     function delete($data) {
-        
         try {
             
            $this->eliminarfactura($data);
@@ -245,8 +248,8 @@ class DBHandler {
         $dbh = $this->init();
         try {
             $_POST = json_decode(file_get_contents('php://input'), True);
-            if ($_POST['method'] == 'put'){
-                return $this->put($id);
+            if ($_POST['method'] == 'login'){
+                return Login::obtenerusuario('gerson@gmail.com', 'admin123');
             }
             else if ($_POST['method'] == 'delete'){
                 return $this->delete($_POST);
@@ -258,23 +261,6 @@ class DBHandler {
             else {
                $this->modificarfactura($_POST);
             }
-//            $name = $_POST['name'];
-//            $area = $_POST['area'];
-//            $population = $_POST['population'];
-//            $density = $_POST['density'];
-//            $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-//            $stmt = $dbh->prepare("UPDATE countries SET area=:area,
-//										population=:population, density=:density,
-//										name=:name WHERE id = :id");
-//            $stmt->bindParam(':id', $id);
-//            $stmt->bindParam(':area', $area);
-//            $stmt->bindParam(':population', $population);
-//            $stmt->bindParam(':density', $density);
-//            $stmt->bindParam(':name', $name);
-//            $dbh->beginTransaction();
-//            $stmt->execute();
-//            $dbh->commit();
-            //$this->insertarfactura($_POST);
            
         } catch (Exception $e) {
             $dbh->rollBack();
@@ -286,6 +272,7 @@ class DBHandler {
 
 Toro::serve(array(
     "/country/:alpha" => "DBHandler",
+    "/login/:alpha" => "DBHandler",
     "/country/:alpha/:alpha" => "DBHandler",
 ));
-?>
+
