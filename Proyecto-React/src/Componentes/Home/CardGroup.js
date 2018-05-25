@@ -2,6 +2,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Visita from "../Global/icons/visita.png";
+
+import home1 from "../Global/images/home1.jpg";
+import home2 from "../Global/images/home2.jpg";
+import home3 from "../Global/images/home3.jpg";
+
 class Card extends Component {
   constructor(props) {
     super(props);
@@ -47,18 +52,18 @@ class CardGroup extends Component {
       <div className="card-group p-3">
 
         <Card
-          company_name={'Microsft'}
-          company_logo={'http://github-jobs.s3.amazonaws.com/b5365b6a-260c-11e8-9128-3e3ad804da5f.jpg'}
+          company_name={'Mejores precios'}
+          company_logo={home1}
           company_url={'https://www.microsoft.com'}
         />
         <Card
-          company_name={'Apple'}
-          company_logo={'http://github-jobs.s3.amazonaws.com/26029982-44ba-11e8-8daf-6b1d47e5d047.jpeg'}
+          company_name={'Casa de sus sueños'}
+          company_logo={home2}
           company_url={'https://www.apple.com/'}
         />
         <Card
-          company_name={'Bolt Labs'}
-          company_logo={'http://github-jobs.s3.amazonaws.com/4e7deaba-4023-11e8-94aa-cb3faf9b4e3d.PNG'}
+          company_name={'Mejores opciones de alquiler'}
+          company_logo={home3}
           company_url={'https://www.bolttoken.org/'}
         />
       </div>

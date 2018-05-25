@@ -3,8 +3,10 @@
 require("Toro.php");
 require("login.php");
 require("propiedades.php");
+require("usuario.php");
 
 class DBHandler {
+
     function init() {
         try {
             $dbh = new PDO('sqlite:base.db');
@@ -13,12 +15,14 @@ class DBHandler {
             die("Unable to connect: " . $e->getMessage());
         }
     }
- function obtenerconexion() {
+
+    function obtenerconexion() {
         $file_db = new PDO('sqlite:base.db');
         // Set errormode to exceptions
         $file_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $file_db;
     }
+
     function getFacturas($id = null) {
         $dbh = $this->init();
         try {
@@ -38,7 +42,8 @@ class DBHandler {
             echo "Failed: " . $e->getMessage();
         }
     }
-        function obtenersubtotal($factura) {
+
+    function obtenersubtotal($factura) {
         $porcentaje = 0;
         try {
             $file_db = $this->obtenerconexion();
@@ -53,7 +58,8 @@ class DBHandler {
         }
         return $porcentaje;
     }
- function actualizarrelacionfactura($factura, $producto, $cnx) {
+
+    function actualizarrelacionfactura($factura, $producto, $cnx) {
         try {
 
             $update = "UPDATE producto 
@@ -71,6 +77,7 @@ class DBHandler {
             echo $e->getMessage();
         }
     }
+
     function insertarfactura($data) {
 
         $numero = $data['numeroi'];
@@ -80,10 +87,10 @@ class DBHandler {
             $file_db = $this->init();
             if (isset($data['selectprods'])) {
                 $vec = $data['selectprods'];
-               // foreach ($vec as $selectedOption) {
-                for($i=0;$i<count($vec);$i++){
-                    $aux=$vec[$i];
-                    $this->actualizarrelacionfactura($numero,$aux['descripcion'] , $file_db);
+                // foreach ($vec as $selectedOption) {
+                for ($i = 0; $i < count($vec); $i++) {
+                    $aux = $vec[$i];
+                    $this->actualizarrelacionfactura($numero, $aux['descripcion'], $file_db);
                 }
             }
             $impuestos = $this->obtenersubtotal($numero) * 0.13;
@@ -106,6 +113,7 @@ class DBHandler {
             return $e->getMessage();
         }
     }
+
     function modificarfactura($data) {
         $numero = $data['numerom'];
         $fecha = $data['fecham'];
@@ -123,8 +131,8 @@ class DBHandler {
             $stmt->bindParam(':numero', $numero);
             $stmt->bindParam(':fecha', $fecha);
             $stmt->bindParam(':cliente', $cliente);
-           // $stmt->bindParam(':impuestos', $impuestos);
-           // $stmt->bindParam(':montototal', $montototal);
+            // $stmt->bindParam(':impuestos', $impuestos);
+            // $stmt->bindParam(':montototal', $montototal);
             $stmt->execute();
 
             echo 'Se ha actualizado la factura: ' . $numero;
@@ -133,7 +141,8 @@ class DBHandler {
             echo $e->getMessage();
         }
     }
-        function eliminarfactura($data) {
+
+    function eliminarfactura($data) {
         $numero = $data['numeroe'];
         try {
             $file_db = $this->obtenerconexion();
@@ -149,7 +158,8 @@ class DBHandler {
             echo $e->getMessage();
         }
     }
-       function eliminardependenciafactura($factura) {
+
+    function eliminardependenciafactura($factura) {
         try {
             $file_db = $this->obtenerconexion();
             // Prepare INSERT statement to SQLite3 file db
@@ -164,6 +174,7 @@ class DBHandler {
             echo $e->getMessage();
         }
     }
+
     function getProductos($id = null) {
         $dbh = $this->init();
         try {
@@ -183,7 +194,8 @@ class DBHandler {
             echo "Failed: " . $e->getMessage();
         }
     }
- function insertarproducto($data) {
+
+    function insertarproducto($data) {
         $cantidad = $data['cantidad'];
         $descripcion = $data['descripcion'];
         $valoru = $data['valoru'];
@@ -207,41 +219,41 @@ class DBHandler {
             echo $e->getMessage();
         }
     }
+
     function get($id = null) {
-       // $_GET = json_decode(file_get_contents('php://input'), True);
-        $metodo=$_GET['metodo'];
+        // $_GET = json_decode(file_get_contents('php://input'), True);
+        $metodo = $_GET['metodo'];
         //echo 'hola mundo';
         if ($metodo) {
             if ($metodo == 'login') {//OBTENER LOGIN
-                $email=$_GET['email'];
-                $password=$_GET['password'];
-               return Login::obtenerusuario($email, $password);
-            }else if ($metodo == 'getpropiedades'){
-               // echo 'hola mundo';
+                $email = $_GET['email'];
+                $password = $_GET['password'];
+                return Login::obtenerusuario($email, $password);
+            } else if ($metodo == 'getpropiedades') {
+                // echo 'hola mundo';
                 return Propiedad::obtenerPropiedades();
             }
-            
         }
-         
     }
 
-    function put($id = null) {
-        
+    function put($_DATA) {
+
         try {
-            $_PUT = json_decode(file_get_contents('php://input'), True);
-           $this->insertarfactura($_PUT);
+            // $_PUT = json_decode(file_get_contents('php://input'), True);
+            $metodo = $_DATA['metodo2'];
+            if ($metodo == 'insertarUsuario') {
+                Usuario::insertarUsuario($_DATA);
+            }
             echo 'Successfull';
         } catch (Exception $e) {
-            $dbh->rollBack();
             echo "Failed: " . $e->getMessage();
         }
     }
 
     function delete($data) {
         try {
-            
-           $this->eliminarfactura($data);
-            
+
+            $this->eliminarfactura($data);
         } catch (Exception $e) {
             $dbh->rollBack();
             echo "Failed: " . $e->getMessage();
@@ -252,20 +264,18 @@ class DBHandler {
         $dbh = $this->init();
         try {
             $_POST = json_decode(file_get_contents('php://input'), True);
-            if ($_POST['method'] == 'login'){
+            if ($_POST['method'] == 'login') {
                 return Login::obtenerusuario('gerson@gmail.com', 'admin123');
-            }
-            else if ($_POST['method'] == 'delete'){
+            } else if ($_POST['method'] == 'delete') {
                 return $this->delete($_POST);
-            }
-             else if ($_POST['method'] == 'insertarproducto'){
+            } else if ($_POST['method'] == 'put') {
+                return $this->put($_POST);
+            } else if ($_POST['method'] == 'insertarproducto') {
                 return $this->insertarproducto($_POST);
+                //return 'Hola';
+            } else {
+                $this->modificarfactura($_POST);
             }
-            
-            else {
-               $this->modificarfactura($_POST);
-            }
-           
         } catch (Exception $e) {
             $dbh->rollBack();
             echo "Failed: " . $e->getMessage();
@@ -277,6 +287,7 @@ class DBHandler {
 Toro::serve(array(
     "/login/:alpha" => "DBHandler",
     "/propiedad/:alpha" => "DBHandler",
+    "/usuario/:alpha" => "DBHandler",
     "/country/:alpha/:alpha" => "DBHandler",
 ));
 
