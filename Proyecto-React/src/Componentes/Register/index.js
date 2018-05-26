@@ -28,15 +28,15 @@ class Register extends Component {
         this.handleDireccionExacta = this.handleDireccionExacta.bind(this);
         this.handlePropiedad = this.handlePropiedad.bind(this);
         this.handleInsertUsuario = this.handleInsertUsuario.bind(this);
-        this.handleTelefono=this.handleTelefono.bind(this);
-        this.handleEmail=this.handleEmail.bind(this);
+        this.handleTelefono = this.handleTelefono.bind(this);
+        this.handleEmail = this.handleEmail.bind(this);
     }
     componentWillMount() {
         document.title = 'Register'
     }
     handleInsertUsuario(event) {
         event.preventDefault();
-       
+
         var data = JSON.stringify({
             method: 'put',// numero: "", fecha: "", area: 0, cliente: '', density: 0,
             metodo2: 'insertarUsuario',
@@ -158,16 +158,13 @@ class Register extends Component {
                     <h1> Registro</h1>
                     <img src={register_img} alt="Register" />
                     <p>Al registrase a nuestro sitio web usted obtendrá múltiples beneficios referente
-                        a la bolsa de trabajo que se maneja, podrás analizar diferentes opciones de compra o alquiler
+                        a la casa que siempre ha querido, podrás analizar diferentes opciones de compra o alquiler
                         que se ofrecen y ser postulantes de las mismas directamente.
-    Actualmente se encuentra puestos de trabajo en la mayoría de las áreas lo cual ayudaría a
-     obtener mayores posibilidades de empleo.
-    Además, puede obtener información directamente del sitio de la pagina la que
-    quieras postular.
-    Los usuarios tendrán múltiple opciones de filtrado según sus necesidades o
-    su áreas especifica de trabajo lo que le permite tener opciones mas especificas
-    acorde a su experiencia y estudios.
-</p>
+
+                        Los usuarios tendrán múltiple opciones de filtrado según sus necesidades o
+                        su áreas de búsqueda, lo que le permite tener opciones mas específicas
+                        acorde a su experiencia y estudios.
+                    </p>
 
                 </div>
                 <div className="col-xs-12 col-sm-12 col-md-6 col-lg-8">
@@ -200,16 +197,16 @@ class Register extends Component {
                                 <div className="row">
                                     <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                         <label htmlFor="correo"><span></span>Correo</label>
-                                        <input className="form-control" name='correo' type="email" placeholder="Email" required 
-                                        onChange={this.handleEmail}/>
+                                        <input className="form-control" name='correo' type="email" placeholder="Email" required
+                                            onChange={this.handleEmail} />
                                     </div>
                                 </div>
 
                                 <div className="row">
                                     <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                         <label htmlFor="telefono"><span></span>Teléfono</label>
-                                        <input className="form-control" name='telefono' type="tel" 
-                                        placeholder="Teléfono de contacto" required onChange={this.handleTelefono}/>
+                                        <input className="form-control" name='telefono' type="tel"
+                                            placeholder="Teléfono de contacto" required onChange={this.handleTelefono} />
                                     </div>
                                 </div>
                                 <div className="row">

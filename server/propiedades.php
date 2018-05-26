@@ -12,8 +12,7 @@ class Propiedad {
        //Ejemplo de consumo URL
        //http://localhost/proyecto2-progra-web/server/index.php/propiedad/1/?metodo=getpropiedades
         $dbh = Propiedad::obtenerconexion();
-        try {
-            
+        try {            
                 $stmt = $dbh->prepare("SELECT * FROM PROPIEDAD");
                 $stmt->execute();
                 $data = Array();

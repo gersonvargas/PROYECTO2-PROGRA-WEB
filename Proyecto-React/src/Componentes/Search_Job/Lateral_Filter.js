@@ -89,31 +89,31 @@ class LateralFilter extends Component {
 
     handlerSubmit(event) {
         event.preventDefault();
-        var ubicacion = this.state.location;
-        var empresa = this.state.company;
-        var tipo1 = document.getElementById('check1').checked;
-        var trabajos = this.state.jobs;
-        if (ubicacion != 'All' || tipo1) {
-            var resultado = this.filtrarSeleccion(this.state.jobs, empresa, ubicacion, tipo1);
-            if (resultado) {
-                this.setState({
-                    isfiltrado: true,
-                    datosFiltrados: resultado
-                });
-            } else {
-
-                var llocation = this.filtrarLocalizacion(this.state.jobs, ubicacion);
-                this.setState({
-                    isfiltrado: true,
-                    datosFiltrados: llocation
-                });
-            }
-        } else {
-            this.setState({
-                datosFiltrados: trabajos,
-                isfiltrado: true
-            });
+        var photo = document.getElementById("fileToUpload");
+        // the file is the first element in the files property
+        var file = photo.files[0];
+        var formData = new FormData();
+        formData.append("fileToUpload", file);
+        console.log(file);
+       /* var data = JSON.stringify({
+            'form':formData,
+            "method": "insertarPropiedad"
         }
+        )*/
+        fetch("http://localhost/proyecto2-progra-web/server/index.php/propiedad/1", {
+            method: "post",
+            headers: {
+                //'Accept': 'application/json',
+                'Content-Type': 'multipart/form-data'
+            },
+            body: formData
+        }).then((response) => {
+
+            return response.json();
+        })
+            .then((res) => {
+                console.log('El server responde: ' + res)
+            })
     }
 
     //**   Filtering Location* */
@@ -224,49 +224,9 @@ class LateralFilter extends Component {
                 </div>
                 <div className="row jobs">
                     <div className="col-ms-8 col-md-3 col-lg-4" >
-                        <h4>Filtering Jobs</h4>
+                        <h4>Bienes raices</h4>
                         <form onSubmit={this.handlerSubmit}>
-                            {this.state.listaLocations ?
-                                <div>
-                                    <label>Select the Job's Location</label>
-                                    <select id='ubicacion' required className="custom-select" onChange={this.filterListLocation}>
-                                        <option value='All'>All Locations</option>
-                                        {this.state.listaLocations.map((item, key) =>
-                                            <option key={item.id}
-                                                value={item.location}>
-                                                {item.location}
-                                            </option>
-                                        )}
-                                    </select>
-                                </div> : ''
-                            }
-                            {this.state.listaEmpresas ?
-                                <div>
-                                    <label>Select the Company</label>
-                                    <select id='ubicacion' required className="custom-select" onChange={this.filterListCompany}>
-                                        <option value='All'>All Companys</option>
-                                        {this.state.listaEmpresas.map((item, key) =>
-                                            <option key={item.id}
-                                                value={item.company}>
-                                                {item.company}
-                                            </option>
-                                        )}
-                                    </select>
-                                </div> : ''
-                            }
-
-                            {this.state.jobs ?
-                                <div className="input-group mb-3">
-                                    <div className="input-group-prepend">
-                                        <div className="input-group-text mt-3">
-                                            <input className='form-control' type="checkbox"
-                                                id='check1' aria-label="Checkbox for following text input" />
-                                            <label className='ml-2'>Just full time</label>
-                                        </div>
-                                    </div>
-
-                                </div> : <p>Downloading jobs...</p>
-                            }
+                            <input type="file" name="fileToUpload" id="fileToUpload" />
                             <button type="submit" className="btn btn-primary btn-sm active">
                                 <img className='mr-3 ml-3' src={Lupa} />
                                 Filter

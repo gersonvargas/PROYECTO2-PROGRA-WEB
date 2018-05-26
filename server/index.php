@@ -261,7 +261,7 @@ class DBHandler {
     }
 
     function post($id = null) {
-        $dbh = $this->init();
+
         try {
             $_POST = json_decode(file_get_contents('php://input'), True);
             if ($_POST['method'] == 'login') {
@@ -270,14 +270,13 @@ class DBHandler {
                 return $this->delete($_POST);
             } else if ($_POST['method'] == 'put') {
                 return $this->put($_POST);
-            } else if ($_POST['method'] == 'insertarproducto') {
-                return $this->insertarproducto($_POST);
-                //return 'Hola';
-            } else {
-                $this->modificarfactura($_POST);
+            } else if ($_POST['method'] == 'insertarPropiedad') {
+                $myArr = array("John", "Mary", "Peter", "Sally");
+                $myJSON = json_encode($_POST['form']);
+                 
+                echo $myJSON;
             }
         } catch (Exception $e) {
-            $dbh->rollBack();
             echo "Failed: " . $e->getMessage();
         }
     }
