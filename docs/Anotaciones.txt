@@ -1,0 +1,36 @@
+Propiedad:
+NUMERO_PROPIEDAD
+nombre 
+autor(persona o empresa)
+fecha
+tamano
+descripcion
+ubicacion (localidad, ciudad, provincia)
+tipo propiedad (vivienda, apartamento, edificio comercial, bodega, otro)
+tipodisponibilidad (alquiler, vennta, ambos)
+costo
+metros 2 de construccion
+estado de la construccion
+
+
+
+En caso de ser vivienda o apartamento 
+se requiere conocer también la cantidad de habitaciones,
+ baños, cocheras, y plantas (pisos).
+ 
+ 
+ Interesado
+ 
+ Para ello se guardan sus datos: 
+ nombre, teléfono, dirección electrónica, ubicación, y contraseña.
+ 
+ 
+Clientes
+
+nombre
+teléfono
+ dirección electrónica
+ ubicación preferida, 
+y tipo de propiedad requerida (vivienda, apartamento, edificio comercial, bodega, etc.). 
+Posteriormente, sólo los propietarios registrados pueden revisar 
+la información sobre clientes.
