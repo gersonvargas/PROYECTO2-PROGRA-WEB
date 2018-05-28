@@ -28,10 +28,11 @@ class ListaPropiedadesDetallada extends React.Component {
                      <td>{item.FECHA_PUBLICACION}</td>
                      <td>{item.TIPO_PROPIEDAD}</td>
                  </tr>);
+                  <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
                  */
             const rows = this.props.propiedades.map((item, index) =>
                 <Card>
-                    <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                   
                     <CardBody>
                         <CardTitle>{item.NOMBRE}</CardTitle>
                         <CardSubtitle>{item.AUTOR}</CardSubtitle>
