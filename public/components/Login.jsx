@@ -38,11 +38,12 @@ class Login extends React.Component {
             })
             .then((data) => {
 
-                if(data){
+                if (data) {
                     localStorage.setItem("loginUser", data.EMAIL);
+                    // localStorage.setItem("tipo_usuario", data.TIPO_USUARIO);
                     localStorage.setItem("loggedUser", JSON.stringify(data));
                     this.forceUpdate();
-                }else{
+                } else {
                     localStorage.setItem("loginUser", 'NULL');
                     alert('Credenciales incorrectas, intente de nuevo.');
                 }
@@ -50,7 +51,7 @@ class Login extends React.Component {
     }
 
     render() {
-        if(localStorage.loginUser !== 'NULL'){
+        if (localStorage.loginUser !== 'NULL') {
             localStorage.setItem("path", "home");
             location.reload();
         }
@@ -65,18 +66,18 @@ class Login extends React.Component {
                                 <label className="sr-only" >Email</label>
                                 <div className="input-group mb-2">
                                     <input type="email" className="form-control" id="email" placeholder="Email"
-                                           onChange={this.handleEmail} />
+                                        onChange={this.handleEmail} />
                                 </div>
                             </div>
                             <div className="form-group">
                                 <label className="sr-only">Password</label>
                                 <div className="input-group mb-2">
                                     <input type="password" className="form-control" id="password" placeholder="Password"
-                                           onChange={this.handlePassword} />
+                                        onChange={this.handlePassword} />
                                 </div>
                             </div>
                             <button type="button" className="btn btn-primary" id="password" placeholder="Password"
-                                    onClick={this.login}>
+                                onClick={this.login}>
                                 Login
                             </button>
                             <small><a href="" >Or create an account</a></small>

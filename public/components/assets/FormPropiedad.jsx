@@ -178,7 +178,7 @@ class FormPropiedad extends React.Component {
     render() {
         return (
             <div>
-                <h2>Detalle de factura: {this.state.numero}</h2>
+                <h2>Detalle de la propiedad: {this.state.numero}</h2>
                 <Form >
                     <FormGroup>
                         <Label>Numero:</Label>
@@ -202,66 +202,9 @@ class FormPropiedad extends React.Component {
 
                         <p><small>Monto total: {this.state.montototal}</small></p>
                     </FormGroup>
-                    <div>
-                        <h2>Productos</h2>
-                        {this.state.prodductos_seleccionados ?
-                            <Table striped>
-                                <thead><tr>
-                                    <th>Cantidad</th><th>Descripcion</th><th>Valor/U</th>
-                                    <th>Subtotal</th>
-                                    <th>Acción</th>
-                                </tr></thead>
-                                <tbody>
-                                    {
-                                        this.state.prodductos_seleccionados.map((prod, index) =>
-                                            <tr key={index} >
-                                                <td>{prod.cantidad}</td>
-                                                <td>{prod.descripcion}</td>
-                                                <td>{prod.valorunitario}</td>
-                                                <td>{prod.subtotal}</td>
-                                                <td><FormGroup>
-
-                                                    <Input type="button" name="population"
-                                                        value='Remove' data-item={index} onClick={this.handleDetails} />
-                                                </FormGroup></td>
-                                            </tr>
-                                        )
-                                    }
-
-                                </tbody>
-                            </Table> : ''
-
-                        }
-
-                    </div>
+                   
                 </Form>
-                <div className='mb-3'>
-                    <Form inline>
-
-                        <FormGroup>
-                            <Input type="text" name="cantidad"
-                                onChange={this.handleCP} placeholder='Cantidad' />
-                        </FormGroup>
-
-                        <FormGroup>
-                            <Input type="text" name="cantidad"
-                                onChange={this.handleDP} placeholder='Descripcion' />
-                        </FormGroup>
-
-                        <FormGroup>
-                            <Input type="text" name="cantidad"
-                                onChange={this.handleVP} placeholder='Valor (U)' />
-                        </FormGroup>
-
-                        <FormGroup>
-                            <Input type="button" name=""
-                                value='Add' onClick={this.handleInsertProd} />
-
-                        </FormGroup>
-
-
-                    </Form>
-                </div>
+                
                 <div>
                     <Button onClick={this.handleInsert}>Agregar</Button>{' '}
                     <Button onClick={this.handleUpdate}>Modificar</Button>{' '}

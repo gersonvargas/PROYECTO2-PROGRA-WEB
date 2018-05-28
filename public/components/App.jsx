@@ -54,9 +54,10 @@ class App extends React.Component {
     }
     handlePropiedades() {
         if (localStorage.loginUser !== 'NULL') {
+
             localStorage.setItem("path", "propiedad");
-        }else{
-            localStorage.setItem("path", "login"); 
+        } else {
+            localStorage.setItem("path", "login");
         }
         this.forceUpdate();
     }
@@ -78,7 +79,8 @@ class App extends React.Component {
             case "registrar":
                 renderClass = <Registrar />;
                 break;
-            default: break;
+            default:
+                break;
         }
 
         var LoginType = <NavLink href="" onClick={this.handleLogin}>Login</NavLink>;
