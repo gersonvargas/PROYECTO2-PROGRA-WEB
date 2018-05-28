@@ -35,7 +35,7 @@ class App extends React.Component {
         this.handleLogin = this.handleLogin.bind(this);
         this.handleHome = this.handleHome.bind(this);
         this.handlePropiedades = this.handlePropiedades.bind(this);
-        this.handleRegistrar=this.handleRegistrar.bind(this);
+        this.handleRegistrar = this.handleRegistrar.bind(this);
     }
 
     handleLogin() {
@@ -53,7 +53,11 @@ class App extends React.Component {
         this.forceUpdate();
     }
     handlePropiedades() {
-        localStorage.setItem("path", "propiedad");
+        if (localStorage.loginUser !== 'NULL') {
+            localStorage.setItem("path", "propiedad");
+        }else{
+            localStorage.setItem("path", "login"); 
+        }
         this.forceUpdate();
     }
     handleRegistrar() {
@@ -71,7 +75,7 @@ class App extends React.Component {
             case "propiedad":
                 renderClass = <Propiedades />;
                 break;
-                case "registrar":
+            case "registrar":
                 renderClass = <Registrar />;
                 break;
             default: break;
