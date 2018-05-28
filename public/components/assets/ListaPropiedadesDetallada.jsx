@@ -14,11 +14,25 @@ var CardFooter = Reactstrap.CardFooter;
 class ListaPropiedadesDetallada extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+           
+        };
         this.handleDetails = this.handleDetails.bind(this);
     }
     handleDetails(e) {
         const index = e.currentTarget.getAttribute('data-item');
         this.props.handleChangePropiedad(this.props.propiedades[index]);
+    }
+    obtenerPostulaciones(numero){
+        //var numero=0;
+       // console.log(this.props.propiedades_aplicadas);
+        for(var i=0;i<this.props.propiedades_aplicadas.length;i++){
+           
+            if(this.props.propiedades_aplicadas[i].PROPIEDAD==numero){
+                return this.props.propiedades_aplicadas[i].aplicadas;
+            }
+        }
+        return 0;
     }
     render() {
         if (this.props.propiedades.length > 0) {
@@ -32,7 +46,7 @@ class ListaPropiedadesDetallada extends React.Component {
                  */
             const rows = this.props.propiedades.map((item, index) =>
                 <Card>
-                   
+
                     <CardBody>
                         <CardTitle>{item.NOMBRE}</CardTitle>
                         <CardSubtitle>{item.AUTOR}</CardSubtitle>
@@ -65,7 +79,13 @@ class ListaPropiedadesDetallada extends React.Component {
                         </CardText>
                         <Button key={index} data-item={index} onClick={this.handleDetails}>Detalles</Button>
                     </CardBody>
-                    <CardFooter className="text-muted">Publicado el: {item.FECHA_PUBLICACION}</CardFooter>
+                    <CardFooter className="text-muted">Publicado el: {item.FECHA_PUBLICACION}
+                        <p>
+                            Postulaciones <span class="badge badge-light">
+                            {this.obtenerPostulaciones(item.NUMERO_PROPIEDAD)}
+                            </span>
+                        </p>
+                    </CardFooter>
                 </Card>
             );
             return (

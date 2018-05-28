@@ -230,6 +230,13 @@ class DBHandler {
             } else if ($metodo == 'getpropiedades') {
                 return Propiedad::obtenerPropiedades();
             }
+            else if ($metodo == 'obtenerCantidadAplicadas') {
+                $numero_propiedad = $_GET['numero_propiedad'];
+                return Propiedad::obtenerCantidadAplicadas($numero_propiedad);
+            }
+            else if ($metodo == 'obtenerTodasAplicadas') {
+                return Propiedad::obtenerTodasAplicadas();
+            }
         }
     }
 

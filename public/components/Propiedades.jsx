@@ -18,10 +18,13 @@ class Propiedades extends React.Component {
         super(props);
         this.state = {
             propiedades: [],
+            propiedades_aplicadas:[],
             propiedad: [],
             tipo_usuario: -1,
         }
         this.handleReload = this.handleReload.bind(this);
+        this.handleAplicadas=this.handleAplicadas.bind(this);
+
         this.componentWillMount = this.componentWillMount.bind(this);
         this.handleChangePropiedad = this.handleChangePropiedad.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
@@ -38,11 +41,23 @@ class Propiedades extends React.Component {
                 this.forceUpdate();
             })
     }
+    handleAplicadas() {
+        fetch('api/index.php/propiedad/1/?metodo=obtenerTodasAplicadas')
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+
+                 console.log(data)
+                this.setState({ propiedades_aplicadas: data });
+                this.forceUpdate();
+            })
+    }
     componentWillMount() {
         this.handleReload();
+        this.handleAplicadas();
         // var currentUser = JSON.parse(localStorage.loggedUser).USERNAME;
         var user = JSON.parse(localStorage.loggedUser);
-        console.log('user: ' + user)
         this.setState({
             tipo_usuario: user.TIPO_USUARIO
         });
@@ -69,6 +84,7 @@ class Propiedades extends React.Component {
                     <Row>
                         <Col xs="5">
                             <ListaPropiedadesDetallada propiedades={this.state.propiedades}
+                            propiedades_aplicadas={this.state.propiedades_aplicadas}
                                 handleChangePropiedad={this.handleChangePropiedad} />
                         </Col>
                         <Col xs="7">

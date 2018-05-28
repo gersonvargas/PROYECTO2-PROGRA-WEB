@@ -84,4 +84,40 @@ class Propiedad {
         }
     }
 
+    //select count(*) aplicadas from PROP_APLICADAS WHERE PROP_APLICADAS.PROPIEDAD=2;
+    public static function obtenerCantidadAplicadas($numero_propiedad) {
+        //Ejemplo de consumo URL
+        //http://localhost/proyecto2-progra-web/server/index.php/propiedad/1/?metodo=obtenerCantidadAplicadas&numero_propiedad=1
+         $dbh = Propiedad::obtenerconexion();
+         try {            
+                 $stmt = $dbh->prepare("select count(*) aplicadas from PROP_APLICADAS WHERE PROP_APLICADAS.PROPIEDAD=:numero");
+                 $stmt->bindParam(':numero', $numero_propiedad);
+                 $stmt->execute();
+                 $data = Array();
+                 while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                     $data[] = $result;
+                 }
+                 echo json_encode($data);
+         } catch (Exception $e) {
+             echo "Failed: " . $e->getMessage();
+         }
+     }
+      //select count(*) aplicadas from PROP_APLICADAS WHERE PROP_APLICADAS.PROPIEDAD=2;
+    public static function obtenerTodasAplicadas() {
+        //Ejemplo de consumo URL
+        //http://localhost/proyecto2-progra-web/server/index.php/propiedad/1/?metodo=obtenerTodasAplicadas
+         $dbh = Propiedad::obtenerconexion();
+         try {            
+                 $stmt = $dbh->prepare("select PROPIEDAD,count(*) aplicadas from PROP_APLICADAS group by PROPIEDAD");
+              
+                 $stmt->execute();
+                 $data = Array();
+                 while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                     $data[] = $result;
+                 }
+                 echo json_encode($data);
+         } catch (Exception $e) {
+             echo "Failed: " . $e->getMessage();
+         }
+     }
 }
