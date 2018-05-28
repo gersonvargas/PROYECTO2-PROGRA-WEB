@@ -17,9 +17,9 @@ class ListaPropiedadesDetallada extends React.Component {
         this.state = {
 
         };
-        this.obtenerPostulaciones=this.obtenerPostulaciones.bind(this);
+        this.obtenerPostulaciones = this.obtenerPostulaciones.bind(this);
         this.handleDetails = this.handleDetails.bind(this);
-        this.obtenerPropiedad=this.obtenerPropiedad.bind(this);
+        this.obtenerPropiedad = this.obtenerPropiedad.bind(this);
     }
     obtenerPropiedad(numero) {
         //var numero=0;
@@ -33,7 +33,7 @@ class ListaPropiedadesDetallada extends React.Component {
     }
     handleDetails(e) {
         const index = e.currentTarget.getAttribute('data-item');
-        var propiedad=this.obtenerPropiedad(index);
+        var propiedad = this.obtenerPropiedad(index);
         this.props.handleChangePropiedad(propiedad);
     }
     obtenerPostulaciones(numero) {
@@ -88,14 +88,16 @@ class ListaPropiedadesDetallada extends React.Component {
                                 {item.TAMANO}
                             </small></p>
                         </CardText>
-                        <Button key={index} data-item={item.NUMERO_PROPIEDAD} onClick={this.handleDetails}>Estoy Interesado</Button>
-                    </CardBody>
-                    <CardFooter className="text-muted">Publicado el: {item.FECHA_PUBLICACION}
-                        <p>
+                        <button className="btn btn-sm btn-primary" key={index} data-item={item.NUMERO_PROPIEDAD}
+                            onClick={this.handleDetails}>Estoy Interesado</button>
+                        <button type="button" class="btn btn-sm btn-info ml-3">
                             Postulaciones <span class="badge badge-light">
                                 {this.obtenerPostulaciones(item.NUMERO_PROPIEDAD)}
                             </span>
-                        </p>
+                        </button>
+                    </CardBody>
+                    <CardFooter className="text-muted">Publicado el: {item.FECHA_PUBLICACION}
+
                     </CardFooter>
                 </Card>
             );
