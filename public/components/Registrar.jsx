@@ -179,7 +179,7 @@ class Registrar extends React.Component {
                                 
                                     <FormGroup className="row">
                                         <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                            <Input type="radio" className='' id="cliente" checked="checked" 
+                                            <Input type="radio" className='' id="cliente" 
                                              name="cliente" value='1' onClick={this.handleTipoUsuario} />
                                             <Label htmlFor="cliente"><span>Cliente</span></Label>
                                         </div>

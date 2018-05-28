@@ -33,7 +33,7 @@ class Propiedades extends React.Component {
             })
             .then((data) => {
 
-                // console.log(data)
+                 console.log(data)
                 this.setState({ propiedades: data });
                 this.forceUpdate();
             })
@@ -67,11 +67,11 @@ class Propiedades extends React.Component {
             case "1": //usuario cliente
                 renderClass =
                     <Row>
-                        <Col xs="3">
-                            <ListaPropiedades propiedades={this.state.propiedades}
+                        <Col xs="5">
+                            <ListaPropiedadesDetallada propiedades={this.state.propiedades}
                                 handleChangePropiedad={this.handleChangePropiedad} />
                         </Col>
-                        <Col xs="9">
+                        <Col xs="7">
                             <FormPropiedad propiedad={this.state.propiedad}
                                 handleChangeData={this.handleChangeData} />
                         </Col>

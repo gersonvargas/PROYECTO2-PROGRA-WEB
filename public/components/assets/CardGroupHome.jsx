@@ -1,4 +1,4 @@
-class Card extends React.Component {
+class CardDet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -42,17 +42,17 @@ class CardGroupHome extends React.Component {
     return (
       <div className="card-group p-3">
 
-        <Card
+        <CardDet
           company_name={'Mejores precios'}
           company_logo='images/home1.jpg'
           company_url={'https://www.microsoft.com'}
         />
-        <Card
+        <CardDet
           company_name={'Casa de sus sueños'}
           company_logo='images/home2.jpg'
           company_url={'https://www.apple.com/'}
         />
-        <Card
+        <CardDet
           company_name={'Mejores opciones de alquiler'}
           company_logo='images/home3.jpg'
           company_url={'https://www.bolttoken.org/'}
