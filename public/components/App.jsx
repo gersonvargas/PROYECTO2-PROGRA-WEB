@@ -112,6 +112,7 @@ class App extends React.Component {
                             </Nav>
                         </Collapse>
                     </Navbar>
+                   
                 </header>
 
                 <div className="container">
