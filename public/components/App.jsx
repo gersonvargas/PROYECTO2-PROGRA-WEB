@@ -21,6 +21,8 @@ var ModalHeader = Reactstrap.ModalHeader;
 var ModalBody = Reactstrap.ModalBody;
 var ModalFooter = Reactstrap.ModalFooter;
 
+
+
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -36,7 +38,7 @@ class App extends React.Component {
 
     handleLogin() {
 
-        if(localStorage.loginUser !== 'NULL'){
+        if (localStorage.loginUser !== 'NULL') {
             localStorage.setItem("loginUser", 'NULL');
             alert('Sesión cerrada.');
         }
@@ -50,20 +52,24 @@ class App extends React.Component {
     }
 
     render() {
-        var renderClass = <Home/>;
-        switch(localStorage.path){
+        var renderClass = <Home />;
+        //if(localStorage){
+        switch (localStorage.path) {
             case "login":
-                renderClass = <Login/>;
+                renderClass = <Login />;
                 break;
-            default:break;
+            default: break;
         }
 
         var LoginType = <NavLink href="" onClick={this.handleLogin}>Login</NavLink>;
-        if(localStorage.loginUser !== 'NULL'){
+        if (localStorage.loginUser && localStorage.loginUser !== 'NULL') {
             var currentUser = JSON.parse(localStorage.loggedUser).USERNAME;
-            var LoginType = <NavLink href="" onClick={this.handleLogin}>Logout: {currentUser}</NavLink>;
+            var LoginType =
+                <NavLink href="" onClick={this.handleLogin}>
+                    Logout: {currentUser}
+                </NavLink>;
         }
-
+        //}
         return (
             <div>
                 <header>
@@ -83,6 +89,7 @@ class App extends React.Component {
                 <div className="container">
                     {renderClass}
                 </div>
+                <Footer/>
             </div>
         )
     }
