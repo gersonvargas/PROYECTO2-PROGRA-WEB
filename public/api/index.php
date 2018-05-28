@@ -247,7 +247,9 @@ class DBHandler {
             $metodo = $_DATA['metodo2'];
             if ($metodo == 'insertarUsuario') {
                 Usuario::insertarUsuario($_DATA);
-            }
+            }else if ($_POST['metodo2'] == 'insertarPostulacion') {
+                return Propiedad::insertarPostulacion($_POST);
+             }
             echo 'Successfull';
         } catch (Exception $e) {
             echo "Failed: " . $e->getMessage();
@@ -275,7 +277,8 @@ class DBHandler {
                 return $this->put($_POST);
             } else if ($_POST['method'] == 'insertarPropiedad') {
                return Propiedad::insertarPropiedad($_POST);
-            }
+            } 
+            
         } catch (Exception $e) {
             echo "Failed: " . $e->getMessage();
         }

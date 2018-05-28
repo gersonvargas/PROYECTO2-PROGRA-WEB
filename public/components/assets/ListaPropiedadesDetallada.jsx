@@ -15,20 +15,32 @@ class ListaPropiedadesDetallada extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-           
+
         };
+        this.obtenerPostulaciones=this.obtenerPostulaciones.bind(this);
         this.handleDetails = this.handleDetails.bind(this);
+        this.obtenerPropiedad=this.obtenerPropiedad.bind(this);
+    }
+    obtenerPropiedad(numero) {
+        //var numero=0;
+        // console.log(this.props.propiedades_aplicadas);
+        for (var i = 0; i < this.props.propiedades.length; i++) {
+            if (this.props.propiedades[i].NUMERO_PROPIEDAD == numero) {
+                return this.props.propiedades[i];
+            }
+        }
+        return null;
     }
     handleDetails(e) {
         const index = e.currentTarget.getAttribute('data-item');
-        this.props.handleChangePropiedad(this.props.propiedades[index]);
+        var propiedad=this.obtenerPropiedad(index);
+        this.props.handleChangePropiedad(propiedad);
     }
-    obtenerPostulaciones(numero){
+    obtenerPostulaciones(numero) {
         //var numero=0;
-       // console.log(this.props.propiedades_aplicadas);
-        for(var i=0;i<this.props.propiedades_aplicadas.length;i++){
-           
-            if(this.props.propiedades_aplicadas[i].PROPIEDAD==numero){
+        // console.log(this.props.propiedades_aplicadas);
+        for (var i = 0; i < this.props.propiedades_aplicadas.length; i++) {
+            if (this.props.propiedades_aplicadas[i].PROPIEDAD == numero) {
                 return this.props.propiedades_aplicadas[i].aplicadas;
             }
         }
@@ -46,7 +58,6 @@ class ListaPropiedadesDetallada extends React.Component {
                  */
             const rows = this.props.propiedades.map((item, index) =>
                 <Card>
-
                     <CardBody>
                         <CardTitle>{item.NOMBRE}</CardTitle>
                         <CardSubtitle>{item.AUTOR}</CardSubtitle>
@@ -77,12 +88,12 @@ class ListaPropiedadesDetallada extends React.Component {
                                 {item.TAMANO}
                             </small></p>
                         </CardText>
-                        <Button key={index} data-item={index} onClick={this.handleDetails}>Detalles</Button>
+                        <Button key={index} data-item={item.NUMERO_PROPIEDAD} onClick={this.handleDetails}>Estoy Interesado</Button>
                     </CardBody>
                     <CardFooter className="text-muted">Publicado el: {item.FECHA_PUBLICACION}
                         <p>
                             Postulaciones <span class="badge badge-light">
-                            {this.obtenerPostulaciones(item.NUMERO_PROPIEDAD)}
+                                {this.obtenerPostulaciones(item.NUMERO_PROPIEDAD)}
                             </span>
                         </p>
                     </CardFooter>

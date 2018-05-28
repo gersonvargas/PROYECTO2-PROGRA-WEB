@@ -67,6 +67,40 @@ class Propiedad {
             echo $e->getMessage();
         }
     }
+
+    public static function insertarPostulacion($data) {
+        //ejemplo de consumo:
+        /*
+         * http://localhost/proyecto2-progra-web/public/api/index.php/propiedad/1
+          {
+"metodo2":"insertarPostulacion",
+"method":"put",
+"numero_propiedad":"2",
+"mensaje":"Estoy interesado en esta propeiedad, contacteme 1",
+"email":"gersonvargas1@gmail.com",
+"fecha":"24/05/2018"
+}
+         */
+        try {
+            $numero_propiedad = $data['numero_propiedad']; // 1= cliente, 2= interesado
+            $email = $data['email'];
+            $mensaje = $data['mensaje'];
+            $fecha = $data['fecha'];
+            $file_db = Usuario::obtenerconexion();
+            $insert = "INSERT INTO PROP_APLICADAS VALUES (:EMAIL_CLIENTE,:PROPIEDAD,:MENSAJE,:FECHA_APLICADA)";
+            $stmt = $file_db->prepare($insert);
+            $stmt->bindParam(':EMAIL_CLIENTE', $email);
+            $stmt->bindParam(':PROPIEDAD', $numero_propiedad);
+            $stmt->bindParam(':MENSAJE', $mensaje);
+            $stmt->bindParam(':FECHA_APLICADA', $fecha);
+            $stmt->execute();
+            return 'Se ha insertado la informacion!';
+        } catch (PDOException $e) {
+            // Print PDOException message
+            echo $e->getMessage();
+        }
+    }
+
    public static function obtenerPropiedades() {
        //Ejemplo de consumo URL
        //http://localhost/proyecto2-progra-web/server/index.php/propiedad/1/?metodo=getpropiedades

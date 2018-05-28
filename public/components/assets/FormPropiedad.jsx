@@ -9,24 +9,13 @@ class FormPropiedad extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            numero: "", fecha: "", area: 0, cliente: '', density: 0,
-            montototal: 0,
-            productos: null,
-            cp: 0, dp: '', vp: 0,
-            prodductos_seleccionados: null
+            cliente: null,
+            numero_propiedad: null,
+            mensaje: null
         }
         this.handleInsert = this.handleInsert.bind(this);
-        this.handleUpdate = this.handleUpdate.bind(this);
-        this.handleDelete = this.handleDelete.bind(this);
-        this.handleFields = this.handleFields.bind(this);
-        this.handleFecha = this.handleFecha.bind(this);
-        this.handleDetails = this.handleDetails.bind(this);
-        this.handleInsertProd = this.handleInsertProd.bind(this);
+        this.handleMensaje = this.handleMensaje.bind(this);
 
-        this.handleCP = this.handleCP.bind(this);
-        this.handleDP = this.handleDP.bind(this);
-        this.handleVP = this.handleVP.bind(this);
-        this.doreload = this.doreload.bind(this);
     }
 
     handleDetails(e) {
@@ -60,158 +49,61 @@ class FormPropiedad extends React.Component {
                 this.forceUpdate();
             })
     }
-    componentWillMount() {
-        //this.doreload();
-    }
+
     componentWillReceiveProps(nextProps) {
-        this.setState({ numero: nextProps.propiedad.numero });
-        this.setState({ fecha: nextProps.propiedad.fecha });
-        this.setState({ cliente: nextProps.propiedad.AUTOR });
-        this.setState({ montototal: nextProps.propiedad.montototal });
+        this.setState({ numero: nextProps.propiedad.NUMERO_PROPIEDAD });
         // this.setState({ population: nextProps.propiedad.population });
         // this.setState({ density: nextProps.propiedad.density });
     }
     handleInsert() {
-
+        var usuario = localStorage.loginUser;
+        var fi = new Date().toJSON().slice(0, 10).replace(/-/g, '/');
         var data = JSON.stringify({
             method: 'put',// numero: "", fecha: "", area: 0, cliente: '', density: 0,
-            numeroi: this.state.numero,
-            fechai: this.state.fecha,
-            clientei: this.state.cliente,
-            selectprods: this.state.prodductos_seleccionados
+            metodo2: 'insertarPostulacion',
+            numero_propiedad: this.state.numero,
+            mensaje: this.state.mensaje,
+            fecha: fi,
+            email: usuario
         })
         console.log(data);
-        fetch("/tarea10/server/index.php/country/1", {
+        fetch("api/index.php/propiedad/1", {
             method: "post",
             headers: { 'Content-Type': 'application/json' },
             body: data
         }).then((response) => {
-            this.props.handleChangeData();
+           // this.props.handleChangeData();
         }
         );
     }
-    handleUpdate() {
-        var data = JSON.stringify({
-            method: 'post',// numero: "", fecha: "", area: 0, cliente: '', density: 0,
-            numerom: this.state.numero,
-            fecham: this.state.fecha,
-            clientem: this.state.cliente
-            // selectprods: this.state.prodductos_seleccionados
-        })
-        console.log(data);
-        fetch("/tarea10/server/index.php/country/1", {
-            method: "post",
-            headers: { 'Content-Type': 'application/json' },
-            body: data
-        }).then((response) => {
-            this.props.handleChangeData();
-        }
-        );
-    }
-    handleDelete() {
-        fetch("/tarea10/server/index.php/country/1", {
-            method: "post",
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                method: 'delete',
-                numerom: this.state.numero
-            })
-        }).then((response) => {
-            this.props.handleChangeData();
-        }
-        );
-    }
-    handleFields(event) {
-        const target = event.target;
-        const value = target.value;
-        const name = target.name;
-        //alert(name)
-        this.setState({ [name]: value });
-        // this.setState({ numero: value });
-    }
-    handleFecha(event) {
-        var f = event.target.value;
-        // alert(f)
+
+
+
+    handleMensaje(event) {
+        var data = event.target.value;
         this.setState({
-            fecha: f
+            mensaje: data
         })
     }
 
-    handleInsertProd() {
-
-        var data = JSON.stringify({
-            method: 'insertarproducto',
-            cantidad: this.state.cp,
-            descripcion: this.state.dp,
-            valoru: this.state.vp
-        })
-        console.log(data);
-        fetch("/tarea10/server/index.php/country/1", {
-            method: "post",
-            headers: { 'Content-Type': 'application/json' },
-            body: data
-        }).then((response) => {
-            this.doreload();
-            //this.props.handleChangeData();
-        }
-        );
-    }
-    handleCP(event) {
-        var cp = event.target.value;
-        this.setState({
-            cp: cp
-        })
-    }
-
-    handleVP(event) {
-        var vp = event.target.value;
-        this.setState({
-            vp: vp
-        })
-    }
-    handleDP(event) {
-        var dp = event.target.value;
-        this.setState({
-            dp: dp
-        })
-    }
     render() {
         return (
             <div>
-                <h2>Detalle de la propiedad: {this.state.numero}</h2>
-                <Form >
-                    <FormGroup>
-                        <Label>Numero:</Label>
-                        <Input type="number" name="numero"
-                            value={this.state.numero} onChange={this.handleFields} />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label>Fecha:</Label>
-                        <Input type="date" name="fecha" id="exampleDate" placeholder="date placeholder"
-                            value={this.state.fecha}
-                            onChange={this.handleFecha}
-                        />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label>Cliente</Label>
-                        <Input type="text" name="cliente"
-                            value={this.state.cliente} onChange={this.handleFields} />
-                    </FormGroup>
-                    <Input type="hidden" name="id" value={this.state.id} />
-                    <FormGroup>
-
-                        <p><small>Monto total: {this.state.montototal}</small></p>
-                    </FormGroup>
-                   
-                </Form>
                 
+                <h2>Contacta al dueño del bien número: {this.state.numero}</h2>
+                <p>Contactar con el anunciante: {this.state.cliente}</p>
+                <Form >
+                    <FormGroup className="row">
+                        <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <Label htmlFor="nombre"><span></span>Mensaje:</Label>
+                            <Input type="textarea" className="form-control" name='nombre'
+                                placeholder="Mensaje" required onChange={this.handleMensaje} />
+                        </div>
+                    </FormGroup>
+                </Form>
                 <div>
-                    <Button onClick={this.handleInsert}>Agregar</Button>{' '}
-                    <Button onClick={this.handleUpdate}>Modificar</Button>{' '}
-                    <Button onClick={this.handleDelete}>Eliminar</Button>{' '}
+                    <Button onClick={this.handleInsert}>Enviar</Button>{' '}
                 </div>
-
-
             </div>
         )
     }

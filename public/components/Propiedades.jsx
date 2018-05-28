@@ -18,13 +18,12 @@ class Propiedades extends React.Component {
         super(props);
         this.state = {
             propiedades: [],
-            propiedades_aplicadas:[],
-            propiedad: [],
+            propiedades_aplicadas: [],
+            propiedad: null,
             tipo_usuario: -1,
         }
         this.handleReload = this.handleReload.bind(this);
-        this.handleAplicadas=this.handleAplicadas.bind(this);
-
+        this.handleAplicadas = this.handleAplicadas.bind(this);
         this.componentWillMount = this.componentWillMount.bind(this);
         this.handleChangePropiedad = this.handleChangePropiedad.bind(this);
         this.componentDidMount = this.componentDidMount.bind(this);
@@ -36,7 +35,7 @@ class Propiedades extends React.Component {
             })
             .then((data) => {
 
-                 console.log(data)
+                // console.log(data)
                 this.setState({ propiedades: data });
                 this.forceUpdate();
             })
@@ -48,7 +47,7 @@ class Propiedades extends React.Component {
             })
             .then((data) => {
 
-                 console.log(data)
+                //console.log(data)
                 this.setState({ propiedades_aplicadas: data });
                 this.forceUpdate();
             })
@@ -72,6 +71,32 @@ class Propiedades extends React.Component {
             propiedad: data
         })
     }
+    obtenerRender() {
+        if (this.state.propiedad) {
+            //console.log(this.state.propiedad);
+            return <Row>
+                <Col xs="5">
+                    <ListaPropiedadesDetallada propiedades={this.state.propiedades}
+                        propiedades_aplicadas={this.state.propiedades_aplicadas}
+                        handleChangePropiedad={this.handleChangePropiedad} />
+                </Col>
+                <Col xs="7">
+                    <FormPropiedad propiedad={this.state.propiedad}
+                        handleChangeData={this.handleChangeData} />
+                </Col>
+            </Row>
+        } else {
+            return <Row>
+                <Col xs="12">
+                    <ListaPropiedadesDetallada propiedades={this.state.propiedades}
+                        propiedades_aplicadas={this.state.propiedades_aplicadas}
+                        handleChangePropiedad={this.handleChangePropiedad} 
+                        
+                        />
+                </Col>
+            </Row>
+        }
+    }
     render() {
         var renderClass = <Home />;
         //if(localStorage){
@@ -80,18 +105,8 @@ class Propiedades extends React.Component {
                 renderClass = <Login />;
                 break;
             case "1": //usuario cliente
-                renderClass =
-                    <Row>
-                        <Col xs="5">
-                            <ListaPropiedadesDetallada propiedades={this.state.propiedades}
-                            propiedades_aplicadas={this.state.propiedades_aplicadas}
-                                handleChangePropiedad={this.handleChangePropiedad} />
-                        </Col>
-                        <Col xs="7">
-                            <FormPropiedad propiedad={this.state.propiedad}
-                                handleChangeData={this.handleChangeData} />
-                        </Col>
-                    </Row>
+                renderClass = this.state.propiedad? this.obtenerRender():this.obtenerRender();
+
                 break;
             case "2"://usuario interesado
                 renderClass = <Registrar />;
