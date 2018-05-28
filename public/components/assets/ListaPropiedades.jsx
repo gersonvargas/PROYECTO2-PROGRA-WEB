@@ -7,15 +7,15 @@ class ListaPropiedades extends React.Component {
     }
     handleDetails(e) {
         const index = e.currentTarget.getAttribute('data-item');
-        this.props.handleChangeCountry(this.props.countries[index]);
+        this.props.handleChangePropiedad(this.props.propiedades[index]);
     }
     render() {
-        if (this.props.countries.length > 0) {
-            const rows = this.props.countries.map((country, index) =>
+        if (this.props.propiedades.length > 0) {
+            const rows = this.props.propiedades.map((item, index) =>
                 <tr key={index} data-item={index} onClick={this.handleDetails}>
-                    <td>{country.numero}</td>
-                    <td>{country.fecha}</td>
-                    <td>{country.cliente}</td>
+                    <td>{item.TIPO_DISPONIBILIDAD}</td>
+                    <td>{item.FECHA_PUBLICACION}</td>
+                    <td>{item.TIPO_PROPIEDAD}</td>
                 </tr>);
             return (
                 <Table striped>

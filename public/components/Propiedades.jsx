@@ -18,29 +18,31 @@ class Propiedades extends React.Component {
         super(props);
         this.state = {
             propiedades: [],
-            propiedad:[]
+            propiedad: []
         }
-        this.handleReload=this.handleReload.bind(this);
+        this.handleReload = this.handleReload.bind(this);
         this.componentWillMount = this.componentWillMount.bind(this);
-        this.handleChangeCountry=this.handleChangeCountry.bind(this);
+        this.handleChangePropiedad = this.handleChangePropiedad.bind(this);
     }
     handleReload() {
         fetch('api/index.php/propiedad/1/?metodo=getpropiedades')
-        .then((response) => {
-            return response.json();
-        })
-        .then((data) => {
-            //console.log(data)
-            this.setState({ propiedades: data });
-            this.forceUpdate();
-        })
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                console.log(data)
+                this.setState({ propiedades: data });
+                this.forceUpdate();
+            })
     }
     componentWillMount() {
         this.handleReload();
     }
-    handleChangeCountry(data) {
+    handleChangePropiedad(data) {
         //console.log(data)
-        this.setState({ country: data })
+        this.setState({
+            propiedad: data
+        })
     }
     render() {
         return (
@@ -50,11 +52,12 @@ class Propiedades extends React.Component {
                 <Container>
                     <Row>
                         <Col xs="3">
-                            <ListaPropiedades countries={this.state.propiedades}
-                                handleChangeCountry={this.handleChangeCountry} />
+                            <ListaPropiedades propiedades={this.state.propiedades}
+                                handleChangePropiedad={this.handleChangePropiedad} />
                         </Col>
                         <Col xs="9">
-                            hola
+                        <FormPropiedad propiedad={this.state.propiedad}
+                        handleChangeData={this.handleChangeData} />
                         </Col>
                     </Row>
                 </Container>
