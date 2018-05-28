@@ -2,7 +2,7 @@ class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            api: 'http://localhost/proyecto2-progra-web/public/api/index.php',
+            api: 'api/index.php',
             email: '',
             password: '',
             login_correcto: false

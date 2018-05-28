@@ -34,6 +34,8 @@ class App extends React.Component {
         };
         this.handleLogin = this.handleLogin.bind(this);
         this.handleHome = this.handleHome.bind(this);
+        this.handlePropiedades = this.handlePropiedades.bind(this);
+        this.handleRegistrar=this.handleRegistrar.bind(this);
     }
 
     handleLogin() {
@@ -50,6 +52,14 @@ class App extends React.Component {
         localStorage.setItem("path", "home");
         this.forceUpdate();
     }
+    handlePropiedades() {
+        localStorage.setItem("path", "propiedad");
+        this.forceUpdate();
+    }
+    handleRegistrar() {
+        localStorage.setItem("path", "registrar");
+        this.forceUpdate();
+    }
 
     render() {
         var renderClass = <Home />;
@@ -57,6 +67,12 @@ class App extends React.Component {
         switch (localStorage.path) {
             case "login":
                 renderClass = <Login />;
+                break;
+            case "propiedad":
+                renderClass = <Propiedades />;
+                break;
+                case "registrar":
+                renderClass = <Registrar />;
                 break;
             default: break;
         }
@@ -81,6 +97,12 @@ class App extends React.Component {
                                 <NavItem>
                                     {LoginType}
                                 </NavItem>
+                                <NavItem>
+                                    <NavLink href="" onClick={this.handlePropiedades}>Propiedades</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink href="" onClick={this.handleRegistrar}>Registrarse</NavLink>
+                                </NavItem>
                             </Nav>
                         </Collapse>
                     </Navbar>
@@ -89,7 +111,7 @@ class App extends React.Component {
                 <div className="container">
                     {renderClass}
                 </div>
-                <Footer/>
+                <Footer />
             </div>
         )
     }
