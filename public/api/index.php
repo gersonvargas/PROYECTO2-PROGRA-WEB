@@ -267,10 +267,7 @@ class DBHandler {
             } else if ($_POST['method'] == 'put') {
                 return $this->put($_POST);
             } else if ($_POST['method'] == 'insertarPropiedad') {
-                $myArr = array("John", "Mary", "Peter", "Sally");
-                $myJSON = json_encode($_POST['form']);
-                 
-                echo $myJSON;
+               return Propiedad::insertarPropiedad($_POST);
             }
         } catch (Exception $e) {
             echo "Failed: " . $e->getMessage();
