@@ -29,6 +29,7 @@ class App extends React.Component {
         this.handleHome = this.handleHome.bind(this);
         this.handlePropiedades = this.handlePropiedades.bind(this);
         this.handleRegistrar = this.handleRegistrar.bind(this);
+        this.handleAbout = this.handleAbout.bind(this);
     }
 
     handleLogin() {
@@ -59,7 +60,10 @@ class App extends React.Component {
         localStorage.setItem("path", "registrar");
         this.forceUpdate();
     }
-
+    handleAbout() {
+        localStorage.setItem("path", "about");
+        this.forceUpdate();
+    }
     render() {
         var renderClass = <Home />;
         //if(localStorage){
@@ -72,6 +76,9 @@ class App extends React.Component {
                 break;
             case "registrar":
                 renderClass = <Registrar />;
+                break;
+                case "about":
+                renderClass = <About />;
                 break;
             default:
                 break;
@@ -105,6 +112,9 @@ class App extends React.Component {
                                 </NavItem>
                                 <NavItem>
                                     {Registrarse}
+                                </NavItem>
+                                <NavItem>
+                                <NavLink href="" onClick={this.handleAbout}>Sobre nosotros</NavLink>
                                 </NavItem>
                             </Nav>
                         </Collapse>
