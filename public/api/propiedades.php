@@ -243,6 +243,9 @@ class Propiedad {
                  $stmt = $dbh->prepare("DELETE FROM PROPIEDAD where NUMERO_PROPIEDAD=:numero");
                  $stmt->bindParam(':numero', $numero);
                  $stmt->execute();
+                 $stmt2 = $dbh->prepare("DELETE FROM PROP_APLICADAS where PROPIEDAD=:numero");
+                 $stmt2->bindParam(':numero', $numero);
+                 $stmt2->execute();
                 echo 'Elinado correctamente.';
          } catch (Exception $e) {
              echo "Failed: " . $e->getMessage();

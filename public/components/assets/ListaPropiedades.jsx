@@ -54,8 +54,8 @@ class ListaPropiedades extends React.Component {
         this.props.handleChangePropiedad(propiedad);
     }
     handleDetails2(e) {
-        const index = e.currentTarget.getAttribute('data-item');
-        var propiedad = this.obtenerPropiedad(index);
+        const index2 = e.currentTarget.getAttribute('data-item');
+        var propiedad = this.obtenerPropiedad(index2);
         this.props.handleChangePropiedad(propiedad);
         this.handleVerMensajes();
     }
@@ -115,7 +115,7 @@ class ListaPropiedades extends React.Component {
                             onClick={this.handleDetails}>Administrar
                         </button>
                         <button type="button" class="btn btn-sm btn-info ml-2"
-                            key={index} data-item={item.NUMERO_PROPIEDAD}
+                            key={item.NUMERO_PROPIEDAD} data-item={item.NUMERO_PROPIEDAD}
                             onClick={this.handleDetails2}>
                             {this.state.vermensaje ? 'Ver Postulaciones' : 'Ocultar Postulaciones'} <span class="badge badge-light">
                                 {this.obtenerPostulaciones(item.NUMERO_PROPIEDAD)}

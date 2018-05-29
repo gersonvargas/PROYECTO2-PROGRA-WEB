@@ -53,7 +53,7 @@ class Propiedades extends React.Component {
             })
             .then((data) => {
 
-               // console.log('Mensajes ' + data)
+                // console.log('Mensajes ' + data)
                 this.setState({ mensajes: data });
                 this.forceUpdate();
             })
@@ -78,8 +78,6 @@ class Propiedades extends React.Component {
             //api/index.php/propiedad/1/?metodo=obtenerPropiedadesUsuario&email=gersonvargas@gmail.com
             this.handleReload('?metodo=obtenerPropiedadesUsuario&email=' + this.state.email_usuario);
         }
-
-
         this.handleAplicadas();
     }
     componentWillMount() {
@@ -93,12 +91,12 @@ class Propiedades extends React.Component {
     }
     handleVerMensajes(value) {
         if (this.state.propiedad) {
-            this.handleListaMensajes('?metodo=obtenerMensajesPropiedad&propiedad=' + this.state.propiedad.NUMERO_PROPIEDAD);          
+            this.handleListaMensajes('?metodo=obtenerMensajesPropiedad&propiedad=' + this.state.propiedad.NUMERO_PROPIEDAD);
         }
         this.setState({
             ver_mensajes: value
         });
-        
+
     }
     obtenerRender() {
         if (this.state.propiedad) {
