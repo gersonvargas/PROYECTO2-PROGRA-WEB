@@ -6,7 +6,6 @@ class Footer extends React.Component {
 
         return (
             <div className="color_footer">
-               
                 <div className="footer-copyright py-3 text-center">
                    UNA 2018 © Copyright
                 </div>

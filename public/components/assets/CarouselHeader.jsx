@@ -70,7 +70,7 @@ class CarouselHeader extends React.Component {
           onExited={this.onExited}
           key={item.src}
         >
-          <img src={item.src} alt={item.altText}  style={{width:"100%",height:"20%"}} />
+          <img src={item.src} alt={item.altText} className="imgCarou" />
           <CarouselCaption captionText={item.caption} captionHeader={item.caption} />
         </CarouselItem>
       );

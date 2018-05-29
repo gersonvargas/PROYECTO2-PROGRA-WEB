@@ -116,7 +116,7 @@ class Propiedades extends React.Component {
         }
         return (
             <div className="Home">
-                <h1 className='text-center'>Propiedades disponibles:</h1>
+                <h1>Propiedades disponibles</h1>
                 <hr />
                 <Container>
                     {renderClass}

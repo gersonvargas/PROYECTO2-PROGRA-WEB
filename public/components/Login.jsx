@@ -17,7 +17,6 @@ class Login extends React.Component {
         this.setState({
             email: correo
         })
-
     }
 
     handlePassword(event) {
@@ -57,9 +56,11 @@ class Login extends React.Component {
         }
 
         return (
-            <div>
+            <div className="loginArea">
                 <div className="card col-md-10">
-                    <div className="card-header h2">Login</div>
+                    <div className="card-header h2">Iniciar sesión
+                        <img src='images/login.png' alt="Iniciar sesión" className="loginImg" />
+                    </div>
                     <div className="card-body text-dark">
                         <form>
                             <div className="form-group">
@@ -76,11 +77,10 @@ class Login extends React.Component {
                                         onChange={this.handlePassword} />
                                 </div>
                             </div>
-                            <button type="button" className="btn btn-primary" id="password" placeholder="Password"
+                            <button type="button" className="btn btn-primary"
                                 onClick={this.login}>
-                                Login
+                                Iniciar sesión
                             </button>
-                            <small><a href="" >Or create an account</a></small>
                         </form>
                     </div>
                 </div>

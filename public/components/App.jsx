@@ -21,17 +21,10 @@ var ModalHeader = Reactstrap.ModalHeader;
 var ModalBody = Reactstrap.ModalBody;
 var ModalFooter = Reactstrap.ModalFooter;
 
-
-
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            facturas: [],
-            factura: [],
-            regions: [],
-            region: []
-        };
+        this.state = {};
         this.handleLogin = this.handleLogin.bind(this);
         this.handleHome = this.handleHome.bind(this);
         this.handlePropiedades = this.handlePropiedades.bind(this);
@@ -52,15 +45,16 @@ class App extends React.Component {
         localStorage.setItem("path", "home");
         this.forceUpdate();
     }
+
     handlePropiedades() {
         if (localStorage.loginUser !== 'NULL') {
-
             localStorage.setItem("path", "propiedad");
         } else {
             localStorage.setItem("path", "login");
         }
         this.forceUpdate();
     }
+
     handleRegistrar() {
         localStorage.setItem("path", "registrar");
         this.forceUpdate();
@@ -83,15 +77,16 @@ class App extends React.Component {
                 break;
         }
 
-        var LoginType = <NavLink href="" onClick={this.handleLogin}>Login</NavLink>;
+        var LoginType = <NavLink href="" onClick={this.handleLogin}>Iniciar sesión</NavLink>;
+        var Registrarse = <NavLink href="" onClick={this.handleRegistrar}>Registrarse</NavLink>;
         if (localStorage.loginUser && localStorage.loginUser !== 'NULL') {
             var currentUser = JSON.parse(localStorage.loggedUser).USERNAME;
-            var LoginType =
+            LoginType =
                 <NavLink href="" onClick={this.handleLogin}>
-                    Logout: {currentUser}
+                    Cerrar sesión: {currentUser}
                 </NavLink>;
+            Registrarse = '';
         }
-        //}
         return (
             <div>
                 <header>
@@ -99,20 +94,22 @@ class App extends React.Component {
                         <NavbarBrand href="" onClick={this.handleHome}>Bienes Raíces</NavbarBrand>
                         <NavbarToggler onClick={this.toggle} />
                         <Collapse isOpen={this.state.isOpen} navbar>
-                            <Nav className="ml-left" navbar>
+                            <Nav navbar>
+                                <NavItem>
+                                    <NavLink href="" onClick={this.handlePropiedades}>Propiedades</NavLink>
+                                </NavItem>
+                            </Nav>
+                            <Nav navbar>
                                 <NavItem>
                                     {LoginType}
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink href="" onClick={this.handlePropiedades}>Propiedades</NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink href="" onClick={this.handleRegistrar}>Registrarse</NavLink>
+                                    {Registrarse}
                                 </NavItem>
                             </Nav>
                         </Collapse>
                     </Navbar>
-                   
+
                 </header>
 
                 <div className="container">

@@ -9,21 +9,12 @@ class CardDet extends React.Component {
   }
   render() {
     return (
-      <div className="card m-3">
+      <div className="card m-3 cardCustom">
         <div className="card-body">
           <h5 className="card-title">{this.state.company_name}</h5>
           <p className="card-text">
-            <img className="card-img-top img-fluid rounded" src={this.state.company_logo} alt="Card image cap" />
-
+            <img className="card-img-top img-fluid rounded cardImg" src={this.state.company_logo} alt="Card image cap" />
           </p>
-        </div>
-        <div className="card-footer">
-          <small className="text-muted">
-
-            <a className='btn btn-primary' target="_blank" href={this.state.company_url}> Visit us
-                <img className="rounded ml-2" src='icons/lupa.png' alt="Card image cap" />
-            </a>
-          </small>
         </div>
       </div>
     );

@@ -1,4 +1,3 @@
-
 var Form = Reactstrap.Form;
 var Button = Reactstrap.Button;
 var FormGroup = Reactstrap.FormGroup;
@@ -20,8 +19,7 @@ class Registrar extends React.Component {
             provincia: null,
             direccion: null,
             propiedad: null
-
-        }
+        };
         this.handleTipoUsuario = this.handleTipoUsuario.bind(this);
         this.handleNombre = this.handleNombre.bind(this);
         this.handleGenero = this.handleGenero.bind(this);
@@ -35,7 +33,7 @@ class Registrar extends React.Component {
         this.handleEmail = this.handleEmail.bind(this);
     }
     componentWillMount() {
-        document.title = 'Register'
+        document.title = 'Registrarse'
     }
     handleInsertUsuario(event) {
         event.preventDefault();
@@ -154,83 +152,76 @@ class Registrar extends React.Component {
     }
     render() {
         return (
-
-            <div className="row">
-                <div className="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-                    {/*<img src={register_img} alt="Register"/>*/}
-                    <h1> Registro</h1>
-                    <img src='images/register.png' alt="Register" />
-                    <p>Al registrase a nuestro sitio web usted obtendrá múltiples beneficios referente
+            <div className="loginArea">
+                <div className="card col-md-10">
+                    <div className="card-header h2">
+                        Registrarse
+                        <img src='images/register.png' alt="Registro" className="registerImg" />
+                    </div>
+                    <div className="infoRegister">
+                        Al registrase a nuestro sitio web usted obtendrá múltiples beneficios referente
                         a la casa que siempre ha querido, podrás analizar diferentes opciones de compra o alquiler
                         que se ofrecen y ser postulantes de las mismas directamente.
 
                         Los usuarios tendrán múltiple opciones de filtrado según sus necesidades o
                         su áreas de búsqueda, lo que le permite tener opciones mas específicas
                         acorde a su experiencia y estudios.
-                    </p>
-
-                </div>
-                <div className="col-xs-12 col-sm-12 col-md-6 col-lg-8">
-                    <div className="register text-center">
-
+                    </div>
+                    <div className="card-body text-dark">
                         <form className="register-form" onSubmit={this.handleInsertUsuario}>
-                            <fieldset className="scheduler-border">
-                                <legend className="scheduler-border">Registrar</legend>
-                                
-                                    <FormGroup className="row">
-                                        <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                            <Input type="radio" className='' id="cliente" 
-                                             name="cliente" value='1' onClick={this.handleTipoUsuario} />
-                                            <Label htmlFor="cliente"><span>Cliente</span></Label>
-                                        </div>
-                                        <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-left">
-                                            <Input type="radio" id="Interesado" name="cliente" value='2' onClick={this.handleTipoUsuario} />
-                                            <Label htmlFor="Interesado"><span></span>Interesado</Label>
-                                        </div>
-                                    </FormGroup>
-                               
+                            <div className="form-group">
+                                    <Label htmlFor="cliente"><span></span>Tipo de usuario</Label>
+                                    <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <Input type="radio" className='' id="cliente"
+                                               name="cliente" value='1' onClick={this.handleTipoUsuario} />
+                                        <Label htmlFor="cliente"><span>Cliente</span></Label>
+                                    </div>
+                                    <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <Input type="radio" id="Interesado" name="cliente" value='2' onClick={this.handleTipoUsuario} />
+                                        <Label htmlFor="Interesado"><span></span>Interesado</Label>
+                                    </div>
+                            </div>
                                 <FormGroup className="row">
                                     <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                         <Label htmlFor="nombre"><span></span>Nombre completo</Label>
                                         <Input className="form-control" name='nombre'
-                                            type="text" placeholder="Nombre completo" required onChange={this.handleNombre} />
+                                               type="text" placeholder="Nombre completo" required onChange={this.handleNombre} />
                                     </div>
                                 </FormGroup>
-
                                 <FormGroup className="row">
                                     <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                         <Label htmlFor="correo"><span></span>Correo</Label>
                                         <Input className="form-control" name='correo' type="email" placeholder="Email" required
-                                            onChange={this.handleEmail} />
+                                               onChange={this.handleEmail} />
                                     </div>
                                 </FormGroup>
-
                                 <FormGroup className="row">
                                     <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                         <Label htmlFor="telefono"><span></span>Teléfono</Label>
                                         <Input className="form-control" name='telefono' type="tel"
-                                            placeholder="Teléfono de contacto" required onChange={this.handleTelefono} />
+                                               placeholder="Teléfono de contacto" required onChange={this.handleTelefono} />
                                     </div>
                                 </FormGroup>
                                 <FormGroup className="row">
                                     <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                         <Label htmlFor="password1"><span></span>Contraseña</Label>
                                         <Input className="form-control" name='password1' type="password"
-                                            placeholder="Password" required onChange={this.handlePass} />
+                                               placeholder="Contraseña" required onChange={this.handlePass} />
                                     </div>
                                 </FormGroup>
                                 <FormGroup className="row">
                                     <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                         <Label htmlFor="password2"><span></span>Repita la Contraseña</Label>
                                         <Input className="form-control" name='password2' type="password"
-                                            placeholder="Confirm Password" required onChange={this.handleValidarPass} />
+                                               placeholder="Confirme la contraseña" required onChange={this.handleValidarPass} />
                                     </div>
                                 </FormGroup>
                                 <FormGroup className="row">
                                     <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <Label htmlFor="province"><span></span>Provincia</Label>
                                         <select className="form-control" id="province" name="province" required
-                                            onChange={this.handleProvincia}>
-                                            <option value="">Provincia</option>
+                                                onChange={this.handleProvincia}>
+                                            <option value="">Seleccione</option>
                                             <option value="San Jose">San José</option>
                                             <option value="Alajuela">Alajuela</option>
                                             <option value="Heredia">Heredia</option>
@@ -242,11 +233,12 @@ class Registrar extends React.Component {
                                     </div>
                                 </FormGroup>
                                 {this.state.tipo_usuario == '1' ?
-                                    <div className="row">
+                                    <FormGroup className="row">
                                         <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <Label htmlFor="province"><span></span>Tipo de Propiedad</Label>
                                             <select className="form-control" id="province" name="province" required
-                                                onChange={this.handlePropiedad}>
-                                                <option value="">Propiedad Requerida</option>
+                                                    onChange={this.handlePropiedad}>
+                                                <option value="">Seleccione</option>
                                                 <option value="Vivienda">VIVIENDA</option>
                                                 <option value="Apartamento">APARTAMENTO</option>
                                                 <option value="Edificio Comercial">EDIFICIO COMERCIAL</option>
@@ -254,27 +246,22 @@ class Registrar extends React.Component {
                                                 <option value="Otro">Otro</option>
                                             </select>
                                         </div>
-                                    </div> : ''
+                                    </FormGroup> : ''
                                 }
                                 <FormGroup className="row">
-
                                     <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                         <Label htmlFor="nombre"><span></span>Dirección exacta</Label>
                                         <Input type="textarea" className="form-control" name='nombre'
-                                            placeholder="Dirección" required onChange={this.handleDireccionExacta} />
+                                               placeholder="Dirección" required onChange={this.handleDireccionExacta} />
                                     </div>
                                 </FormGroup>
-                                <FormGroup className="row">
-                                    <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <Button className="btn btn-primary" type="submit" name="finalize">Registrar</Button>
-                                    </div>
-                                </FormGroup>
-                            </fieldset>
+                                <button type="submit" className="btn btn-primary">
+                                    Registrar
+                                </button>
                         </form>
                     </div>
                 </div>
             </div>
-
         );
     }
 }

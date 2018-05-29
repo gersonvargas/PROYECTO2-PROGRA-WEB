@@ -1,0 +1,65 @@
+@font-face {
+    font-family: myFirstFont;
+    src: url(fontawesome-webfont.woff);
+}
+
+body{
+    background: lightgoldenrodyellow;
+    font-family: myFirstFont;
+}
+
+.loginArea{
+    margin-left: 100px;
+    margin-top: 5%;
+}
+
+.loginArea .card-header{
+    background: white;
+}
+
+.carouselCustom{
+    margin: 2%;
+}
+
+.imgCarou{
+    height: 500px;
+    width: 100%;
+}
+
+.Home h1{
+    margin-top: 2%;
+}
+
+.cardImg{
+    height: 275px;
+    width: 275px;
+}
+
+.cardCustom{
+    border: darkgrey solid 1px !important;
+    background: darkseagreen;
+}
+
+.color_footer{
+    background: #373C42;
+    color: white;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 60px;
+    width: 100%;
+    z-index: 10000;
+}
+
+.container{
+    margin-bottom: 100px !important;
+}
+
+
+.registerImg, .loginImg{
+    float: right;
+}
+
+.infoRegister{
+    margin: 1%;
+}
