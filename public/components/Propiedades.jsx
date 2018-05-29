@@ -19,17 +19,22 @@ class Propiedades extends React.Component {
         this.state = {
             propiedades: [],
             propiedades_aplicadas: [],
+            mensajes: [],
             propiedad: null,
-            tipo_usuario: -1,
+            ver_mensajes: false,
+            tipo_usuario: JSON.parse(localStorage.loggedUser).TIPO_USUARIO,
+            email_usuario: JSON.parse(localStorage.loggedUser).EMAIL,
         }
         this.handleReload = this.handleReload.bind(this);
         this.handleAplicadas = this.handleAplicadas.bind(this);
         this.componentWillMount = this.componentWillMount.bind(this);
         this.handleChangePropiedad = this.handleChangePropiedad.bind(this);
-        this.componentDidMount = this.componentDidMount.bind(this);
+        this.handleAll = this.handleAll.bind(this);
+        this.handleVerMensajes = this.handleVerMensajes.bind(this);
+        this.handleListaMensajes = this.handleListaMensajes.bind(this);
     }
-    handleReload() {
-        fetch('api/index.php/propiedad/1/?metodo=getpropiedades')
+    handleReload(params) {
+        fetch('api/index.php/propiedad/1/' + params)
             .then((response) => {
                 return response.json();
             })
@@ -37,6 +42,19 @@ class Propiedades extends React.Component {
 
                 // console.log(data)
                 this.setState({ propiedades: data });
+                this.forceUpdate();
+            })
+    }
+    //ListaMensajes
+    handleListaMensajes(params) {
+        fetch('api/index.php/propiedad/1/' + params)
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+
+               // console.log('Mensajes ' + data)
+                this.setState({ mensajes: data });
                 this.forceUpdate();
             })
     }
@@ -52,24 +70,35 @@ class Propiedades extends React.Component {
                 this.forceUpdate();
             })
     }
-    componentWillMount() {
-        this.handleReload();
-        this.handleAplicadas();
-        // var currentUser = JSON.parse(localStorage.loggedUser).USERNAME;
-        var user = JSON.parse(localStorage.loggedUser);
-        this.setState({
-            tipo_usuario: user.TIPO_USUARIO
-        });
+    handleAll() {
+        if (this.state.tipo_usuario == 1) {
+            this.handleReload('?metodo=getpropiedades');
+        }
+        if (this.state.tipo_usuario == 2) {
+            //api/index.php/propiedad/1/?metodo=obtenerPropiedadesUsuario&email=gersonvargas@gmail.com
+            this.handleReload('?metodo=obtenerPropiedadesUsuario&email=' + this.state.email_usuario);
+        }
 
+
+        this.handleAplicadas();
     }
-    componentDidMount() {
-        console.log(this.state.tipo_usuario)
+    componentWillMount() {
+        this.handleAll();
     }
+
     handleChangePropiedad(data) {
-        //console.log(data)
         this.setState({
             propiedad: data
         })
+    }
+    handleVerMensajes(value) {
+        if (this.state.propiedad) {
+            this.handleListaMensajes('?metodo=obtenerMensajesPropiedad&propiedad=' + this.state.propiedad.NUMERO_PROPIEDAD);          
+        }
+        this.setState({
+            ver_mensajes: value
+        });
+        
     }
     obtenerRender() {
         if (this.state.propiedad) {
@@ -90,12 +119,32 @@ class Propiedades extends React.Component {
                 <Col xs="12">
                     <ListaPropiedadesDetallada propiedades={this.state.propiedades}
                         propiedades_aplicadas={this.state.propiedades_aplicadas}
-                        handleChangePropiedad={this.handleChangePropiedad} 
-                        
-                        />
+                        handleChangePropiedad={this.handleChangePropiedad}
+                    />
                 </Col>
             </Row>
         }
+    }
+    obtenerRenderInteresado() {
+        return <Row>
+            <Col xs="5">
+
+                <ListaPropiedades propiedades={this.state.propiedades}
+                    propiedades_aplicadas={this.state.propiedades_aplicadas}
+                    handleChangePropiedad={this.handleChangePropiedad}
+                    handleVerMensajes={this.handleVerMensajes}
+                />
+            </Col>
+            <Col xs="7">
+                {this.state.ver_mensajes ?
+                    <ListaMensajes mensajes={this.state.mensajes} />
+                    :
+                    <FormInteresadoPropiedad propiedad={this.state.propiedad ? this.state.propiedad : []}
+                        handleChangeData={this.handleChangeData}
+                        handleAll={this.handleAll} />
+                }
+            </Col>
+        </Row>
     }
     render() {
         var renderClass = <Home />;
@@ -105,11 +154,11 @@ class Propiedades extends React.Component {
                 renderClass = <Login />;
                 break;
             case "1": //usuario cliente
-                renderClass = this.state.propiedad? this.obtenerRender():this.obtenerRender();
+                renderClass = this.state.propiedad ? this.obtenerRender() : this.obtenerRender();
 
                 break;
             case "2"://usuario interesado
-                renderClass = <Registrar />;
+                renderClass = this.obtenerRenderInteresado();
                 break;
             default:
                 break;

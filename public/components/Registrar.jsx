@@ -56,6 +56,13 @@ class Registrar extends React.Component {
             headers: { 'Content-Type': 'application/json' },
             body: data
         }).then((response) => {
+            if(response.statusText=='OK'){
+                document.getElementById('alerta').innerHTML=
+                '<p class="alert alert-success"><small>Proceso completado correctamente</small><p>';
+            }else{
+                document.getElementById('alerta').innerHTML=
+                '<p class="alert alert-danger">'+response.statusText+'<p>';
+            }
             //this.props.handleChangeData();
         }
         );
@@ -170,95 +177,99 @@ class Registrar extends React.Component {
                     <div className="card-body text-dark">
                         <form className="register-form" onSubmit={this.handleInsertUsuario}>
                             <div className="form-group">
-                                    <Label htmlFor="cliente"><span></span>Tipo de usuario</Label>
-                                    <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <Input type="radio" className='' id="cliente"
-                                               name="cliente" value='1' onClick={this.handleTipoUsuario} />
-                                        <Label htmlFor="cliente"><span>Cliente</span></Label>
-                                    </div>
-                                    <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <Input type="radio" id="Interesado" name="cliente" value='2' onClick={this.handleTipoUsuario} />
-                                        <Label htmlFor="Interesado"><span></span>Interesado</Label>
-                                    </div>
+                                <Label htmlFor="cliente"><span></span>Tipo de usuario</Label>
+                                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <Input type="radio" className='' id="cliente"
+                                        name="cliente" value='1' onClick={this.handleTipoUsuario} />
+                                    <Label htmlFor="cliente"><span>Cliente</span></Label>
+                                </div>
+                                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <Input type="radio" id="Interesado" name="cliente" value='2' onClick={this.handleTipoUsuario} />
+                                    <Label htmlFor="Interesado"><span></span>Interesado</Label>
+                                </div>
                             </div>
+                            <FormGroup className="row">
+                                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <Label htmlFor="nombre"><span></span>Nombre completo</Label>
+                                    <Input className="form-control" name='nombre'
+                                        type="text" placeholder="Nombre completo" required onChange={this.handleNombre} />
+                                </div>
+                            </FormGroup>
+                            <FormGroup className="row">
+                                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <Label htmlFor="correo"><span></span>Correo</Label>
+                                    <Input className="form-control" name='correo' type="email" placeholder="Email" required
+                                        onChange={this.handleEmail} />
+                                </div>
+                            </FormGroup>
+                            <FormGroup className="row">
+                                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <Label htmlFor="telefono"><span></span>Teléfono</Label>
+                                    <Input className="form-control" name='telefono' type="tel"
+                                        placeholder="Teléfono de contacto" required onChange={this.handleTelefono} />
+                                </div>
+                            </FormGroup>
+                            <FormGroup className="row">
+                                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <Label htmlFor="password1"><span></span>Contraseña</Label>
+                                    <Input className="form-control" name='password1' type="password"
+                                        placeholder="Contraseña" required onChange={this.handlePass} />
+                                </div>
+                            </FormGroup>
+                            <FormGroup className="row">
+                                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <Label htmlFor="password2"><span></span>Repita la Contraseña</Label>
+                                    <Input className="form-control" name='password2' type="password"
+                                        placeholder="Confirme la contraseña" required onChange={this.handleValidarPass} />
+                                </div>
+                            </FormGroup>
+                            <FormGroup className="row">
+                                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <Label htmlFor="province"><span></span>Provincia</Label>
+                                    <select className="form-control" id="province" name="province" required
+                                        onChange={this.handleProvincia}>
+                                        <option value="">Seleccione</option>
+                                        <option value="San Jose">San José</option>
+                                        <option value="Alajuela">Alajuela</option>
+                                        <option value="Heredia">Heredia</option>
+                                        <option value="Cartago">Cartago</option>
+                                        <option value="Guanacaste">Guanacaste</option>
+                                        <option value="Puntarenas">Puntarenas</option>
+                                        <option value="Limon">Limón</option>
+                                    </select>
+                                </div>
+                            </FormGroup>
+                            {this.state.tipo_usuario == '1' ?
                                 <FormGroup className="row">
                                     <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <Label htmlFor="nombre"><span></span>Nombre completo</Label>
-                                        <Input className="form-control" name='nombre'
-                                               type="text" placeholder="Nombre completo" required onChange={this.handleNombre} />
-                                    </div>
-                                </FormGroup>
-                                <FormGroup className="row">
-                                    <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <Label htmlFor="correo"><span></span>Correo</Label>
-                                        <Input className="form-control" name='correo' type="email" placeholder="Email" required
-                                               onChange={this.handleEmail} />
-                                    </div>
-                                </FormGroup>
-                                <FormGroup className="row">
-                                    <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <Label htmlFor="telefono"><span></span>Teléfono</Label>
-                                        <Input className="form-control" name='telefono' type="tel"
-                                               placeholder="Teléfono de contacto" required onChange={this.handleTelefono} />
-                                    </div>
-                                </FormGroup>
-                                <FormGroup className="row">
-                                    <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <Label htmlFor="password1"><span></span>Contraseña</Label>
-                                        <Input className="form-control" name='password1' type="password"
-                                               placeholder="Contraseña" required onChange={this.handlePass} />
-                                    </div>
-                                </FormGroup>
-                                <FormGroup className="row">
-                                    <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <Label htmlFor="password2"><span></span>Repita la Contraseña</Label>
-                                        <Input className="form-control" name='password2' type="password"
-                                               placeholder="Confirme la contraseña" required onChange={this.handleValidarPass} />
-                                    </div>
-                                </FormGroup>
-                                <FormGroup className="row">
-                                    <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <Label htmlFor="province"><span></span>Provincia</Label>
+                                        <Label htmlFor="province"><span></span>Tipo de Propiedad</Label>
                                         <select className="form-control" id="province" name="province" required
-                                                onChange={this.handleProvincia}>
+                                            onChange={this.handlePropiedad}>
                                             <option value="">Seleccione</option>
-                                            <option value="San Jose">San José</option>
-                                            <option value="Alajuela">Alajuela</option>
-                                            <option value="Heredia">Heredia</option>
-                                            <option value="Cartago">Cartago</option>
-                                            <option value="Guanacaste">Guanacaste</option>
-                                            <option value="Puntarenas">Puntarenas</option>
-                                            <option value="Limon">Limón</option>
+                                            <option value="Vivienda">VIVIENDA</option>
+                                            <option value="Apartamento">APARTAMENTO</option>
+                                            <option value="Edificio Comercial">EDIFICIO COMERCIAL</option>
+                                            <option value="Bodega">BODEGA</option>
+                                            <option value="Otro">Otro</option>
                                         </select>
                                     </div>
-                                </FormGroup>
-                                {this.state.tipo_usuario == '1' ?
-                                    <FormGroup className="row">
-                                        <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                            <Label htmlFor="province"><span></span>Tipo de Propiedad</Label>
-                                            <select className="form-control" id="province" name="province" required
-                                                    onChange={this.handlePropiedad}>
-                                                <option value="">Seleccione</option>
-                                                <option value="Vivienda">VIVIENDA</option>
-                                                <option value="Apartamento">APARTAMENTO</option>
-                                                <option value="Edificio Comercial">EDIFICIO COMERCIAL</option>
-                                                <option value="Bodega">BODEGA</option>
-                                                <option value="Otro">Otro</option>
-                                            </select>
-                                        </div>
-                                    </FormGroup> : ''
-                                }
-                                <FormGroup className="row">
-                                    <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                        <Label htmlFor="nombre"><span></span>Dirección exacta</Label>
-                                        <Input type="textarea" className="form-control" name='nombre'
-                                               placeholder="Dirección" required onChange={this.handleDireccionExacta} />
-                                    </div>
-                                </FormGroup>
-                                <button type="submit" className="btn btn-primary">
-                                    Registrar
+                                </FormGroup> : ''
+                            }
+                            <FormGroup className="row">
+                                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <Label htmlFor="nombre"><span></span>Dirección exacta</Label>
+                                    <Input type="textarea" className="form-control" name='nombre'
+                                        placeholder="Dirección" required onChange={this.handleDireccionExacta} />
+                                </div>
+                            </FormGroup>
+                            <div id='alerta'  role="alert">
+                                ...
+                            </div>
+                            <button type="submit" className="btn btn-primary">
+                                Registrar
                                 </button>
                         </form>
+
                     </div>
                 </div>
             </div>

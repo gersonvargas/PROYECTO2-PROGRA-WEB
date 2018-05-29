@@ -236,6 +236,13 @@ class DBHandler {
             }
             else if ($metodo == 'obtenerTodasAplicadas') {
                 return Propiedad::obtenerTodasAplicadas();
+            }else if ($metodo == 'obtenerPropiedadesUsuario') {
+                $user = $_GET['email'];
+                return Propiedad::obtenerPropiedadesUsuario($user);
+            }//obtenerMensajesPropiedad
+            else if ($metodo == 'obtenerMensajesPropiedad') {
+                $propiedad = $_GET['propiedad'];
+                return Propiedad::obtenerMensajesPropiedad($propiedad);
             }
         }
     }
@@ -258,7 +265,11 @@ class DBHandler {
 
     function delete($data) {
         try {
-            $this->eliminarfactura($data);
+            $metodo = $data['metodo2'];
+            if($metodo=='eliminarPropiedad'){
+                $numero=$data['numero_propiedad'];
+                Propiedad::eliminarPropiedad($numero);
+            }
         } catch (Exception $e) {
             $dbh->rollBack();
             echo "Failed: " . $e->getMessage();
@@ -277,7 +288,9 @@ class DBHandler {
                 return $this->put($_POST);
             } else if ($_POST['method'] == 'insertarPropiedad') {
                return Propiedad::insertarPropiedad($_POST);
-            } 
+            }else if ($_POST['method'] == 'modificarPropiedad') {
+                return Propiedad::modificarPropiedad($_POST);
+             } 
             
         } catch (Exception $e) {
             echo "Failed: " . $e->getMessage();
