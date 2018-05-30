@@ -44,7 +44,10 @@ class Login extends React.Component {
                     this.forceUpdate();
                 } else {
                     localStorage.setItem("loginUser", 'NULL');
-                    alert('Credenciales incorrectas, intente de nuevo.');
+                    document.getElementById('alerta').innerHTML =
+                        '<p class="alert alert-danger"><small>Credenciales incorrectas, intente de nuevo</small><p>';
+                    document.body.scrollTop = 0; // For Safari
+                    document.documentElement.scrollTop = 0; //
                 }
             })
     }
@@ -61,6 +64,7 @@ class Login extends React.Component {
                     <div className="card-header h2">Iniciar sesión
                         <img src='images/login.png' alt="Iniciar sesión" className="loginImg" />
                     </div>
+                    <div id='alerta' role="alert"></div>
                     <div className="card-body text-dark">
                         <form>
                             <div className="form-group">

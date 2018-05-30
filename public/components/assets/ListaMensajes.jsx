@@ -45,7 +45,7 @@ class ListaMensajes extends React.Component {
                 </div>
             );
         }else{
-          return  <p>La propiedad seleccionada no tiene mensajes!</p>
+          return  <p>La propiedad seleccionada no tiene mensajes.</p>
         }
         
     }

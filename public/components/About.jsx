@@ -13,7 +13,6 @@ class About extends React.Component {
                 
                         <div className='col-md-6 mt-3'>
                             <h1>Nuestro sitio:</h1>
-                            <p><small>Look it, find it...</small></p>
                             <p>Fundado el 20 de mayo de 2018, nuestro sitio brinda 
                                 el servicio de bienes raíces, una fuente confiable, en donde puede encontrar
                                 su casa, apartamento sonñado.</p>

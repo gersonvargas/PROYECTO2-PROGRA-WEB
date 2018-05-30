@@ -16,6 +16,7 @@ class Registrar extends React.Component {
             email: null,
             telefono: null,
             password: null,
+            password2: null,
             provincia: null,
             direccion: null,
             propiedad: null
@@ -32,41 +33,71 @@ class Registrar extends React.Component {
         this.handleTelefono = this.handleTelefono.bind(this);
         this.handleEmail = this.handleEmail.bind(this);
     }
+
     componentWillMount() {
         document.title = 'Registrarse'
     }
+
     handleInsertUsuario(event) {
         event.preventDefault();
+        if (this.state.tipo_usuario == "-1") {
+            document.getElementById('alerta').innerHTML =
+                '<p class="alert alert-danger">Indique el tipo de usuario.<p>';
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; //
+        } else if (this.state.password !== this.state.password2) {
+            document.getElementById('alerta').innerHTML =
+                '<p class="alert alert-danger">Las contraseñas no son iguales. Repitalas.<p>';
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; //
+        } else {
+            var data = JSON.stringify({
+                method: 'put',// numero: "", fecha: "", area: 0, cliente: '', density: 0,
+                metodo2: 'insertarUsuario',
+                t_user: this.state.tipo_usuario,
+                nombre: this.state.nombre,
+                telefono: this.state.telefono,
+                email: this.state.email,
+                provincia: this.state.provincia,
+                ubicacion: this.state.direccion,
+                password: this.state.password,
+                propiedad_requerida: this.state.propiedad
+            });
 
-        var data = JSON.stringify({
-            method: 'put',// numero: "", fecha: "", area: 0, cliente: '', density: 0,
-            metodo2: 'insertarUsuario',
-            t_user: this.state.tipo_usuario,
-            nombre: this.state.nombre,
-            telefono: this.state.telefono,
-            email: this.state.email,
-            provincia: this.state.provincia,
-            ubicacion: this.state.direccion,
-            password: this.state.password,
-            propiedad_requerida: this.state.propiedad
-        })
-        console.log(data);
-        fetch("api/index.php/usuario/1", {
-            method: "post",
-            headers: { 'Content-Type': 'application/json' },
-            body: data
-        }).then((response) => {
-            if(response.statusText=='OK'){
-                document.getElementById('alerta').innerHTML=
-                '<p class="alert alert-success"><small>Proceso completado correctamente</small><p>';
-            }else{
-                document.getElementById('alerta').innerHTML=
-                '<p class="alert alert-danger">'+response.statusText+'<p>';
-            }
-            //this.props.handleChangeData();
+            fetch("api/index.php/usuario/1", {
+                method: "post",
+                headers: {'Content-Type': 'application/json'},
+                body: data
+            }).then((response) => response.json())
+                .then((data) => {
+                    if (data.code == '200') {
+                        document.getElementById('alerta').innerHTML =
+                            '<p class="alert alert-success"><small>Proceso completado correctamente</small><p>';
+                        document.body.scrollTop = 0; // For Safari
+                        document.documentElement.scrollTop = 0; //
+
+                        localStorage.setItem("loginUser", this.state.email);
+                        var usuario = {
+                          EMAIL: this.state.email,
+                          USERNAME: this.state.nombre
+                        };
+                        localStorage.setItem("loggedUser", JSON.stringify(usuario));
+                        localStorage.setItem("path", "home");
+                        location.reload();
+                    } else {
+                        document.getElementById('alerta').innerHTML =
+                            '<p class="alert alert-danger">' + data.msg + '<p>';
+
+                        document.body.scrollTop = 0; // For Safari
+                        document.documentElement.scrollTop = 0; //
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         }
-        );
     }
+
     handleTipoUsuario(event) {
         var dato = event.target.value;
         this.setState(
@@ -82,6 +113,7 @@ class Registrar extends React.Component {
             )
         }
     }
+
     handleNombre(event) {
         var dato = event.target.value;
         this.setState(
@@ -90,6 +122,7 @@ class Registrar extends React.Component {
             }
         )
     }
+
     handleGenero(event) {
         var dato = event.target.value;
         this.setState(
@@ -98,6 +131,7 @@ class Registrar extends React.Component {
             }
         )
     }
+
     handlePass(event) {
         var dato = event.target.value;
         this.setState(
@@ -106,14 +140,16 @@ class Registrar extends React.Component {
             }
         )
     }
+
     handleValidarPass(event) {
         var dato = event.target.value;
         this.setState(
             {
-                genero: dato
+                password2: dato
             }
         )
     }
+
     handleProvincia(event) {
         var dato = event.target.value;
         this.setState(
@@ -122,6 +158,7 @@ class Registrar extends React.Component {
             }
         )
     }
+
     handleDireccionExacta(event) {
         var dato = event.target.value;
         this.setState(
@@ -130,6 +167,7 @@ class Registrar extends React.Component {
             }
         )
     }
+
     handlePropiedad(event) {
         var dato = event.target.value;
         this.setState(
@@ -139,6 +177,7 @@ class Registrar extends React.Component {
         )
 
     }
+
     handleEmail(event) {
         var dato = event.target.value;
         this.setState(
@@ -148,6 +187,7 @@ class Registrar extends React.Component {
         )
 
     }
+
     handleTelefono(event) {
         var dato = event.target.value;
         this.setState(
@@ -157,13 +197,14 @@ class Registrar extends React.Component {
         )
 
     }
+
     render() {
         return (
             <div className="loginArea">
                 <div className="card col-md-10">
                     <div className="card-header h2">
                         Registrarse
-                        <img src='images/register.png' alt="Registro" className="registerImg" />
+                        <img src='images/register.png' alt="Registro" className="registerImg"/>
                     </div>
                     <div className="infoRegister">
                         Al registrase a nuestro sitio web usted obtendrá múltiples beneficios referente
@@ -175,16 +216,18 @@ class Registrar extends React.Component {
                         acorde a su experiencia y estudios.
                     </div>
                     <div className="card-body text-dark">
+                        <div id='alerta' role="alert"></div>
                         <form className="register-form" onSubmit={this.handleInsertUsuario}>
                             <div className="form-group">
                                 <Label htmlFor="cliente"><span></span>Tipo de usuario</Label>
                                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <Input type="radio" className='' id="cliente"
-                                        name="cliente" value='1' onClick={this.handleTipoUsuario} />
+                                           name="cliente" value='1' onClick={this.handleTipoUsuario}/>
                                     <Label htmlFor="cliente"><span>Cliente</span></Label>
                                 </div>
                                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                    <Input type="radio" id="Interesado" name="cliente" value='2' onClick={this.handleTipoUsuario} />
+                                    <Input type="radio" id="Interesado" name="cliente" value='2'
+                                           onClick={this.handleTipoUsuario}/>
                                     <Label htmlFor="Interesado"><span></span>Interesado</Label>
                                 </div>
                             </div>
@@ -192,42 +235,45 @@ class Registrar extends React.Component {
                                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <Label htmlFor="nombre"><span></span>Nombre completo</Label>
                                     <Input className="form-control" name='nombre'
-                                        type="text" placeholder="Nombre completo" required onChange={this.handleNombre} />
+                                           type="text" placeholder="Nombre completo" required
+                                           onChange={this.handleNombre}/>
                                 </div>
                             </FormGroup>
                             <FormGroup className="row">
                                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <Label htmlFor="correo"><span></span>Correo</Label>
-                                    <Input className="form-control" name='correo' type="email" placeholder="Email" required
-                                        onChange={this.handleEmail} />
+                                    <Input className="form-control" name='correo' type="email" placeholder="Email"
+                                           required
+                                           onChange={this.handleEmail}/>
                                 </div>
                             </FormGroup>
                             <FormGroup className="row">
                                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <Label htmlFor="telefono"><span></span>Teléfono</Label>
                                     <Input className="form-control" name='telefono' type="tel"
-                                        placeholder="Teléfono de contacto" required onChange={this.handleTelefono} />
+                                           placeholder="Teléfono de contacto" required onChange={this.handleTelefono}/>
                                 </div>
                             </FormGroup>
                             <FormGroup className="row">
                                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <Label htmlFor="password1"><span></span>Contraseña</Label>
                                     <Input className="form-control" name='password1' type="password"
-                                        placeholder="Contraseña" required onChange={this.handlePass} />
+                                           placeholder="Contraseña" required onChange={this.handlePass}/>
                                 </div>
                             </FormGroup>
                             <FormGroup className="row">
                                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <Label htmlFor="password2"><span></span>Repita la Contraseña</Label>
                                     <Input className="form-control" name='password2' type="password"
-                                        placeholder="Confirme la contraseña" required onChange={this.handleValidarPass} />
+                                           placeholder="Confirme la contraseña" required
+                                           onChange={this.handleValidarPass}/>
                                 </div>
                             </FormGroup>
                             <FormGroup className="row">
                                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <Label htmlFor="province"><span></span>Provincia</Label>
                                     <select className="form-control" id="province" name="province" required
-                                        onChange={this.handleProvincia}>
+                                            onChange={this.handleProvincia}>
                                         <option value="">Seleccione</option>
                                         <option value="San Jose">San José</option>
                                         <option value="Alajuela">Alajuela</option>
@@ -244,12 +290,12 @@ class Registrar extends React.Component {
                                     <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                         <Label htmlFor="province"><span></span>Tipo de Propiedad</Label>
                                         <select className="form-control" id="province" name="province" required
-                                            onChange={this.handlePropiedad}>
+                                                onChange={this.handlePropiedad}>
                                             <option value="">Seleccione</option>
-                                            <option value="Vivienda">VIVIENDA</option>
-                                            <option value="Apartamento">APARTAMENTO</option>
-                                            <option value="Edificio Comercial">EDIFICIO COMERCIAL</option>
-                                            <option value="Bodega">BODEGA</option>
+                                            <option value="Vivienda">Vivienda</option>
+                                            <option value="Apartamento">Apartamento</option>
+                                            <option value="Edificio Comercial">Edificio Comercial</option>
+                                            <option value="Bodega">Bodega</option>
                                             <option value="Otro">Otro</option>
                                         </select>
                                     </div>
@@ -259,15 +305,12 @@ class Registrar extends React.Component {
                                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <Label htmlFor="nombre"><span></span>Dirección exacta</Label>
                                     <Input type="textarea" className="form-control" name='nombre'
-                                        placeholder="Dirección" required onChange={this.handleDireccionExacta} />
+                                           placeholder="Dirección" required onChange={this.handleDireccionExacta}/>
                                 </div>
                             </FormGroup>
-                            <div id='alerta'  role="alert">
-                                ...
-                            </div>
                             <button type="submit" className="btn btn-primary">
                                 Registrar
-                                </button>
+                            </button>
                         </form>
 
                     </div>

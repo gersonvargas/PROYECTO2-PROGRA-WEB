@@ -30,19 +30,6 @@ class Card1 extends React.Component {
               </small>
             </p>
           </div>
-          <div className="card-footer">
-            <small className="text-muted">
-              <i>{this.state.usuario.created_at}</i>
-              <hr />
-              <p>Follow me: </p>
-              <a href={this.state.red_social}>
-                <img className="rounded" src='icons/facebook.png' alt="Card image cap" />
-              </a>
-              <a href={this.state.trabajo_git}>
-                <img className="rounded" src='icons/github.png'alt="Card image cap" />
-              </a>
-            </small>
-          </div>
         </div>
       );
     }

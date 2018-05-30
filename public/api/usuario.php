@@ -1,15 +1,19 @@
 <?php
+require_once "App.php";
 
-class Usuario {
+class Usuario extends App
+{
 
-    public static function obtenerconexion() {
+    public static function obtenerconexion()
+    {
         $file_db = new PDO('sqlite:bienesRaices.db');
         // Set errormode to exceptions
         $file_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $file_db;
     }
 
-    public static function insertarUsuario($data) {
+    public static function insertarUsuario($data)
+    {
         //Ejemplo de consumo URL
         //http://localhost/proyecto2-progra-web/server/index.php/usuario/1
         /* POST ->
@@ -26,9 +30,18 @@ class Usuario {
             $file_db = Usuario::obtenerconexion();
             $insert = '';
             $propiedad = '';
+
+
+            $select = "SELECT EMAIL FROM USUARIO where email = '" . $email . "'";
+            $stmt = $file_db->prepare($select);
+            $stmt->execute();
+            $usuario = $stmt->fetchObject();
+            if($usuario){
+                return Usuario::error("Este correo ya esta registrado. Intente con otro.");
+            }
+
             if ($tipo_usuario == '1') {
                 $propiedad = $data['propiedad_requerida'];
-                // Prepare INSERT statement to SQLite3 file db
                 $insert = "INSERT INTO CLIENTE 
                 VALUES (:nombre, :telefono, :email, :provincia, :ubicacion, :propiedad_requerida,:password)";
             } else if ($tipo_usuario == '2') {
@@ -58,10 +71,9 @@ class Usuario {
             $stmt2->bindParam(':TIPO_USUARIO', $tipo_usuario);
             $stmt2->bindParam(':PASSWORD', $pass);
             $stmt2->execute();
-            return 'Se ha insertado la informacion!';
+            return Usuario::success('Se ha insertado el usuario');
         } catch (PDOException $e) {
-            // Print PDOException message
-            echo $e->getMessage();
+            return Usuario::error($e->getMessage());
         }
     }
 

@@ -42,6 +42,7 @@ class App extends React.Component {
         localStorage.setItem("path", "login");
         this.forceUpdate();
     }
+
     handleHome() {
         localStorage.setItem("path", "home");
         this.forceUpdate();
@@ -60,25 +61,27 @@ class App extends React.Component {
         localStorage.setItem("path", "registrar");
         this.forceUpdate();
     }
+
     handleAbout() {
         localStorage.setItem("path", "about");
         this.forceUpdate();
     }
+
     render() {
-        var renderClass = <Home />;
+        var renderClass = <Home/>;
         //if(localStorage){
         switch (localStorage.path) {
             case "login":
-                renderClass = <Login />;
+                renderClass = <Login/>;
                 break;
             case "propiedad":
-                renderClass = <Propiedades />;
+                renderClass = <Propiedades/>;
                 break;
             case "registrar":
-                renderClass = <Registrar />;
+                renderClass = <Registrar/>;
                 break;
-                case "about":
-                renderClass = <About />;
+            case "about":
+                renderClass = <About/>;
                 break;
             default:
                 break;
@@ -99,22 +102,22 @@ class App extends React.Component {
                 <header>
                     <Navbar color="dark" inverse expand="md">
                         <NavbarBrand href="" onClick={this.handleHome}>Bienes Raíces</NavbarBrand>
-                        <NavbarToggler onClick={this.toggle} />
+                        <NavbarToggler onClick={this.toggle}/>
                         <Collapse isOpen={this.state.isOpen} navbar>
                             <Nav navbar>
                                 <NavItem>
                                     <NavLink href="" onClick={this.handlePropiedades}>Propiedades</NavLink>
                                 </NavItem>
+                                <NavItem>
+                                    <NavLink href="" onClick={this.handleAbout}>Sobre nosotros</NavLink>
+                                </NavItem>
                             </Nav>
-                            <Nav navbar>
+                            <Nav navbar className="customNav">
                                 <NavItem>
                                     {LoginType}
                                 </NavItem>
                                 <NavItem>
                                     {Registrarse}
-                                </NavItem>
-                                <NavItem>
-                                <NavLink href="" onClick={this.handleAbout}>Sobre nosotros</NavLink>
                                 </NavItem>
                             </Nav>
                         </Collapse>
@@ -125,7 +128,7 @@ class App extends React.Component {
                 <div className="container">
                     {renderClass}
                 </div>
-                <Footer />
+                <Footer/>
             </div>
         )
     }

@@ -63,3 +63,7 @@ body{
 .infoRegister{
     margin: 1%;
 }
+
+.customNav{
+    border-left: white solid 1px;
+}

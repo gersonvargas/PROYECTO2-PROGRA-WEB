@@ -95,7 +95,7 @@ class ListaPropiedades extends React.Component {
                             </small></p>
                         </CardText>
                         <CardText>
-                            <p>Descripcion de la porpiedad:
+                            <p>Descripcion de la propiedad:
                                 <small className="text-muted">
                                     {item.DESCRIPCION}
                                 </small>
