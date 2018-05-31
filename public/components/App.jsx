@@ -68,22 +68,23 @@ class App extends React.Component {
     }
 
     render() {
-        var renderClass = <Home/>;
+        var renderClass = <Home />;
         //if(localStorage){
         switch (localStorage.path) {
             case "login":
-                renderClass = <Login/>;
+                renderClass = <Login />;
                 break;
             case "propiedad":
-                renderClass = <Propiedades/>;
+                renderClass = <Propiedades />;
                 break;
             case "registrar":
-                renderClass = <Registrar/>;
+                renderClass = <Registrar />;
                 break;
             case "about":
-                renderClass = <About/>;
+                renderClass = <About />;
                 break;
             default:
+                renderClass = <Home />;
                 break;
         }
 
@@ -102,7 +103,7 @@ class App extends React.Component {
                 <header>
                     <Navbar color="dark" inverse expand="md">
                         <NavbarBrand href="" onClick={this.handleHome}>Bienes Raíces</NavbarBrand>
-                        <NavbarToggler onClick={this.toggle}/>
+                        <NavbarToggler onClick={this.toggle} />
                         <Collapse isOpen={this.state.isOpen} navbar>
                             <Nav navbar>
                                 <NavItem>
@@ -128,7 +129,7 @@ class App extends React.Component {
                 <div className="container">
                     {renderClass}
                 </div>
-                <Footer/>
+                <Footer />
             </div>
         )
     }

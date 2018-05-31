@@ -42,6 +42,9 @@ class Propiedad extends App
             $tipo_disponibilidad = $data['tipo_disponibilidad'];
             $estado_construccion = $data['estado_construccion'];
             $descripcion = $data['descripcion'];
+            $localidad = $data['localidad'];
+            $cliudad = $data['ciudad'];
+            $provincia = $data['provincia'];
             $file_db = Propiedad::obtenerconexion();
 
             $insert = "UPDATE PROPIEDAD 
@@ -53,7 +56,10 @@ class Propiedad extends App
                 TIPO_PROPIEDAD=:TIPO_PROPIEDAD,
                 TIPO_DISPONIBILIDAD=:TIPO_DISPONIBILIDAD,
                 ESTADO_CONSTRUCCION=:ESTADO_CONSTRUCCION,
-                DESCRIPCION=:DESCRIPCION 
+                DESCRIPCION=:DESCRIPCION,
+                LOCALIDAD=:LOCALIDAD,
+                CIUDAD=:CIUDAD,
+                PROVINCIA=:PROVINCIA
                 WHERE NUMERO_PROPIEDAD=:NUMERO_PROPIEDAD";
 
             $stmt = $file_db->prepare($insert);
@@ -66,6 +72,11 @@ class Propiedad extends App
             $stmt->bindParam(':TIPO_DISPONIBILIDAD', $tipo_disponibilidad);
             $stmt->bindParam(':DESCRIPCION', $descripcion);
             $stmt->bindParam(':ESTADO_CONSTRUCCION', $estado_construccion);
+            
+            $stmt->bindParam(':LOCALIDAD', $localidad);
+            $stmt->bindParam(':CIUDAD', $cliudad);
+            $stmt->bindParam(':PROVINCIA', $provincia);
+            
             $stmt->bindParam(':NUMERO_PROPIEDAD', $numero_propiedad);
             $stmt->execute();
             return Propiedad::success('Se ha modificado la informacion.');
@@ -106,6 +117,10 @@ class Propiedad extends App
             $estado_construccion = $data['estado_construccion'];
             $descripcion = $data['descripcion'];
             $fecha_publicacion = $data['fecha_publicacion'];
+
+            $localidad = $data['localidad'];
+            $cliudad = $data['ciudad'];
+            $provincia = $data['provincia'];
             $file_db = Propiedad::obtenerconexion();
 
             $insert = "INSERT INTO PROPIEDAD 
@@ -115,6 +130,9 @@ class Propiedad extends App
                 :TIPO_DISPONIBILIDAD,
                 :ESTADO_CONSTRUCCION,
                 :DESCRIPCION,
+                :LOCALIDAD,
+                :CIUDAD,
+                :PROVINCIA,
                 :FECHA_PUBLICACION
                 )";
             $stmt = $file_db->prepare($insert);
@@ -127,6 +145,9 @@ class Propiedad extends App
             $stmt->bindParam(':TIPO_DISPONIBILIDAD', $tipo_disponibilidad);
             $stmt->bindParam(':ESTADO_CONSTRUCCION', $estado_construccion);
             $stmt->bindParam(':DESCRIPCION', $descripcion);
+            $stmt->bindParam(':LOCALIDAD', $localidad);
+            $stmt->bindParam(':CIUDAD', $cliudad);
+            $stmt->bindParam(':PROVINCIA', $provincia);
             $stmt->bindParam(':FECHA_PUBLICACION', $fecha_publicacion);
             $stmt->execute();
             return Propiedad::success('Se ha insertado la informacion.');
