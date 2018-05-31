@@ -22,6 +22,10 @@ class FormInteresadoPropiedad extends React.Component {
             ciudad: null,
             provincia: null,
             mensaje: null,
+            cantidad_banos: null,
+            cantidad_cocheras: null,
+            cantidad_habitaciones: null,
+            cantidad_pisos: null,
             isEdit: false
         }
         this.handleActualizar = this.handleActualizar.bind(this);
@@ -36,34 +40,40 @@ class FormInteresadoPropiedad extends React.Component {
         this.handleEstadoConstruccion = this.handleEstadoConstruccion.bind(this);
         this.handleDescripcion = this.handleDescripcion.bind(this);
         this.handleCancelar = this.handleCancelar.bind(this);
-
         this.handleLocalidad = this.handleLocalidad.bind(this);
         this.handleProvincia = this.handleProvincia.bind(this);
         this.handleCiudad = this.handleCiudad.bind(this);
+        this.handleCantidadBanos = this.handleCantidadBanos.bind(this);
+        this.handleCantidadCocheras = this.handleCantidadCocheras.bind(this);
+        this.handleCantidadHabitaciones = this.handleCantidadHabitaciones.bind(this);
+        this.handleCantidadPisos = this.handleCantidadPisos.bind(this);
+        this.componentWillReceiveProps=this.componentWillReceiveProps.bind(this);
     }
-
     componentWillReceiveProps(nextProps) {
-
         if (nextProps.propiedad.NUMERO_PROPIEDAD) {
             this.setState({ isEdit: true });
         } else {
             this.setState({ isEdit: false });
         }
+        this.setState({
+            numero_propiedad: nextProps.propiedad.NUMERO_PROPIEDAD,
+            nombre_propiedad: nextProps.propiedad.NOMBRE,
+            autor: nextProps.propiedad.AUTOR,
+            tam_propiedad: nextProps.propiedad.TAMANO,
+            m_cuadrados: nextProps.propiedad.M_CUADRADOS,
+            tipo_propiedad: nextProps.propiedad.TIPO_PROPIEDAD,
+            tipo_disponibilidad: nextProps.propiedad.TIPO_DISPONIBILIDAD,
+            estado_construccion: nextProps.propiedad.ESTADO_CONSTRUCCION,
+            descripcion: nextProps.propiedad.DESCRIPCION,
+            localidad: nextProps.propiedad.LOCALIDAD,
+            ciudad: nextProps.propiedad.CIUDAD,
+            provincia: nextProps.propiedad.PROVINCIA,
+            cantidad_banos: nextProps.propiedad.CANTIDAD_BANOS,
+            cantidad_cocheras: nextProps.propiedad.CANTIDAD_COCHERAS,
+            cantidad_habitaciones: nextProps.propiedad.CANTIDAD_HABITACIONES,
+            cantidad_pisos: nextProps.propiedad.CANTIDAD_PISOS
+        });
 
-        // console.log(nextProps.propiedad);
-        this.setState({ numero_propiedad: nextProps.propiedad.NUMERO_PROPIEDAD });
-        this.setState({ nombre_propiedad: nextProps.propiedad.NOMBRE });
-        this.setState({ autor: nextProps.propiedad.AUTOR });
-        this.setState({ tam_propiedad: nextProps.propiedad.TAMANO });
-        this.setState({ m_cuadrados: nextProps.propiedad.M_CUADRADOS });
-        this.setState({ tipo_propiedad: nextProps.propiedad.TIPO_PROPIEDAD });
-        this.setState({ tipo_disponibilidad: nextProps.propiedad.TIPO_DISPONIBILIDAD });
-        this.setState({ estado_construccion: nextProps.propiedad.ESTADO_CONSTRUCCION });
-        this.setState({ descripcion: nextProps.propiedad.DESCRIPCION });
-
-        this.setState({ localidad: nextProps.propiedad.LOCALIDAD });
-        this.setState({ ciudad: nextProps.propiedad.CIUDAD });
-        this.setState({ provincia: nextProps.propiedad.PROVINCIA });
     }
 
     handleCancelar() {
@@ -107,7 +117,11 @@ class FormInteresadoPropiedad extends React.Component {
                 localidad: this.state.localidad,
                 ciudad: this.state.ciudad,
                 provincia: this.state.provincia,
-                fecha_publicacion: fi
+                fecha_publicacion: fi,
+                cantidad_banos: this.state.cantidad_banos,
+                cantidad_cocheras: this.state.cantidad_cocheras,
+                cantidad_habitaciones: this.state.cantidad_habitaciones,
+                cantidad_pisos: this.state.cantidad_pisos,
             });
             console.log(data);
             fetch("api/index.php/propiedad/1", {
@@ -165,7 +179,11 @@ class FormInteresadoPropiedad extends React.Component {
                 localidad: this.state.localidad,
                 ciudad: this.state.ciudad,
                 provincia: this.state.provincia,
-                fecha_publicacion: fi
+                fecha_publicacion: fi,
+                cantidad_banos: this.state.cantidad_banos,
+                cantidad_cocheras: this.state.cantidad_cocheras,
+                cantidad_habitaciones: this.state.cantidad_habitaciones,
+                cantidad_pisos: this.state.cantidad_pisos
             });
             //console.log(data);
             fetch("api/index.php/propiedad/1", {
@@ -292,7 +310,36 @@ class FormInteresadoPropiedad extends React.Component {
             provincia: data
         })
     }
-
+    handleCantidadBanos(event) {
+        var data = event.target.value;
+        this.setState({
+            cantidad_banos: data
+        })
+    }
+    handleCantidadCocheras(event) {
+        var data = event.target.value;
+        this.setState({
+            cantidad_cocheras: data
+        })
+    }
+    handleCantidadHabitaciones(event) {
+        var data = event.target.value;
+        this.setState({
+            cantidad_habitaciones: data
+        })
+    }
+    handleCantidadPisos(event) {
+        var data = event.target.value;
+        this.setState({
+            cantidad_pisos: data
+        })
+    }
+    /*  
+     cantidad_banos:null,
+                cantidad_cocheras:null,
+                cantidad_habitaciones:null,
+                cantidad_pisos:null,
+    */
     render() {
 
         const buttons = this.state.isEdit ?
@@ -307,14 +354,15 @@ class FormInteresadoPropiedad extends React.Component {
             && (this.state.tipo_propiedad == 'Apartamento' ||
                 this.state.tipo_propiedad == 'Vivienda') ?
             <div className="border my-3 p-2">
-               <h3>Se requieren los siguientes datos:</h3>
+                <h3>Se requieren los siguientes datos:</h3>
                 <FormGroup className="row">
                     <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <Label htmlFor="nombre"><span></span>Cantidad de habitaciones:</Label>
                         <Input type="number" className="form-control" name='numero'
                             placeholder="Número de la propiedad"
-                            required 
-                            value={this.state.numero_propiedad} />
+                            required
+                            onChange={this.handleCantidadHabitaciones}
+                            value={this.state.cantidad_habitaciones} />
                     </div>
                 </FormGroup>
                 <FormGroup className="row">
@@ -322,8 +370,9 @@ class FormInteresadoPropiedad extends React.Component {
                         <Label htmlFor="nombre"><span></span>Cantidad de Baños:</Label>
                         <Input type="number" className="form-control" name='numero'
                             placeholder="Número de la propiedad"
-                            required 
-                            value={this.state.numero_propiedad} />
+                            required
+                            onChange={this.handleCantidadBanos}
+                            value={this.state.cantidad_banos} />
                     </div>
                 </FormGroup>
                 <FormGroup className="row">
@@ -331,8 +380,9 @@ class FormInteresadoPropiedad extends React.Component {
                         <Label htmlFor="nombre"><span></span>Cantidad de Cocheras:</Label>
                         <Input type="number" className="form-control" name='numero'
                             placeholder="Número de la propiedad"
-                            required 
-                            value={this.state.numero_propiedad} />
+                            required
+                            onChange={this.handleCantidadCocheras}
+                            value={this.state.cantidad_cocheras} />
                     </div>
                 </FormGroup>
                 <FormGroup className="row">
@@ -340,8 +390,9 @@ class FormInteresadoPropiedad extends React.Component {
                         <Label htmlFor="nombre"><span></span>Cantidad de Pisos:</Label>
                         <Input type="number" className="form-control" name='numero'
                             placeholder="Número de la propiedad"
-                            required 
-                            value={this.state.numero_propiedad} />
+                            required
+                            onChange={this.handleCantidadPisos}
+                            value={this.state.cantidad_pisos} />
                     </div>
                 </FormGroup>
             </div>
@@ -419,7 +470,6 @@ class FormInteresadoPropiedad extends React.Component {
                     </FormGroup>
                     {validar_tipos}
                     <FormGroup className="row">
-
                         <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <Label htmlFor="tipo_disponibilidad"><span></span>Tipo de disponibilidad</Label>
                             <select className="form-control" id="tipo_disponibilidad" name="tipo_disponibilidad"

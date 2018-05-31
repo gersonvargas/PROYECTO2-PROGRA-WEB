@@ -14,24 +14,6 @@ class Propiedad extends App
 
     public static function modificarPropiedad($data)
     {
-        //ejemplo de consumo:
-        /*
-         * http://localhost/proyecto2-progra-web/server/index.php/propiedad/1
-          {
-          "metodo2":"insertarPropiedad",
-          "method":"insertarPropiedad",
-          "numero_propiedad":"1",
-          "nombre":"Propiedad 1",
-          "autor":"user2@gmail.com",
-          "tamano":"435",
-          "m_cuadrados":"100",
-          "tipo_propiedad":"BODEGA",
-          "tipo_disponibilidad":"ALQUILER",
-          "estado_construccion":"Bueno",
-          "descripcion":"Bodega para alquilar",
-          "fecha_publicacion":"24/05/2018"
-          }
-         */
         try {
             $numero_propiedad = $data['numero_propiedad']; // 1= cliente, 2= interesado
             $nombre = $data['nombre'];
@@ -47,6 +29,51 @@ class Propiedad extends App
             $provincia = $data['provincia'];
             $file_db = Propiedad::obtenerconexion();
 
+            if($tipo_propiedad=='Apartamento'||$tipo_propiedad=='Vivienda'){
+                $cantidad_banos= $data['cantidad_banos'];
+                $cantidad_habitaciones= $data['cantidad_habitaciones'];
+                $cantidad_cocheras= $data['cantidad_cocheras'];
+                $cantidad_pisos= $data['cantidad_pisos'];
+
+            $insert = "UPDATE PROPIEDAD 
+                SET 
+                NOMBRE=:NOMBRE,
+                AUTOR=:AUTOR,
+                TAMANO=:TAMANO,
+                M_CUADRADOS=:M_CUADRADOS,
+                TIPO_PROPIEDAD=:TIPO_PROPIEDAD,
+                TIPO_DISPONIBILIDAD=:TIPO_DISPONIBILIDAD,
+                ESTADO_CONSTRUCCION=:ESTADO_CONSTRUCCION,
+                DESCRIPCION=:DESCRIPCION,
+                LOCALIDAD=:LOCALIDAD,
+                CIUDAD=:CIUDAD,
+                CANTIDAD_HABITACIONES=:CANTIDAD_HABITACIONES,
+                CANTIDAD_BANOS=:CANTIDAD_BANOS,
+                CANTIDAD_COCHERAS=:CANTIDAD_COCHERAS,
+                CANTIDAD_PISOS=:CANTIDAD_PISOS,
+                PROVINCIA=:PROVINCIA
+                WHERE NUMERO_PROPIEDAD=:NUMERO_PROPIEDAD";
+
+            $stmt = $file_db->prepare($insert);
+
+            $stmt->bindParam(':NOMBRE', $nombre);
+            $stmt->bindParam(':AUTOR', $autor);
+            $stmt->bindParam(':TAMANO', $tamano);
+            $stmt->bindParam(':M_CUADRADOS', $m_cuadrados);
+            $stmt->bindParam(':TIPO_PROPIEDAD', $tipo_propiedad);
+            $stmt->bindParam(':TIPO_DISPONIBILIDAD', $tipo_disponibilidad);
+            $stmt->bindParam(':DESCRIPCION', $descripcion);
+            $stmt->bindParam(':ESTADO_CONSTRUCCION', $estado_construccion);
+            $stmt->bindParam(':LOCALIDAD', $localidad);
+            $stmt->bindParam(':CIUDAD', $cliudad);
+            $stmt->bindParam(':PROVINCIA', $provincia);
+            $stmt->bindParam(':CANTIDAD_HABITACIONES', $cantidad_habitaciones);
+            $stmt->bindParam(':CANTIDAD_BANOS', $cantidad_banos);
+            $stmt->bindParam(':CANTIDAD_COCHERAS', $cantidad_cocheras);
+            $stmt->bindParam(':CANTIDAD_PISOS', $cantidad_pisos);
+            $stmt->bindParam(':NUMERO_PROPIEDAD', $numero_propiedad);
+            $stmt->execute();
+            }else{
             $insert = "UPDATE PROPIEDAD 
                 SET 
                 NOMBRE=:NOMBRE,
@@ -63,7 +90,6 @@ class Propiedad extends App
                 WHERE NUMERO_PROPIEDAD=:NUMERO_PROPIEDAD";
 
             $stmt = $file_db->prepare($insert);
-
             $stmt->bindParam(':NOMBRE', $nombre);
             $stmt->bindParam(':AUTOR', $autor);
             $stmt->bindParam(':TAMANO', $tamano);
@@ -72,40 +98,21 @@ class Propiedad extends App
             $stmt->bindParam(':TIPO_DISPONIBILIDAD', $tipo_disponibilidad);
             $stmt->bindParam(':DESCRIPCION', $descripcion);
             $stmt->bindParam(':ESTADO_CONSTRUCCION', $estado_construccion);
-            
             $stmt->bindParam(':LOCALIDAD', $localidad);
             $stmt->bindParam(':CIUDAD', $cliudad);
             $stmt->bindParam(':PROVINCIA', $provincia);
-            
             $stmt->bindParam(':NUMERO_PROPIEDAD', $numero_propiedad);
             $stmt->execute();
-            return Propiedad::success('Se ha modificado la informacion.');
+            }
+            return App::success('Se ha modificado la informacion.');
         } catch (PDOException $e) {
             // Print PDOException message
-            return Propiedad::error($e->getMessage());
+            return App::error($e->getMessage());
         }
     }
 
     public static function insertarPropiedad($data)
     {
-        //ejemplo de consumo:
-        /*
-         * http://localhost/proyecto2-progra-web/server/index.php/propiedad/1
-          {
-          "metodo2":"insertarPropiedad",
-          "method":"insertarPropiedad",
-          "numero_propiedad":"1",
-          "nombre":"Propiedad 1",
-          "autor":"user2@gmail.com",
-          "tamano":"435",
-          "m_cuadrados":"100",
-          "tipo_propiedad":"BODEGA",
-          "tipo_disponibilidad":"ALQUILER",
-          "estado_construccion":"Bueno",
-          "descripcion":"Bodega para alquilar",
-          "fecha_publicacion":"24/05/2018"
-          }
-         */
         try {
             $numero_propiedad = $data['numero_propiedad']; // 1= cliente, 2= interesado
             $nombre = $data['nombre'];
@@ -117,13 +124,58 @@ class Propiedad extends App
             $estado_construccion = $data['estado_construccion'];
             $descripcion = $data['descripcion'];
             $fecha_publicacion = $data['fecha_publicacion'];
-
             $localidad = $data['localidad'];
             $cliudad = $data['ciudad'];
             $provincia = $data['provincia'];
+          
             $file_db = Propiedad::obtenerconexion();
-
-            $insert = "INSERT INTO PROPIEDAD 
+            if($tipo_propiedad=='Apartamento'||$tipo_propiedad=='Vivienda'){
+                $cantidad_banos= $data['cantidad_banos'];
+                $cantidad_habitaciones= $data['cantidad_habitaciones'];
+                $cantidad_cocheras= $data['cantidad_cocheras'];
+                $cantidad_pisos= $data['cantidad_pisos'];
+                
+                 $insert2 = "INSERT INTO PROPIEDAD 
+                 VALUES (:NUMERO_PROPIEDAD, 
+                 :NOMBRE,
+                :AUTOR, 
+                :TAMANO,
+                 :M_CUADRADOS, 
+                 :TIPO_PROPIEDAD,
+                 :TIPO_DISPONIBILIDAD,
+                 :ESTADO_CONSTRUCCION,
+                 :DESCRIPCION,
+                 :LOCALIDAD,
+                 :CIUDAD,
+                 :PROVINCIA,
+                 :CANTIDAD_HABITACIONES, 
+                :CANTIDAD_BANOS,
+                :CANTIDAD_COCHERAS,
+                :CANTIDAD_PISOS,
+                 :FECHA_PUBLICACION
+                 )";
+                $stmt2 = $file_db->prepare($insert2);
+                $stmt2->bindParam(':NUMERO_PROPIEDAD', $numero_propiedad);
+                $stmt2->bindParam(':NOMBRE', $nombre);
+                $stmt2->bindParam(':AUTOR', $autor);
+                $stmt2->bindParam(':TAMANO', $tamano);
+                $stmt2->bindParam(':M_CUADRADOS', $m_cuadrados);
+                $stmt2->bindParam(':TIPO_PROPIEDAD', $tipo_propiedad);
+                $stmt2->bindParam(':TIPO_DISPONIBILIDAD', $tipo_disponibilidad);
+                $stmt2->bindParam(':ESTADO_CONSTRUCCION', $estado_construccion);
+                $stmt2->bindParam(':DESCRIPCION', $descripcion);
+                $stmt2->bindParam(':LOCALIDAD', $localidad);
+                $stmt2->bindParam(':CIUDAD', $cliudad);
+                $stmt2->bindParam(':PROVINCIA', $provincia);
+                $stmt2->bindParam(':CANTIDAD_HABITACIONES', $cantidad_habitaciones);
+                $stmt2->bindParam(':CANTIDAD_BANOS', $cantidad_banos);
+                $stmt2->bindParam(':CANTIDAD_COCHERAS', $cantidad_cocheras);
+                $stmt2->bindParam(':CANTIDAD_PISOS', $cantidad_pisos);
+                $stmt2->bindParam(':FECHA_PUBLICACION', $fecha_publicacion);
+                $stmt2->execute();
+           
+            }else{
+                $insert = "INSERT INTO PROPIEDAD 
                 VALUES (:NUMERO_PROPIEDAD, :NOMBRE, :AUTOR, :TAMANO,
                 :M_CUADRADOS, 
                 :TIPO_PROPIEDAD,
@@ -150,10 +202,11 @@ class Propiedad extends App
             $stmt->bindParam(':PROVINCIA', $provincia);
             $stmt->bindParam(':FECHA_PUBLICACION', $fecha_publicacion);
             $stmt->execute();
-            return Propiedad::success('Se ha insertado la informacion.');
+            }
+            return App::success('Se ha insertado la informacion.');
         } catch (PDOException $e) {
             // Print PDOException message
-            return Propiedad::error($e->getMessage());
+            return App::error($e->getMessage());
         }
     }
 
@@ -280,10 +333,10 @@ class Propiedad extends App
             $stmt2 = $dbh->prepare("DELETE FROM PROP_APLICADAS where PROPIEDAD=:numero");
             $stmt2->bindParam(':numero', $numero);
             $stmt2->execute();
-            return Propiedad::success('Se ha eliminado la informacion');
+            return App::success('Se ha eliminado la informacion');
         } catch (PDOException $e) {
             // Print PDOException message
-            return Propiedad::error($e->getMessage());
+            return App::error($e->getMessage());
         }
     }
 
@@ -303,7 +356,7 @@ class Propiedad extends App
             }
             echo json_encode($data);
         } catch (Exception $e) {
-            echo "Failed: " . $e->getMessage();
+            return App::error($e->getMessage());
         }
     }
 }

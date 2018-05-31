@@ -8,14 +8,14 @@
 
 class App
 {
-    public function success($output){
+    public static function success($output){
         die(json_encode(array(
             "code" => 200,
             "msg" => $output
         )));
     }
 
-    public function error($output){
+    public static function error($output){
         die(json_encode(array(
             "code" => 401,
             "msg" => $output
