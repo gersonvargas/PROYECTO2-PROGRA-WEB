@@ -18,6 +18,7 @@ class Propiedades extends React.Component {
         super(props);
         this.state = {
             propiedades: [],
+            propiedades_original: [],
             propiedades_aplicadas: [],
             mensajes: [],
             propiedad: null,
@@ -32,6 +33,7 @@ class Propiedades extends React.Component {
         this.handleAll = this.handleAll.bind(this);
         this.handleVerMensajes = this.handleVerMensajes.bind(this);
         this.handleListaMensajes = this.handleListaMensajes.bind(this);
+        this.filterList = this.filterList.bind(this);
     }
     handleReload(params) {
         fetch('api/index.php/propiedad/1/' + params)
@@ -41,7 +43,10 @@ class Propiedades extends React.Component {
             .then((data) => {
 
                 // console.log(data)
-                this.setState({ propiedades: data });
+                this.setState({
+                    propiedades: data
+                    , propiedades_original: data
+                });
                 this.forceUpdate();
             })
     }
@@ -88,6 +93,22 @@ class Propiedades extends React.Component {
         this.setState({
             propiedad: data
         })
+    }
+    filterList(event) {
+        var updatedList = this.state.propiedades;
+        updatedList = updatedList.filter(function (item) {
+            return item.PROVINCIA.toLowerCase().search(
+                event.target.value.toLowerCase()) !== -1;
+        });
+        if (event.target.value != '') {
+            this.setState({
+                propiedades: updatedList
+            });
+        } else {
+            this.setState({
+                propiedades: this.state.propiedades_original
+            });
+        }
     }
     handleVerMensajes(value) {
         if (this.state.propiedad) {
@@ -166,6 +187,17 @@ class Propiedades extends React.Component {
                 <h1>Propiedades disponibles</h1>
                 <hr />
                 <Container>
+                    <Row>
+                        <Col xs="5">
+                            <div className="input-group-prepend m-3">
+                                <span className="input-group-text" id="inputGroup-sizing-default">
+                                    <img src='icons/lupa.png' />
+                                </span>
+                                <input className="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" type="text"
+                                    placeholder="Search" onChange={this.filterList} />
+                            </div>
+                        </Col>
+                    </Row>
                     {renderClass}
                 </Container>
             </div>
