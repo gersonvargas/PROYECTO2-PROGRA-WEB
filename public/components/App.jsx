@@ -30,6 +30,7 @@ class App extends React.Component {
         this.handlePropiedades = this.handlePropiedades.bind(this);
         this.handleRegistrar = this.handleRegistrar.bind(this);
         this.handleAbout = this.handleAbout.bind(this);
+        this.handlePerfil = this.handlePerfil.bind(this);
     }
 
     handleLogin() {
@@ -66,6 +67,10 @@ class App extends React.Component {
         localStorage.setItem("path", "about");
         this.forceUpdate();
     }
+    handlePerfil() {
+        localStorage.setItem("path", "perfil");
+        this.forceUpdate();
+    }
 
     render() {
         var renderClass = <Home />;
@@ -83,6 +88,9 @@ class App extends React.Component {
             case "about":
                 renderClass = <About />;
                 break;
+            case "perfil":
+                renderClass = <Perfil currentUser={JSON.parse(localStorage.loggedUser)}/>;
+                break;
             default:
                 renderClass = <Home />;
                 break;
@@ -90,6 +98,8 @@ class App extends React.Component {
 
         var LoginType = <NavLink href="" onClick={this.handleLogin}>Iniciar sesión</NavLink>;
         var Registrarse = <NavLink href="" onClick={this.handleRegistrar}>Registrarse</NavLink>;
+
+        var PerfilUser = '';
         if (localStorage.loginUser && localStorage.loginUser !== 'NULL') {
             var currentUser = JSON.parse(localStorage.loggedUser).USERNAME;
             LoginType =
@@ -97,6 +107,7 @@ class App extends React.Component {
                     Cerrar sesión: {currentUser}
                 </NavLink>;
             Registrarse = '';
+            PerfilUser = <NavLink href="" onClick={this.handlePerfil}>Perfil</NavLink>;
         }
         return (
             <div>
@@ -119,6 +130,9 @@ class App extends React.Component {
                                 </NavItem>
                                 <NavItem>
                                     {Registrarse}
+                                </NavItem>
+                                <NavItem>
+                                    {PerfilUser}
                                 </NavItem>
                             </Nav>
                         </Collapse>

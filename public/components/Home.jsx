@@ -3,12 +3,12 @@ class Home extends React.Component {
         return (
             <div className="Home">
                 <h1>Te damos la bienvenida a nuestro sitio.</h1>
-                <hr/>
+                <hr />
                 <div className='carousel carouselCustom'>
-                    <CarouselHeader/>
+                    <CarouselHeader />
                 </div>
-                <hr/>
-                <CardGroupHome/>
+                <hr />
+                <CardGroupHome />
             </div>
         );
     }
