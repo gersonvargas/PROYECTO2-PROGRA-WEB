@@ -108,7 +108,7 @@ class App extends React.Component {
                     Cerrar sesión: {currentUser}
                 </NavLink>;
             Registrarse = '';
-            PerfilUser = <NavLink href="" onClick={this.handlePerfil}>Perfil</NavLink>;
+            PerfilUser = <NavLink href="" onClick={this.handlePerfil}><img src='icons/usuario.png'alt='alt'/>Perfil</NavLink>;
         }
     
         return (
