@@ -39,8 +39,11 @@ class Registrar extends React.Component {
     }
 
     handleInsertUsuario(event) {
+       // alert('hola')
         event.preventDefault();
+        //alert('entra this.state.tipo_usuario == "-1"');
         if (this.state.tipo_usuario == "-1") {
+            
             document.getElementById('alerta').innerHTML =
                 '<p class="alert alert-danger">Indique el tipo de usuario.<p>';
             document.body.scrollTop = 0; // For Safari
@@ -51,7 +54,7 @@ class Registrar extends React.Component {
             document.body.scrollTop = 0; // For Safari
             document.documentElement.scrollTop = 0; //
         } else {
-            var data = JSON.stringify({
+            var data1 = JSON.stringify({
                 method: 'put',// numero: "", fecha: "", area: 0, cliente: '', density: 0,
                 metodo2: 'insertarUsuario',
                 t_user: this.state.tipo_usuario,
@@ -67,7 +70,7 @@ class Registrar extends React.Component {
             fetch("api/index.php/usuario/1", {
                 method: "post",
                 headers: {'Content-Type': 'application/json'},
-                body: data
+                body: data1
             }).then((response) => response.json())
                 .then((data) => {
                     if (data.code == '200') {
@@ -75,19 +78,21 @@ class Registrar extends React.Component {
                             '<p class="alert alert-success"><small>Proceso completado correctamente</small><p>';
                         document.body.scrollTop = 0; // For Safari
                         document.documentElement.scrollTop = 0; //
-
-                        localStorage.setItem("loginUser", this.state.email);
-                        var usuario = {
+                       /* var usuario = {
                           EMAIL: this.state.email,
-                          USERNAME: this.state.nombre
+                          USERNAME: this.state.nombre,
+                          TIPO_USUARIO: this.state.tipo_usuario,
+                          PASSWORD: this.state.password,
+                          PRUEBA:'pruebas'
                         };
                         localStorage.setItem("loggedUser", JSON.stringify(usuario));
-                        localStorage.setItem("path", "home");
-                        location.reload();
+                        */
+                        localStorage.setItem("path", "login");
+                        
+                       location.reload();
                     } else {
                         document.getElementById('alerta').innerHTML =
                             '<p class="alert alert-danger">' + data.msg + '<p>';
-
                         document.body.scrollTop = 0; // For Safari
                         document.documentElement.scrollTop = 0; //
                     }

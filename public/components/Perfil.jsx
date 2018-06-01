@@ -10,26 +10,21 @@ class Perfil extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            tipo_usuario: this.props.currentUser.TIPO_USUARIO,
-            nombre: this.props.currentUser.USERNAME,
-            password: this.props.currentUser.PASSWORD
+            tipo_usuario: JSON.parse(localStorage.loggedUser).TIPO_USUARIO,
+            nombre: JSON.parse(localStorage.loggedUser).USERNAME,
+            password: JSON.parse(localStorage.loggedUser).PASSWORD,
+            email: JSON.parse(localStorage.loggedUser).EMAIL
         };
         this.handleTipoUsuario = this.handleTipoUsuario.bind(this);
         this.handleNombre = this.handleNombre.bind(this);
-        this.handleGenero = this.handleGenero.bind(this);
         this.handlePass = this.handlePass.bind(this);
         this.handleValidarPass = this.handleValidarPass.bind(this);
-        this.handleProvincia = this.handleProvincia.bind(this);
-        this.handleDireccionExacta = this.handleDireccionExacta.bind(this);
-        this.handlePropiedad = this.handlePropiedad.bind(this);
-        this.handleInsertUsuario = this.handleInsertUsuario.bind(this);
-        this.handleTelefono = this.handleTelefono.bind(this);
         this.handleEmail = this.handleEmail.bind(this);
-        this.handleEliminar=this.handleEliminar.bind(this);
+        this.handleEliminar = this.handleEliminar.bind(this);
     }
 
     componentWillMount() {
-        //console.log(this.props.currentUser)
+        console.log('Usuario actual '+localStorage.loggedUser);
         document.title = 'Registrarse'
     }
 
@@ -61,7 +56,7 @@ class Perfil extends React.Component {
 
             fetch("api/index.php/usuario/1", {
                 method: "post",
-                headers: {'Content-Type': 'application/json'},
+                headers: { 'Content-Type': 'application/json' },
                 body: data
             }).then((response) => response.json())
                 .then((data) => {
@@ -73,8 +68,8 @@ class Perfil extends React.Component {
 
                         localStorage.setItem("loginUser", this.state.email);
                         var usuario = {
-                          EMAIL: this.state.email,
-                          USERNAME: this.state.nombre
+                            EMAIL: this.state.email,
+                            USERNAME: this.state.nombre
                         };
                         localStorage.setItem("loggedUser", JSON.stringify(usuario));
                         localStorage.setItem("path", "home");
@@ -118,15 +113,6 @@ class Perfil extends React.Component {
         )
     }
 
-    handleGenero(event) {
-        var dato = event.target.value;
-        this.setState(
-            {
-                genero: dato
-            }
-        )
-    }
-
     handlePass(event) {
         var dato = event.target.value;
         this.setState(
@@ -145,33 +131,6 @@ class Perfil extends React.Component {
         )
     }
 
-    handleProvincia(event) {
-        var dato = event.target.value;
-        this.setState(
-            {
-                provincia: dato
-            }
-        )
-    }
-
-    handleDireccionExacta(event) {
-        var dato = event.target.value;
-        this.setState(
-            {
-                direccion: dato
-            }
-        )
-    }
-
-    handlePropiedad(event) {
-        var dato = event.target.value;
-        this.setState(
-            {
-                propiedad: dato
-            }
-        )
-
-    }
 
     handleEmail(event) {
         var dato = event.target.value;
@@ -183,39 +142,34 @@ class Perfil extends React.Component {
 
     }
 
-    handleTelefono(event) {
-        var dato = event.target.value;
-        this.setState(
-            {
-                telefono: dato
-            }
-        )
 
-    }
-
-    handleEliminar(){
+    handleEliminar() {
         var data = JSON.stringify({
             method: 'delete',
             metodo2: 'eliminarUsuario',
-            numero_propiedad: this.state.numero_propiedad
+            email: this.state.email,
+            tipo_usuario: this.state.tipo_usuario
         })
-        // console.log(data);
+         console.log(data);
         fetch("api/index.php/usuario/1", {
             method: "post",
             headers: { 'Content-Type': 'application/json' },
             body: data
         }).then((response) => {
-            this.props.handleAll();
+          //  this.props.handleAll();
             if (response.status == 200) {
                 document.getElementById('alerta').innerHTML =
                     '<p class="alert alert-success"><small>Proceso completado correctamente</small><p>';
-            } else {
+                    localStorage.setItem("loginUser", 'NULL');
+                    localStorage.setItem("path", "home");
+                    location.reload();
+                } else {
                 document.getElementById('alerta').innerHTML =
                     '<p class="alert alert-danger">' + response.statusText + '<p>';
             }
             document.body.scrollTop = 0; // For Safari
             document.documentElement.scrollTop = 0; //
-            location.reload();
+           // location.reload();
         }
         );
     }
@@ -225,10 +179,11 @@ class Perfil extends React.Component {
                 <div className="card col-md-10">
                     <div className="card-header h2">
                         Administración de la cuenta
-                        <img src='images/register.png' alt="Registro" className="registerImg"/>
+                        <img src='images/register.png' alt="Registro" className="registerImg" />
                     </div>
                     <div className="infoRegister">
-                       Permite cambiar la contraseña o bien <strong>eliminarla</strong>
+                        <p> Permite cambiar la contraseña o bien <strong>eliminarla.</strong></p>
+                       
                     </div>
                     <div className="card-body text-dark">
                         <div id='alerta' role="alert"></div>
@@ -237,34 +192,35 @@ class Perfil extends React.Component {
                                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <Label htmlFor="nombre"><span></span>Nombre completo</Label>
                                     <Input className="form-control" name='nombre'
-                                           type="text" placeholder="Nombre completo" required
-                                           value={this.state.nombre}
-                                           onChange={this.handleNombre}/>
+                                        type="text" placeholder="Nombre completo" required
+                                        value={this.state.nombre}
+                                        onChange={this.handleNombre} />
                                 </div>
                             </FormGroup>
                             <FormGroup className="row">
                                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <Label htmlFor="password1"><span></span>Contraseña</Label>
                                     <Input className="form-control" name='password1' type="password"
-                                           placeholder="Contraseña" required 
-                                           value={this.state.password}
-                                           onChange={this.handlePass}/>
+                                        placeholder="Contraseña" required
+                                        value={this.state.password}
+                                        onChange={this.handlePass} />
                                 </div>
                             </FormGroup>
                             <FormGroup className="row">
                                 <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                     <Label htmlFor="password2"><span></span>Repita la Contraseña</Label>
                                     <Input className="form-control" name='password2' type="password"
-                                           placeholder="Confirme la contraseña" required
-                                           onChange={this.handleValidarPass}/>
+                                        placeholder="Confirme la contraseña" required
+                                        onChange={this.handleValidarPass} />
                                 </div>
                             </FormGroup>
+                            <p> <small>Cuenta Actual: <strong>{this.state.email}</strong></small></p>
                             <button type="submit" className="btn btn-primary">
                                 Actualizar
                             </button>
                             <button type="button" className="btn btn-danger ml-3"
-                            onClick={this.handleEliminar}>
-                               Eliminar Cuenta
+                                onClick={this.handleEliminar}>
+                                Eliminar Cuenta
                             </button>
                         </Form>
 

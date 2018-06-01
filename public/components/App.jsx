@@ -37,7 +37,7 @@ class App extends React.Component {
 
         if (localStorage.loginUser !== 'NULL') {
             localStorage.setItem("loginUser", 'NULL');
-            alert('Sesión cerrada.');
+            //alert('Sesión cerrada.');
         }
 
         localStorage.setItem("path", "login");
@@ -71,10 +71,10 @@ class App extends React.Component {
         localStorage.setItem("path", "perfil");
         this.forceUpdate();
     }
-
+    
     render() {
         var renderClass = <Home />;
-        //if(localStorage){
+        //if(localStorage.loggedUser&&localStorage.loginUser){}
         switch (localStorage.path) {
             case "login":
                 renderClass = <Login />;
@@ -89,7 +89,7 @@ class App extends React.Component {
                 renderClass = <About />;
                 break;
             case "perfil":
-                renderClass = <Perfil currentUser={JSON.parse(localStorage.loggedUser)}/>;
+                renderClass = <Perfil />;
                 break;
             default:
                 renderClass = <Home />;
@@ -100,7 +100,8 @@ class App extends React.Component {
         var Registrarse = <NavLink href="" onClick={this.handleRegistrar}>Registrarse</NavLink>;
 
         var PerfilUser = '';
-        if (localStorage.loginUser && localStorage.loginUser !== 'NULL') {
+        if (localStorage.loggedUser&&(localStorage.loginUser && localStorage.loginUser !== 'NULL')) {
+
             var currentUser = JSON.parse(localStorage.loggedUser).USERNAME;
             LoginType =
                 <NavLink href="" onClick={this.handleLogin}>
@@ -109,6 +110,7 @@ class App extends React.Component {
             Registrarse = '';
             PerfilUser = <NavLink href="" onClick={this.handlePerfil}>Perfil</NavLink>;
         }
+    
         return (
             <div>
                 <header>

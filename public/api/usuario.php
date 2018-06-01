@@ -148,7 +148,7 @@ class Usuario extends App
             return Usuario::error($e->getMessage());
         }
     }
-    public static function eliminarUsuario($usuario,$tipo)
+    public static function eliminarUsuario($usuario,$tipo_usuario)
     {
         //Ejemplo de consumo URL
         //http://localhost/proyecto2-progra-web/public/api/index.php/propiedad/1/?metodo=obtenerPropiedadesUsuario&email=gersonvargas@gmail.com
@@ -161,9 +161,17 @@ class Usuario extends App
             $delteuser='';
             if ($tipo_usuario == '1') {
                 $delteuser='DELETE FROM CLIENTE where EMAIL=:user';
+                $delteapli='DELETE FROM PROP_APLICADAS where EMAIL_CLIENTE=:user';
+                $apli = $dbh->prepare($delteapli);
+                $apli->bindParam(':user', $usuario);
+                $apli->execute();
             }else 
             if($tipo_usuario == '2'){
                 $delteuser='DELETE FROM INTERESADO where EMAIL=:user';
+                $delteuser3='DELETE FROM PROPIEDAD where AUTOR=:user';
+                $stmt3 = $dbh->prepare($delteuser3);
+                $stmt3->bindParam(':user', $usuario);
+                $stmt3->execute();
             }
             $stmt2 = $dbh->prepare($delteuser);
             $stmt2->bindParam(':user', $usuario);
