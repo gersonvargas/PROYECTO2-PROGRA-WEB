@@ -24,4 +24,25 @@ class Login {
         }
     }
 
+    public static function obtenerInteresado($propiedad) {
+        try {
+            $dbh = Login::obtenerconexion();
+            if ($propiedad) {
+                $select = "select 
+                INTERESADO.NOMBRE ,
+                        INTERESADO.TELEFONO ,
+                        INTERESADO.EMAIL ,
+                        INTERESADO.PROVINCIA ,
+                        INTERESADO.UBICACION 
+                from INTERESADO,PROPIEDAD where email=autor and NUMERO_PROPIEDAD=" . $propiedad . " group by email;";
+                $stmt = $dbh->prepare($select);
+                $stmt->execute();
+                $usuario = $stmt->fetchObject();
+                echo json_encode($usuario);
+            }
+        } catch (Exception $e) {
+            echo "Failed: " . $e->getMessage();
+        }
+    }
+
 }

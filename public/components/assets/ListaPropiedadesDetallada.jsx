@@ -15,11 +15,13 @@ class ListaPropiedadesDetallada extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            modal: false, tipo: true, contacto: []
         };
         this.obtenerPostulaciones = this.obtenerPostulaciones.bind(this);
         this.handleDetails = this.handleDetails.bind(this);
         this.obtenerPropiedad = this.obtenerPropiedad.bind(this);
+        this.handleModal = this.handleModal.bind(this);
+        this.handleEditData = this.handleEditData.bind(this);
     }
     obtenerPropiedad(numero) {
         //var numero=0;
@@ -46,21 +48,44 @@ class ListaPropiedadesDetallada extends React.Component {
         }
         return 0;
     }
+    handleEditData() {
+        this.setState({
+            tipo: true,
+            modal: !this.state.modal
+        });
+    }
+    handleModal(e) {
+        const index = e.currentTarget.getAttribute('data-item');
+        //var propiedad = this.obtenerPropiedad(index);
+        var url =
+            'api/index.php/login/' +
+            '?metodo=obtenerInteresado&propiedad=' + index;
+        fetch(url)
+            .then((response) => {
+                console.log(response);
+                return response.json();
+            })
+            .then((data) => {
+
+                if (data) {
+                    this.setState({
+                        contacto: data,
+                        tipo: true,
+                        modal: !this.state.modal
+                    });
+                }
+            }).catch.then((data) => {
+                alert('There was a problem!')
+            })
+
+    }
     render() {
         if (this.props.propiedades.length > 0) {
-            /* const rows = this.props.propiedades.map((item, index) =>
-                 <tr key={index} data-item={index} onClick={this.handleDetails}>
-                     <td>{item.TIPO_DISPONIBILIDAD}</td>
-                     <td>{item.FECHA_PUBLICACION}</td>
-                     <td>{item.TIPO_PROPIEDAD}</td>
-                 </tr>);
-                  <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
-                 */
+
             const rows = this.props.propiedades.map((item, index) =>
                 <Card>
                     <CardBody>
                         <CardTitle>{item.NOMBRE}</CardTitle>
-                        <CardSubtitle>{item.AUTOR}</CardSubtitle>
                         <CardText>
                             <p> Disponibilidad: <small className="text-muted">
                                 {item.TIPO_DISPONIBILIDAD}
@@ -88,6 +113,46 @@ class ListaPropiedadesDetallada extends React.Component {
                                 {item.TAMANO}
                             </small></p>
                         </CardText>
+                        <CardText>
+                            <p> Ubicacion: <small className="text-muted">
+                                {item.LOCALIDAD}
+                            </small></p>
+                            <p> Provincia: <small className="text-muted">
+                                {item.PROVINCIA}
+                            </small></p>
+                        </CardText>
+
+                        {
+                            item.TIPO_PROPIEDAD == 'Apartamento' ||
+                                item.TIPO_PROPIEDAD == 'Vivienda' ?
+                                <CardText>
+                                    <p> Esta propiedad de tipo: {item.TIPO_PROPIEDAD} posee:</p>
+                                    <p>
+                                    Habitaciones.
+                                        <small className="text-muted badge badge-primary">
+                                            {item.CANTIDAD_HABITACIONES}
+                                        </small> 
+                            </p>
+                                    <p>
+                                    Baños:
+                                        <small className="text-muted badge badge-primary">
+                                            {item.CANTIDAD_BANOS}
+                                        </small> 
+                            </p>
+                                    <p>
+                                    Cocheras: 
+                                        <small className="text-muted badge badge-primary">
+                                            {item.CANTIDAD_COCHERAS}
+                                        </small> 
+                            </p>
+                                    <p>
+                                    Pisos:
+                                        <small className="text-muted badge badge-primary">
+                                            {item.CANTIDAD_PISOS}
+                                        </small> 
+                            </p>
+                                </CardText> : ""
+                        }
                         <button className="btn btn-sm btn-primary" key={index} data-item={item.NUMERO_PROPIEDAD}
                             onClick={this.handleDetails}>Estoy Interesado</button>
                         <button type="button" class="btn btn-sm btn-info ml-3">
@@ -95,6 +160,14 @@ class ListaPropiedadesDetallada extends React.Component {
                                 {this.obtenerPostulaciones(item.NUMERO_PROPIEDAD)}
                             </span>
                         </button>
+                        <button type="button" class="btn btn-sm btn-info ml-3"
+                            key={index} data-item={item.NUMERO_PROPIEDAD}
+                            onClick={this.handleModal}>
+                            Contacto
+                        </button>
+                        <ModalContacto contacto={this.state.contacto} modal={this.state.modal}
+                            handleEditData={this.handleEditData}
+                            handleChangeData={this.handleChangeData} tipo={this.state.tipo} />
                     </CardBody>
                     <CardFooter className="text-muted">Publicado el: {item.FECHA_PUBLICACION}
 

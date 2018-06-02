@@ -48,6 +48,10 @@ class DBHandler {
                 $propiedad = $_GET['propiedad'];
                 return Propiedad::obtenerMensajesPropiedad($propiedad);
             }
+            else if ($metodo == 'obtenerInteresado') {
+                $usuario = $_GET['propiedad'];
+                return Login::obtenerInteresado($usuario);
+            }
         }
     }
 
