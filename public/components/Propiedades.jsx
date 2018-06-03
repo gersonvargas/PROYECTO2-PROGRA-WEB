@@ -25,7 +25,7 @@ class Propiedades extends React.Component {
             ver_mensajes: false,
             tipo_usuario: JSON.parse(localStorage.loggedUser).TIPO_USUARIO,
             email_usuario: JSON.parse(localStorage.loggedUser).EMAIL,
-        }
+        };
         this.handleReload = this.handleReload.bind(this);
         this.handleAplicadas = this.handleAplicadas.bind(this);
         this.componentWillMount = this.componentWillMount.bind(this);
@@ -166,15 +166,13 @@ class Propiedades extends React.Component {
         </Row>
     }
     render() {
-        var renderClass = <Home />;
-        //if(localStorage){
+        var renderClass = <p></p>;
         switch (this.state.tipo_usuario) {
             case "0": //usuario administrador
                 renderClass = <Login />;
                 break;
             case "1": //usuario cliente
                 renderClass = this.state.propiedad ? this.obtenerRender() : this.obtenerRender();
-
                 break;
             case "2"://usuario interesado
                 renderClass = this.obtenerRenderInteresado();
@@ -191,7 +189,7 @@ class Propiedades extends React.Component {
                         <Col xs="5">
                             <div className="input-group-prepend m-3">
                                 <span className="input-group-text" id="inputGroup-sizing-default">
-                                    <img src='icons/lupa.png' />
+                                    <img src='images/icons/lupa.png' />
                                 </span>
                                 <input className="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" type="text"
                                     placeholder="Search" onChange={this.filterList} />

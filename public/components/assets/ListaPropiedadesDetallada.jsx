@@ -126,30 +126,30 @@ class ListaPropiedadesDetallada extends React.Component {
                             item.TIPO_PROPIEDAD == 'Apartamento' ||
                                 item.TIPO_PROPIEDAD == 'Vivienda' ?
                                 <CardText>
-                                    <p> Esta propiedad de tipo: {item.TIPO_PROPIEDAD} posee:</p>
+                                    <p> Esta propiedad de tipo {item.TIPO_PROPIEDAD} posee:</p>
                                     <p>
-                                    Habitaciones.
-                                        <small className="text-muted badge badge-primary">
+                                    Habitaciones:
+                                        <strong className="">
                                             {item.CANTIDAD_HABITACIONES}
-                                        </small> 
+                                        </strong>
                             </p>
                                     <p>
                                     Baños:
-                                        <small className="text-muted badge badge-primary">
+                                        <strong className="">
                                             {item.CANTIDAD_BANOS}
-                                        </small> 
+                                        </strong>
                             </p>
                                     <p>
-                                    Cocheras: 
-                                        <small className="text-muted badge badge-primary">
+                                    Cocheras:
+                                        <strong className="">
                                             {item.CANTIDAD_COCHERAS}
-                                        </small> 
+                                        </strong>
                             </p>
                                     <p>
                                     Pisos:
-                                        <small className="text-muted badge badge-primary">
+                                        <strong className="">
                                             {item.CANTIDAD_PISOS}
-                                        </small> 
+                                        </strong>
                             </p>
                                 </CardText> : ""
                         }

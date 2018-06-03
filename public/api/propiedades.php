@@ -203,10 +203,10 @@ class Propiedad extends App
             $stmt->bindParam(':FECHA_PUBLICACION', $fecha_publicacion);
             $stmt->execute();
             }
-            return App::success('Se ha insertado la informacion.');
+            return Propiedad::success('Se ha insertado la informacion.');
         } catch (PDOException $e) {
             // Print PDOException message
-            return App::error($e->getMessage());
+            return Propiedad::error($e->getMessage());
         }
     }
 

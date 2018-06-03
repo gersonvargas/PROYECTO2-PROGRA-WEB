@@ -118,10 +118,9 @@ class Usuario extends App
             $stmt = $file_db->prepare($insert);
             $stmt->bindParam(':nombre', $nombre);
             $stmt->bindParam(':telefono', $telefono);
-            $stmt->bindParam(':email', $email);
             $stmt->bindParam(':provincia', $provincia);
             $stmt->bindParam(':ubicacion', $ubicacion);
-            $stmt->bindParam(':password', $pass);
+            $stmt->bindParam(':email', $email);
 
             if ($tipo_usuario == '1') {
                 $stmt->bindParam(':propiedad_requerida', $propiedad);
@@ -130,12 +129,13 @@ class Usuario extends App
 
             $fecha = date("Y-m-d");
             $insert2 = "UPDATE USUARIO 
-            SET USERNAME=:USERNAME,
+            SET 
+            USERNAME=:USERNAME,
             PASSWORD=:PASSWORD,
             LAST_MODIFIED=:LAST_MODIFIED,
             TIPO_USUARIO=:TIPO_USUARIO
             WHERE 
-            EMAIL=:email";
+            EMAIL=:EMAIL";
             $stmt2 = $file_db->prepare($insert2);
             $stmt2->bindParam(':USERNAME', $nombre);
             $stmt2->bindParam(':EMAIL', $email);

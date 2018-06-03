@@ -5,9 +5,11 @@ require("login.php");
 require("propiedades.php");
 require("usuario.php");
 
-class DBHandler {
+class DBHandler
+{
 
-    function init() {
+    function init()
+    {
         try {
             $dbh = new PDO('sqlite:bienesRaices.db');
             return $dbh;
@@ -16,15 +18,17 @@ class DBHandler {
         }
     }
 
-    function obtenerconexion() {
+    function obtenerconexion()
+    {
         $file_db = new PDO('sqlite:bienesRaices.db');
         // Set errormode to exceptions
         $file_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $file_db;
     }
 
-    
-    function get($id = null) {
+
+    function get($id = null)
+    {
         $metodo = $_GET['metodo'];
         if ($metodo) {
             if ($metodo == 'login') {
@@ -33,54 +37,58 @@ class DBHandler {
                 return Login::obtenerUsuario($email, $password);
             } else if ($metodo == 'getpropiedades') {
                 return Propiedad::obtenerPropiedades();
-            }
-            else if ($metodo == 'obtenerCantidadAplicadas') {
+            } else if ($metodo == 'obtenerCantidadAplicadas') {
                 $numero_propiedad = $_GET['numero_propiedad'];
                 return Propiedad::obtenerCantidadAplicadas($numero_propiedad);
-            }
-            else if ($metodo == 'obtenerTodasAplicadas') {
+            } else if ($metodo == 'obtenerTodasAplicadas') {
                 return Propiedad::obtenerTodasAplicadas();
-            }else if ($metodo == 'obtenerPropiedadesUsuario') {
+            } else if ($metodo == 'obtenerPropiedadesUsuario') {
                 $user = $_GET['email'];
                 return Propiedad::obtenerPropiedadesUsuario($user);
             }//obtenerMensajesPropiedad
             else if ($metodo == 'obtenerMensajesPropiedad') {
                 $propiedad = $_GET['propiedad'];
                 return Propiedad::obtenerMensajesPropiedad($propiedad);
-            }
-            else if ($metodo == 'obtenerInteresado') {
+            } else if ($metodo == 'obtenerInteresado') {
                 $usuario = $_GET['propiedad'];
                 return Login::obtenerInteresado($usuario);
             }
         }
     }
 
-    function put($_DATA) {
-
+    function put($_DATA)
+    {
         try {
-            // $_PUT = json_decode(file_get_contents('php://input'), True);
             $metodo = $_DATA['metodo2'];
-            if ($metodo == 'insertarUsuario') {
-                Usuario::insertarUsuario($_DATA);
-            }else if ($_POST['metodo2'] == 'insertarPostulacion') {
-                return Propiedad::insertarPostulacion($_POST);
-             }
-            echo 'Successfull';
+            switch ($metodo) {
+                case "insertarUsuario":
+                    Usuario::insertarUsuario($_DATA);
+                    break;
+                case "insertarPostulacion":
+                    return Propiedad::insertarPostulacion($_POST);
+                    break;
+                case "actualizarUsuario":
+                    Usuario::actualizarUsuario($_DATA);
+                    break;
+                default:
+                    break;
+            }
         } catch (Exception $e) {
             echo "Failed: " . $e->getMessage();
         }
     }
 
-    function delete($data) {
+    function delete($data)
+    {
         try {
             $metodo = $data['metodo2'];
-            if($metodo=='eliminarPropiedad'){
-                $numero=$data['numero_propiedad'];
+            if ($metodo == 'eliminarPropiedad') {
+                $numero = $data['numero_propiedad'];
                 Propiedad::eliminarPropiedad($numero);
-            }else if($metodo=='eliminarUsuario'){
-                $email=$data['email'];
-                $tipo_usuario=$data['tipo_usuario'];
-                Usuario::eliminarUsuario($email,$tipo_usuario);
+            } else if ($metodo == 'eliminarUsuario') {
+                $email = $data['email'];
+                $tipo_usuario = $data['tipo_usuario'];
+                Usuario::eliminarUsuario($email, $tipo_usuario);
             }
         } catch (Exception $e) {
             $dbh->rollBack();
@@ -88,22 +96,22 @@ class DBHandler {
         }
     }
 
-    function post($id = null) {
-
+    function post($id = null)
+    {
         try {
             $_POST = json_decode(file_get_contents('php://input'), True);
             if ($_POST['method'] == 'login') {
                 return Login::obtenerusuario('gerson@gmail.com', 'admin123');
             } else if ($_POST['method'] == 'delete') {
                 return $this->delete($_POST);
-            } else if ($_POST['method'] == 'put') {
+            } else if ($_POST['method'] == 'put' OR $_POST['method'] == 'post') {
                 return $this->put($_POST);
             } else if ($_POST['method'] == 'insertarPropiedad') {
-               return Propiedad::insertarPropiedad($_POST);
-            }else if ($_POST['method'] == 'modificarPropiedad') {
+                return Propiedad::insertarPropiedad($_POST);
+            } else if ($_POST['method'] == 'modificarPropiedad') {
                 return Propiedad::modificarPropiedad($_POST);
-             } 
-            
+            }
+
         } catch (Exception $e) {
             echo "Failed: " . $e->getMessage();
         }

@@ -39,11 +39,11 @@ class Registrar extends React.Component {
     }
 
     handleInsertUsuario(event) {
-       // alert('hola')
+        // alert('hola')
         event.preventDefault();
         //alert('entra this.state.tipo_usuario == "-1"');
         if (this.state.tipo_usuario == "-1") {
-            
+
             document.getElementById('alerta').innerHTML =
                 '<p class="alert alert-danger">Indique el tipo de usuario.<p>';
             document.body.scrollTop = 0; // For Safari
@@ -78,18 +78,8 @@ class Registrar extends React.Component {
                             '<p class="alert alert-success"><small>Proceso completado correctamente</small><p>';
                         document.body.scrollTop = 0; // For Safari
                         document.documentElement.scrollTop = 0; //
-                       /* var usuario = {
-                          EMAIL: this.state.email,
-                          USERNAME: this.state.nombre,
-                          TIPO_USUARIO: this.state.tipo_usuario,
-                          PASSWORD: this.state.password,
-                          PRUEBA:'pruebas'
-                        };
-                        localStorage.setItem("loggedUser", JSON.stringify(usuario));
-                        */
                         localStorage.setItem("path", "login");
-                        
-                       location.reload();
+                        location.reload();
                     } else {
                         document.getElementById('alerta').innerHTML =
                             '<p class="alert alert-danger">' + data.msg + '<p>';

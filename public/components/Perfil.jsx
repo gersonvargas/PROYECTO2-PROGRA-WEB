@@ -15,6 +15,9 @@ class Perfil extends React.Component {
             password: JSON.parse(localStorage.loggedUser).PASSWORD,
             email: JSON.parse(localStorage.loggedUser).EMAIL
         };
+
+        console.log(this.state);
+
         this.handleTipoUsuario = this.handleTipoUsuario.bind(this);
         this.handleNombre = this.handleNombre.bind(this);
         this.handlePass = this.handlePass.bind(this);
@@ -24,8 +27,7 @@ class Perfil extends React.Component {
     }
 
     componentWillMount() {
-        console.log('Usuario actual '+localStorage.loggedUser);
-        document.title = 'Registrarse'
+        document.title = 'Perfil'
     }
 
     handleInsertUsuario(event) {
@@ -41,9 +43,9 @@ class Perfil extends React.Component {
             document.body.scrollTop = 0; // For Safari
             document.documentElement.scrollTop = 0; //
         } else {
-            var data = JSON.stringify({
-                method: 'put',// numero: "", fecha: "", area: 0, cliente: '', density: 0,
-                metodo2: 'insertarUsuario',
+            var requestData = JSON.stringify({
+                method: 'post',
+                metodo2: 'actualizarUsuario',
                 t_user: this.state.tipo_usuario,
                 nombre: this.state.nombre,
                 telefono: this.state.telefono,
@@ -55,9 +57,9 @@ class Perfil extends React.Component {
             });
 
             fetch("api/index.php/usuario/1", {
-                method: "post",
+                method: "POST",
                 headers: { 'Content-Type': 'application/json' },
-                body: data
+                body: requestData
             }).then((response) => response.json())
                 .then((data) => {
                     if (data.code == '200') {
@@ -69,7 +71,8 @@ class Perfil extends React.Component {
                         localStorage.setItem("loginUser", this.state.email);
                         var usuario = {
                             EMAIL: this.state.email,
-                            USERNAME: this.state.nombre
+                            USERNAME: this.state.nombre,
+                            TIPO_USUARIO: this.state.tipo_usuario
                         };
                         localStorage.setItem("loggedUser", JSON.stringify(usuario));
                         localStorage.setItem("path", "home");
@@ -144,34 +147,36 @@ class Perfil extends React.Component {
 
 
     handleEliminar() {
-        var data = JSON.stringify({
-            method: 'delete',
-            metodo2: 'eliminarUsuario',
-            email: this.state.email,
-            tipo_usuario: this.state.tipo_usuario
-        })
-         console.log(data);
-        fetch("api/index.php/usuario/1", {
-            method: "post",
-            headers: { 'Content-Type': 'application/json' },
-            body: data
-        }).then((response) => {
-          //  this.props.handleAll();
-            if (response.status == 200) {
-                document.getElementById('alerta').innerHTML =
-                    '<p class="alert alert-success"><small>Proceso completado correctamente</small><p>';
-                    localStorage.setItem("loginUser", 'NULL');
-                    localStorage.setItem("path", "home");
-                    location.reload();
-                } else {
-                document.getElementById('alerta').innerHTML =
-                    '<p class="alert alert-danger">' + response.statusText + '<p>';
-            }
-            document.body.scrollTop = 0; // For Safari
-            document.documentElement.scrollTop = 0; //
-           // location.reload();
+        if (confirm('¿Seguro que desea eliminar su cuenta?, No hay marcha atras.')) {
+            var data = JSON.stringify({
+                method: 'delete',
+                metodo2: 'eliminarUsuario',
+                email: this.state.email,
+                tipo_usuario: this.state.tipo_usuario
+            })
+            console.log(data);
+            fetch("api/index.php/usuario/1", {
+                method: "post",
+                headers: { 'Content-Type': 'application/json' },
+                body: data
+            }).then((response) => {
+                    //  this.props.handleAll();
+                    if (response.status == 200) {
+                        document.getElementById('alerta').innerHTML =
+                            '<p class="alert alert-success"><small>Proceso completado correctamente</small><p>';
+                        localStorage.setItem("loginUser", 'NULL');
+                        localStorage.setItem("path", "home");
+                        location.reload();
+                    } else {
+                        document.getElementById('alerta').innerHTML =
+                            '<p class="alert alert-danger">' + response.statusText + '<p>';
+                    }
+                    document.body.scrollTop = 0; // For Safari
+                    document.documentElement.scrollTop = 0; //
+                    // location.reload();
+                }
+            );
         }
-        );
     }
     render() {
         return (
@@ -179,11 +184,11 @@ class Perfil extends React.Component {
                 <div className="card col-md-10">
                     <div className="card-header h2">
                         Administración de la cuenta
-                        <img src='images/register.png' alt="Registro" className="registerImg" />
+                        <img src='images/idea.png' alt="Registro" className="registerImg" />
                     </div>
                     <div className="infoRegister">
-                        <p> Permite cambiar la contraseña o bien <strong>eliminarla.</strong></p>
-                       
+                        <p> Permite cambiar la contraseña, nombre de usuario o bien <strong>eliminar</strong> la cuenta.
+                        </p>
                     </div>
                     <div className="card-body text-dark">
                         <div id='alerta' role="alert"></div>
@@ -215,13 +220,13 @@ class Perfil extends React.Component {
                                 </div>
                             </FormGroup>
                             <p> <small>Cuenta Actual: <strong>{this.state.email}</strong></small></p>
-                            <button type="submit" className="btn btn-primary">
+                            <Button color="primary" onClick={this.handleInsertUsuario.bind(this)} className="btn btn-primary">
                                 Actualizar
-                            </button>
-                            <button type="button" className="btn btn-danger ml-3"
-                                onClick={this.handleEliminar}>
+                            </Button>
+                            <Button color="danger" className="btn btn-danger ml-3"
+                                onClick={this.handleEliminar.bind(this)}>
                                 Eliminar Cuenta
-                            </button>
+                            </Button>
                         </Form>
 
                     </div>

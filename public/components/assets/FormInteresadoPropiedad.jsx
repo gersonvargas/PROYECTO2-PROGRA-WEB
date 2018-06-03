@@ -359,7 +359,7 @@ class FormInteresadoPropiedad extends React.Component {
                     <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <Label htmlFor="nombre"><span></span>Cantidad de habitaciones:</Label>
                         <Input type="number" className="form-control" name='numero'
-                            placeholder="Número de la propiedad"
+                            placeholder="Cantidad de habitaciones:"
                             required
                             onChange={this.handleCantidadHabitaciones}
                             value={this.state.cantidad_habitaciones} />
@@ -367,9 +367,9 @@ class FormInteresadoPropiedad extends React.Component {
                 </FormGroup>
                 <FormGroup className="row">
                     <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <Label htmlFor="nombre"><span></span>Cantidad de Baños:</Label>
+                        <Label htmlFor="nombre"><span></span>Cantidad de baños:</Label>
                         <Input type="number" className="form-control" name='numero'
-                            placeholder="Número de la propiedad"
+                            placeholder="Cantidad de baños"
                             required
                             onChange={this.handleCantidadBanos}
                             value={this.state.cantidad_banos} />
@@ -377,9 +377,9 @@ class FormInteresadoPropiedad extends React.Component {
                 </FormGroup>
                 <FormGroup className="row">
                     <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <Label htmlFor="nombre"><span></span>Cantidad de Cocheras:</Label>
+                        <Label htmlFor="nombre"><span></span>Cantidad de cocheras:</Label>
                         <Input type="number" className="form-control" name='numero'
-                            placeholder="Número de la propiedad"
+                            placeholder="Cantidad de cocheras"
                             required
                             onChange={this.handleCantidadCocheras}
                             value={this.state.cantidad_cocheras} />
@@ -387,9 +387,9 @@ class FormInteresadoPropiedad extends React.Component {
                 </FormGroup>
                 <FormGroup className="row">
                     <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <Label htmlFor="nombre"><span></span>Cantidad de Pisos:</Label>
+                        <Label htmlFor="nombre"><span></span>Cantidad de pisos:</Label>
                         <Input type="number" className="form-control" name='numero'
-                            placeholder="Número de la propiedad"
+                            placeholder="Cantidad de pisos"
                             required
                             onChange={this.handleCantidadPisos}
                             value={this.state.cantidad_pisos} />

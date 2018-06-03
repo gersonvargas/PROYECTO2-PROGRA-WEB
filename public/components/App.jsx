@@ -73,7 +73,7 @@ class App extends React.Component {
     }
     
     render() {
-        var renderClass = <Home />;
+        var renderClass = "";
         //if(localStorage.loggedUser&&localStorage.loginUser){}
         switch (localStorage.path) {
             case "login":
@@ -108,7 +108,7 @@ class App extends React.Component {
                     Cerrar sesión: {currentUser}
                 </NavLink>;
             Registrarse = '';
-            PerfilUser = <NavLink href="" onClick={this.handlePerfil}><img src='icons/usuario.png'alt='alt'/>Perfil</NavLink>;
+            PerfilUser = <NavLink href="" onClick={this.handlePerfil}>Perfil</NavLink>;
         }
     
         return (
