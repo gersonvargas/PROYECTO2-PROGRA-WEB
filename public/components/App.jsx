@@ -31,6 +31,7 @@ class App extends React.Component {
         this.handleRegistrar = this.handleRegistrar.bind(this);
         this.handleAbout = this.handleAbout.bind(this);
         this.handlePerfil = this.handlePerfil.bind(this);
+        this.handleVisualizarDatos=this.handleVisualizarDatos.bind(this);
     }
 
     handleLogin() {
@@ -71,6 +72,10 @@ class App extends React.Component {
         localStorage.setItem("path", "perfil");
         this.forceUpdate();
     }
+    handleVisualizarDatos() {
+        localStorage.setItem("path", "datos");
+        //this.forceUpdate();
+    }
     
     render() {
         var renderClass = "";
@@ -90,6 +95,9 @@ class App extends React.Component {
                 break;
             case "perfil":
                 renderClass = <Perfil />;
+                break;
+            case "datos":
+                renderClass = <div>Datos</div>;
                 break;
             default:
                 renderClass = <Home />;
@@ -124,6 +132,9 @@ class App extends React.Component {
                                 </NavItem>
                                 <NavItem>
                                     <NavLink href="" onClick={this.handleAbout}>Sobre nosotros</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink href="" onClick={this.handleVisualizarDatos}>Visualizar Datos</NavLink>
                                 </NavItem>
                             </Nav>
                             <Nav navbar className="customNav">
