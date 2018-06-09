@@ -21,8 +21,17 @@ var ModalHeader = Reactstrap.ModalHeader;
 var ModalBody = Reactstrap.ModalBody;
 var ModalFooter = Reactstrap.ModalFooter;
 
+var ColumnChart = ReactChartkick.ColumnChart;
+var PieChart = ReactChartkick.PieChart;
+var AreaChart = ReactChartkick.AreaChart;
+var BarChart = ReactChartkick.BarChart;
+var LineChart = ReactChartkick.LineChart;
+
 class App extends React.Component {
     constructor(props) {
+        if(!localStorage.loginUser){
+            localStorage.setItem("loginUser", 'NULL');
+        }
         super(props);
         this.state = {};
         this.handleLogin = this.handleLogin.bind(this);
@@ -35,7 +44,6 @@ class App extends React.Component {
     }
 
     handleLogin() {
-
         if (localStorage.loginUser !== 'NULL') {
             localStorage.setItem("loginUser", 'NULL');
             //alert('Sesión cerrada.');
@@ -97,7 +105,7 @@ class App extends React.Component {
                 renderClass = <Perfil />;
                 break;
             case "datos":
-                renderClass = <div>Datos</div>;
+                renderClass = <Datos />;
                 break;
             default:
                 renderClass = <Home />;
@@ -131,10 +139,10 @@ class App extends React.Component {
                                     <NavLink href="" onClick={this.handlePropiedades}>Propiedades</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink href="" onClick={this.handleAbout}>Sobre nosotros</NavLink>
+                                    <NavLink href="" onClick={this.handleVisualizarDatos}>Visualizar Datos</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink href="" onClick={this.handleVisualizarDatos}>Visualizar Datos</NavLink>
+                                    <NavLink href="" onClick={this.handleAbout}>Sobre nosotros</NavLink>
                                 </NavItem>
                             </Nav>
                             <Nav navbar className="customNav">

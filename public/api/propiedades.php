@@ -29,11 +29,17 @@ class Propiedad extends App
             $provincia = $data['provincia'];
             $file_db = Propiedad::obtenerconexion();
 
-            if($tipo_propiedad=='Apartamento'||$tipo_propiedad=='Vivienda'){
-                $cantidad_banos= $data['cantidad_banos'];
-                $cantidad_habitaciones= $data['cantidad_habitaciones'];
-                $cantidad_cocheras= $data['cantidad_cocheras'];
-                $cantidad_pisos= $data['cantidad_pisos'];
+            if ($tipo_propiedad == 'Apartamento' || $tipo_propiedad == 'Vivienda') {
+                $cantidad_banos = $data['cantidad_banos'];
+                $cantidad_habitaciones = $data['cantidad_habitaciones'];
+                $cantidad_cocheras = $data['cantidad_cocheras'];
+                $cantidad_pisos = $data['cantidad_pisos'];
+            } else {
+                $cantidad_banos = 0;
+                $cantidad_habitaciones = 0;
+                $cantidad_cocheras = 0;
+                $cantidad_pisos = 0;
+            }
 
             $insert = "UPDATE PROPIEDAD 
                 SET 
@@ -73,37 +79,7 @@ class Propiedad extends App
             $stmt->bindParam(':CANTIDAD_PISOS', $cantidad_pisos);
             $stmt->bindParam(':NUMERO_PROPIEDAD', $numero_propiedad);
             $stmt->execute();
-            }else{
-            $insert = "UPDATE PROPIEDAD 
-                SET 
-                NOMBRE=:NOMBRE,
-                AUTOR=:AUTOR,
-                TAMANO=:TAMANO,
-                M_CUADRADOS=:M_CUADRADOS,
-                TIPO_PROPIEDAD=:TIPO_PROPIEDAD,
-                TIPO_DISPONIBILIDAD=:TIPO_DISPONIBILIDAD,
-                ESTADO_CONSTRUCCION=:ESTADO_CONSTRUCCION,
-                DESCRIPCION=:DESCRIPCION,
-                LOCALIDAD=:LOCALIDAD,
-                CIUDAD=:CIUDAD,
-                PROVINCIA=:PROVINCIA
-                WHERE NUMERO_PROPIEDAD=:NUMERO_PROPIEDAD";
 
-            $stmt = $file_db->prepare($insert);
-            $stmt->bindParam(':NOMBRE', $nombre);
-            $stmt->bindParam(':AUTOR', $autor);
-            $stmt->bindParam(':TAMANO', $tamano);
-            $stmt->bindParam(':M_CUADRADOS', $m_cuadrados);
-            $stmt->bindParam(':TIPO_PROPIEDAD', $tipo_propiedad);
-            $stmt->bindParam(':TIPO_DISPONIBILIDAD', $tipo_disponibilidad);
-            $stmt->bindParam(':DESCRIPCION', $descripcion);
-            $stmt->bindParam(':ESTADO_CONSTRUCCION', $estado_construccion);
-            $stmt->bindParam(':LOCALIDAD', $localidad);
-            $stmt->bindParam(':CIUDAD', $cliudad);
-            $stmt->bindParam(':PROVINCIA', $provincia);
-            $stmt->bindParam(':NUMERO_PROPIEDAD', $numero_propiedad);
-            $stmt->execute();
-            }
             return App::success('Se ha modificado la informacion.');
         } catch (PDOException $e) {
             // Print PDOException message
@@ -127,56 +103,25 @@ class Propiedad extends App
             $localidad = $data['localidad'];
             $cliudad = $data['ciudad'];
             $provincia = $data['provincia'];
-          
+
             $file_db = Propiedad::obtenerconexion();
-            if($tipo_propiedad=='Apartamento'||$tipo_propiedad=='Vivienda'){
-                $cantidad_banos= $data['cantidad_banos'];
-                $cantidad_habitaciones= $data['cantidad_habitaciones'];
-                $cantidad_cocheras= $data['cantidad_cocheras'];
-                $cantidad_pisos= $data['cantidad_pisos'];
-                
-                 $insert2 = "INSERT INTO PROPIEDAD 
+            if ($tipo_propiedad == 'Apartamento' || $tipo_propiedad == 'Vivienda') {
+                $cantidad_banos = $data['cantidad_banos'];
+                $cantidad_habitaciones = $data['cantidad_habitaciones'];
+                $cantidad_cocheras = $data['cantidad_cocheras'];
+                $cantidad_pisos = $data['cantidad_pisos'];
+            } else {
+                $cantidad_banos = 0;
+                $cantidad_habitaciones = 0;
+                $cantidad_cocheras = 0;
+                $cantidad_pisos = 0;
+            }
+
+            $insert2 = "INSERT INTO PROPIEDAD 
                  VALUES (:NUMERO_PROPIEDAD, 
-                 :NOMBRE,
+                :NOMBRE,
                 :AUTOR, 
                 :TAMANO,
-                 :M_CUADRADOS, 
-                 :TIPO_PROPIEDAD,
-                 :TIPO_DISPONIBILIDAD,
-                 :ESTADO_CONSTRUCCION,
-                 :DESCRIPCION,
-                 :LOCALIDAD,
-                 :CIUDAD,
-                 :PROVINCIA,
-                 :CANTIDAD_HABITACIONES, 
-                :CANTIDAD_BANOS,
-                :CANTIDAD_COCHERAS,
-                :CANTIDAD_PISOS,
-                 :FECHA_PUBLICACION
-                 )";
-                $stmt2 = $file_db->prepare($insert2);
-                $stmt2->bindParam(':NUMERO_PROPIEDAD', $numero_propiedad);
-                $stmt2->bindParam(':NOMBRE', $nombre);
-                $stmt2->bindParam(':AUTOR', $autor);
-                $stmt2->bindParam(':TAMANO', $tamano);
-                $stmt2->bindParam(':M_CUADRADOS', $m_cuadrados);
-                $stmt2->bindParam(':TIPO_PROPIEDAD', $tipo_propiedad);
-                $stmt2->bindParam(':TIPO_DISPONIBILIDAD', $tipo_disponibilidad);
-                $stmt2->bindParam(':ESTADO_CONSTRUCCION', $estado_construccion);
-                $stmt2->bindParam(':DESCRIPCION', $descripcion);
-                $stmt2->bindParam(':LOCALIDAD', $localidad);
-                $stmt2->bindParam(':CIUDAD', $cliudad);
-                $stmt2->bindParam(':PROVINCIA', $provincia);
-                $stmt2->bindParam(':CANTIDAD_HABITACIONES', $cantidad_habitaciones);
-                $stmt2->bindParam(':CANTIDAD_BANOS', $cantidad_banos);
-                $stmt2->bindParam(':CANTIDAD_COCHERAS', $cantidad_cocheras);
-                $stmt2->bindParam(':CANTIDAD_PISOS', $cantidad_pisos);
-                $stmt2->bindParam(':FECHA_PUBLICACION', $fecha_publicacion);
-                $stmt2->execute();
-           
-            }else{
-                $insert = "INSERT INTO PROPIEDAD 
-                VALUES (:NUMERO_PROPIEDAD, :NOMBRE, :AUTOR, :TAMANO,
                 :M_CUADRADOS, 
                 :TIPO_PROPIEDAD,
                 :TIPO_DISPONIBILIDAD,
@@ -185,24 +130,32 @@ class Propiedad extends App
                 :LOCALIDAD,
                 :CIUDAD,
                 :PROVINCIA,
+                :CANTIDAD_HABITACIONES, 
+                :CANTIDAD_BANOS,
+                :CANTIDAD_COCHERAS,
+                :CANTIDAD_PISOS,
                 :FECHA_PUBLICACION
-                )";
-            $stmt = $file_db->prepare($insert);
-            $stmt->bindParam(':NUMERO_PROPIEDAD', $numero_propiedad);
-            $stmt->bindParam(':NOMBRE', $nombre);
-            $stmt->bindParam(':AUTOR', $autor);
-            $stmt->bindParam(':TAMANO', $tamano);
-            $stmt->bindParam(':M_CUADRADOS', $m_cuadrados);
-            $stmt->bindParam(':TIPO_PROPIEDAD', $tipo_propiedad);
-            $stmt->bindParam(':TIPO_DISPONIBILIDAD', $tipo_disponibilidad);
-            $stmt->bindParam(':ESTADO_CONSTRUCCION', $estado_construccion);
-            $stmt->bindParam(':DESCRIPCION', $descripcion);
-            $stmt->bindParam(':LOCALIDAD', $localidad);
-            $stmt->bindParam(':CIUDAD', $cliudad);
-            $stmt->bindParam(':PROVINCIA', $provincia);
-            $stmt->bindParam(':FECHA_PUBLICACION', $fecha_publicacion);
-            $stmt->execute();
-            }
+                 )";
+            $stmt2 = $file_db->prepare($insert2);
+            $stmt2->bindParam(':NUMERO_PROPIEDAD', $numero_propiedad);
+            $stmt2->bindParam(':NOMBRE', $nombre);
+            $stmt2->bindParam(':AUTOR', $autor);
+            $stmt2->bindParam(':TAMANO', $tamano);
+            $stmt2->bindParam(':M_CUADRADOS', $m_cuadrados);
+            $stmt2->bindParam(':TIPO_PROPIEDAD', $tipo_propiedad);
+            $stmt2->bindParam(':TIPO_DISPONIBILIDAD', $tipo_disponibilidad);
+            $stmt2->bindParam(':ESTADO_CONSTRUCCION', $estado_construccion);
+            $stmt2->bindParam(':DESCRIPCION', $descripcion);
+            $stmt2->bindParam(':LOCALIDAD', $localidad);
+            $stmt2->bindParam(':CIUDAD', $cliudad);
+            $stmt2->bindParam(':PROVINCIA', $provincia);
+            $stmt2->bindParam(':CANTIDAD_HABITACIONES', $cantidad_habitaciones);
+            $stmt2->bindParam(':CANTIDAD_BANOS', $cantidad_banos);
+            $stmt2->bindParam(':CANTIDAD_COCHERAS', $cantidad_cocheras);
+            $stmt2->bindParam(':CANTIDAD_PISOS', $cantidad_pisos);
+            $stmt2->bindParam(':FECHA_PUBLICACION', $fecha_publicacion);
+            $stmt2->execute();
+
             return Propiedad::success('Se ha insertado la informacion.');
         } catch (PDOException $e) {
             // Print PDOException message
@@ -357,6 +310,71 @@ class Propiedad extends App
             echo json_encode($data);
         } catch (Exception $e) {
             return App::error($e->getMessage());
+        }
+    }
+
+    public static function getDataCharts()
+    {
+        $dbh = Propiedad::obtenerconexion();
+        try {
+            $data = array();
+
+            $selectTipoPropiedad = "SELECT TIPO_PROPIEDAD, COUNT(*) AS QTY FROM PROPIEDAD GROUP BY TIPO_PROPIEDAD ORDER BY COUNT(*) DESC;";
+            $stmt = $dbh->prepare($selectTipoPropiedad);
+            $stmt->execute();
+            $resultTipoPropiedad = $stmt->fetchAll();
+            $dataTipoPropiedad = array();
+            foreach ($resultTipoPropiedad as $rtp) {
+                $dataTipoPropiedad[$rtp['TIPO_PROPIEDAD']] = $rtp['QTY'];
+            }
+            $data['dataTipoPropiedad'] = $dataTipoPropiedad;
+
+            $selectDisponibilidadPropiedad = "SELECT TIPO_DISPONIBILIDAD, COUNT(*) AS QTY FROM PROPIEDAD GROUP BY TIPO_DISPONIBILIDAD ORDER BY COUNT(*) DESC;";
+            $stmt = $dbh->prepare($selectDisponibilidadPropiedad);
+            $stmt->execute();
+            $resultDisponibilidadPropiedad = $stmt->fetchAll();
+            $dataDisponibilidadPropiedad = array();
+            foreach ($resultDisponibilidadPropiedad as $rdp) {
+                $dataDisponibilidadPropiedad[$rdp['TIPO_DISPONIBILIDAD']] = $rdp['QTY'];
+            }
+            $data['dataDisponibilidadPropiedad'] = $dataDisponibilidadPropiedad;
+
+            $selectProvinciaPropiedad = "SELECT PROVINCIA, COUNT(*) AS QTY FROM PROPIEDAD GROUP BY PROVINCIA ORDER BY COUNT(*) DESC;";
+            $stmt = $dbh->prepare($selectProvinciaPropiedad);
+            $stmt->execute();
+            $resultProvinciaPropiedad = $stmt->fetchAll();
+            $dataProvinciaPropiedad = array();
+            foreach ($resultProvinciaPropiedad as $rpp) {
+                $dataProvinciaPropiedad[$rpp['PROVINCIA']] = $rpp['QTY'];
+            }
+            $data['dataProvinciaPropiedad'] = $dataProvinciaPropiedad;
+
+
+            $selectPropiedadCliente = "SELECT PROPIEDAD_REQUERIDA, COUNT(*) AS QTY FROM CLIENTE GROUP BY PROPIEDAD_REQUERIDA ORDER BY COUNT(*) DESC;";
+            $stmt = $dbh->prepare($selectPropiedadCliente);
+            $stmt->execute();
+            $resultPropiedadCliente = $stmt->fetchAll();
+            $dataPropiedadCliente = array();
+            foreach ($resultPropiedadCliente as $rpc) {
+                $dataPropiedadCliente[$rpc['PROPIEDAD_REQUERIDA']] = $rpc['QTY'];
+            }
+            $data['dataPropiedadCliente'] = $dataPropiedadCliente;
+
+            $selectProvinciaCliente = "SELECT PROVINCIA, COUNT(*) AS QTY FROM CLIENTE GROUP BY PROVINCIA ORDER BY COUNT(*) DESC;";
+            $stmt = $dbh->prepare($selectProvinciaCliente);
+            $stmt->execute();
+            $resultProvinciaCliente = $stmt->fetchAll();
+            $dataProvinciaCliente = array();
+            foreach ($resultProvinciaCliente as $rpc2) {
+                $dataProvinciaCliente[$rpc2['PROVINCIA']] = $rpc2['QTY'];
+            }
+            $data['dataProvinciaCliente'] = $dataProvinciaCliente;
+
+            //Lets add some emotion
+            sleep(1);
+            return self::success($data);
+        } catch (Exception $e) {
+            return self::error("Problemas con la base de datos.");
         }
     }
 }

@@ -31,27 +31,32 @@ class DBHandler
     {
         $metodo = $_GET['metodo'];
         if ($metodo) {
-            if ($metodo == 'login') {
-                $email = $_GET['email'];
-                $password = $_GET['password'];
-                return Login::obtenerUsuario($email, $password);
-            } else if ($metodo == 'getpropiedades') {
-                return Propiedad::obtenerPropiedades();
-            } else if ($metodo == 'obtenerCantidadAplicadas') {
-                $numero_propiedad = $_GET['numero_propiedad'];
-                return Propiedad::obtenerCantidadAplicadas($numero_propiedad);
-            } else if ($metodo == 'obtenerTodasAplicadas') {
-                return Propiedad::obtenerTodasAplicadas();
-            } else if ($metodo == 'obtenerPropiedadesUsuario') {
-                $user = $_GET['email'];
-                return Propiedad::obtenerPropiedadesUsuario($user);
-            }//obtenerMensajesPropiedad
-            else if ($metodo == 'obtenerMensajesPropiedad') {
-                $propiedad = $_GET['propiedad'];
-                return Propiedad::obtenerMensajesPropiedad($propiedad);
-            } else if ($metodo == 'obtenerInteresado') {
-                $usuario = $_GET['propiedad'];
-                return Login::obtenerInteresado($usuario);
+
+            if($metodo == "dataCharts"){
+                return Propiedad::getDataCharts();
+            }else{
+                if ($metodo == 'login') {
+                    $email = $_GET['email'];
+                    $password = $_GET['password'];
+                    return Login::obtenerUsuario($email, $password);
+                } else if ($metodo == 'getpropiedades') {
+                    return Propiedad::obtenerPropiedades();
+                } else if ($metodo == 'obtenerCantidadAplicadas') {
+                    $numero_propiedad = $_GET['numero_propiedad'];
+                    return Propiedad::obtenerCantidadAplicadas($numero_propiedad);
+                } else if ($metodo == 'obtenerTodasAplicadas') {
+                    return Propiedad::obtenerTodasAplicadas();
+                } else if ($metodo == 'obtenerPropiedadesUsuario') {
+                    $user = $_GET['email'];
+                    return Propiedad::obtenerPropiedadesUsuario($user);
+                }//obtenerMensajesPropiedad
+                else if ($metodo == 'obtenerMensajesPropiedad') {
+                    $propiedad = $_GET['propiedad'];
+                    return Propiedad::obtenerMensajesPropiedad($propiedad);
+                } else if ($metodo == 'obtenerInteresado') {
+                    $usuario = $_GET['propiedad'];
+                    return Login::obtenerInteresado($usuario);
+                }
             }
         }
     }
@@ -91,7 +96,6 @@ class DBHandler
                 Usuario::eliminarUsuario($email, $tipo_usuario);
             }
         } catch (Exception $e) {
-            $dbh->rollBack();
             echo "Failed: " . $e->getMessage();
         }
     }
@@ -121,6 +125,7 @@ class DBHandler
 Toro::serve(array(
     "/login" => "DBHandler",
     "/propiedad/:alpha" => "DBHandler",
+    "/propiedad/data" => "DBHandler",
     "/usuario/:alpha" => "DBHandler",
     "/country/:alpha/:alpha" => "DBHandler",
 ));
