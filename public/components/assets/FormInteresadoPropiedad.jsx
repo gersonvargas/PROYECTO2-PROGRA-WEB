@@ -26,6 +26,7 @@ class FormInteresadoPropiedad extends React.Component {
             cantidad_cocheras: null,
             cantidad_habitaciones: null,
             cantidad_pisos: null,
+            precio: 0,
             isEdit: false
         }
         this.handleActualizar = this.handleActualizar.bind(this);
@@ -47,7 +48,8 @@ class FormInteresadoPropiedad extends React.Component {
         this.handleCantidadCocheras = this.handleCantidadCocheras.bind(this);
         this.handleCantidadHabitaciones = this.handleCantidadHabitaciones.bind(this);
         this.handleCantidadPisos = this.handleCantidadPisos.bind(this);
-        this.componentWillReceiveProps=this.componentWillReceiveProps.bind(this);
+        this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
+        this.handlePrecio = this.handlePrecio.bind(this);
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.propiedad.NUMERO_PROPIEDAD) {
@@ -71,7 +73,8 @@ class FormInteresadoPropiedad extends React.Component {
             cantidad_banos: nextProps.propiedad.CANTIDAD_BANOS,
             cantidad_cocheras: nextProps.propiedad.CANTIDAD_COCHERAS,
             cantidad_habitaciones: nextProps.propiedad.CANTIDAD_HABITACIONES,
-            cantidad_pisos: nextProps.propiedad.CANTIDAD_PISOS
+            cantidad_pisos: nextProps.propiedad.CANTIDAD_PISOS,
+            precio: nextProps.propiedad.PRECIO
         });
 
     }
@@ -122,6 +125,7 @@ class FormInteresadoPropiedad extends React.Component {
                 cantidad_cocheras: this.state.cantidad_cocheras,
                 cantidad_habitaciones: this.state.cantidad_habitaciones,
                 cantidad_pisos: this.state.cantidad_pisos,
+                precio:this.state.precio
             });
             console.log(data);
             fetch("api/index.php/propiedad/1", {
@@ -183,7 +187,8 @@ class FormInteresadoPropiedad extends React.Component {
                 cantidad_banos: this.state.cantidad_banos,
                 cantidad_cocheras: this.state.cantidad_cocheras,
                 cantidad_habitaciones: this.state.cantidad_habitaciones,
-                cantidad_pisos: this.state.cantidad_pisos
+                cantidad_pisos: this.state.cantidad_pisos,
+                precio:this.state.precio
             });
             //console.log(data);
             fetch("api/index.php/propiedad/1", {
@@ -332,6 +337,12 @@ class FormInteresadoPropiedad extends React.Component {
         var data = event.target.value;
         this.setState({
             cantidad_pisos: data
+        })
+    }
+    handlePrecio(event) {
+        var data = event.target.value;
+        this.setState({
+            precio: data
         })
     }
     /*  
@@ -499,6 +510,20 @@ class FormInteresadoPropiedad extends React.Component {
                             />
                         </div>
                     </FormGroup>
+
+                    <FormGroup className="row">
+                        <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <Label htmlFor="precio_propiedad">
+                                <span></span>Precio de la propiedad:
+                            </Label>
+                            <Input type="number" className="form-control" name='precio_propiedad'
+                                placeholder="Precio de la propiedad"
+                                required onChange={this.handlePrecio}
+                                value={this.state.precio}
+                            />
+                        </div>
+                    </FormGroup>
+
                     <FormGroup className="row">
                         <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <Label htmlFor="province"><span></span>Provincia</Label>

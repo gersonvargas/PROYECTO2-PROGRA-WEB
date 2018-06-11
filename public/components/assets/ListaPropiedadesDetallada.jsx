@@ -153,6 +153,11 @@ class ListaPropiedadesDetallada extends React.Component {
                             </p>
                                 </CardText> : ""
                         }
+                        <CardText>
+                            <p> Precio: <small className="text-muted">
+                                {item.PRECIO}
+                            </small></p>
+                        </CardText>
                         <button className="btn btn-sm btn-primary" key={index} data-item={item.NUMERO_PROPIEDAD}
                             onClick={this.handleDetails}>Estoy Interesado</button>
                         <button type="button" class="btn btn-sm btn-info ml-3">

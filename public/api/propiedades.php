@@ -27,6 +27,7 @@ class Propiedad extends App
             $localidad = $data['localidad'];
             $cliudad = $data['ciudad'];
             $provincia = $data['provincia'];
+            $precio=$data['precio'];
             $file_db = Propiedad::obtenerconexion();
 
             if ($tipo_propiedad == 'Apartamento' || $tipo_propiedad == 'Vivienda') {
@@ -57,7 +58,8 @@ class Propiedad extends App
                 CANTIDAD_BANOS=:CANTIDAD_BANOS,
                 CANTIDAD_COCHERAS=:CANTIDAD_COCHERAS,
                 CANTIDAD_PISOS=:CANTIDAD_PISOS,
-                PROVINCIA=:PROVINCIA
+                PROVINCIA=:PROVINCIA,
+                PRECIO=:PRECIO
                 WHERE NUMERO_PROPIEDAD=:NUMERO_PROPIEDAD";
 
             $stmt = $file_db->prepare($insert);
@@ -77,6 +79,7 @@ class Propiedad extends App
             $stmt->bindParam(':CANTIDAD_BANOS', $cantidad_banos);
             $stmt->bindParam(':CANTIDAD_COCHERAS', $cantidad_cocheras);
             $stmt->bindParam(':CANTIDAD_PISOS', $cantidad_pisos);
+            $stmt->bindParam(':PRECIO', $precio);
             $stmt->bindParam(':NUMERO_PROPIEDAD', $numero_propiedad);
             $stmt->execute();
 
@@ -103,7 +106,7 @@ class Propiedad extends App
             $localidad = $data['localidad'];
             $cliudad = $data['ciudad'];
             $provincia = $data['provincia'];
-
+            $precio=$data['precio'];
             $file_db = Propiedad::obtenerconexion();
             if ($tipo_propiedad == 'Apartamento' || $tipo_propiedad == 'Vivienda') {
                 $cantidad_banos = $data['cantidad_banos'];
@@ -134,7 +137,8 @@ class Propiedad extends App
                 :CANTIDAD_BANOS,
                 :CANTIDAD_COCHERAS,
                 :CANTIDAD_PISOS,
-                :FECHA_PUBLICACION
+                :FECHA_PUBLICACION,
+                :PRECIO
                  )";
             $stmt2 = $file_db->prepare($insert2);
             $stmt2->bindParam(':NUMERO_PROPIEDAD', $numero_propiedad);
@@ -154,6 +158,7 @@ class Propiedad extends App
             $stmt2->bindParam(':CANTIDAD_COCHERAS', $cantidad_cocheras);
             $stmt2->bindParam(':CANTIDAD_PISOS', $cantidad_pisos);
             $stmt2->bindParam(':FECHA_PUBLICACION', $fecha_publicacion);
+            $stmt2->bindParam(':PRECIO', $precio);
             $stmt2->execute();
 
             return Propiedad::success('Se ha insertado la informacion.');

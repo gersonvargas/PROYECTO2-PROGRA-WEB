@@ -111,6 +111,11 @@ class ListaPropiedades extends React.Component {
                                 {item.TAMANO}
                             </small></p>
                         </CardText>
+                        <CardText>
+                            <p> Precio: <small className="text-muted">
+                                {item.PRECIO}
+                            </small></p>
+                        </CardText>
                         <button className="btn btn-sm btn-primary" key={index} data-item={item.NUMERO_PROPIEDAD}
                             onClick={this.handleDetails}>Administrar
                         </button>
