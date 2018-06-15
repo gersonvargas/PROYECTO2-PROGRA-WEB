@@ -26,6 +26,7 @@ var PieChart = ReactChartkick.PieChart;
 var AreaChart = ReactChartkick.AreaChart;
 var BarChart = ReactChartkick.BarChart;
 var LineChart = ReactChartkick.LineChart;
+var ScatterChart = ReactChartkick.ScatterChart;
 
 class App extends React.Component {
     constructor(props) {

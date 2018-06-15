@@ -17,20 +17,40 @@ const charts = [
         dataType: 'disponibilidadPropiedad'
     },
     {
-        caption: 'Propiedades Publicadas: Pronvincia',
+        caption: 'Propiedades Publicadas: Provincia',
         render: 'AreaChart',
         dataType: 'provinciaPropiedad'
     },
-
     {
         caption: 'Clientes Potenciales: Tipo Buscado',
         render: 'BarChart',
         dataType: 'propiedadCliente'
-    },{
-        caption: 'Clientes Potenciales: Pronvincia',
+    },
+    {
+        caption: 'Clientes Potenciales: Provincia',
         render: 'LineChart',
         dataType: 'provinciaCliente'
     },
+    {
+        caption: 'Precios: Provincia',
+        render: 'LineChart',
+        dataType: 'precioProvincia'
+    },
+    {
+        caption: 'Precios: Tipo Propiedad',
+        render: 'LineChart',
+        dataType: 'precioPropiedad'
+    },
+    {
+        caption: 'Precios: Cantidad Habitaciones',
+        render: 'LineChart',
+        dataType: 'precioHabitaciones'
+    },
+    {
+        caption: 'Precios: Cantidad Pisos',
+        render: 'LineChart',
+        dataType: 'precioPisos'
+    }
 ];
 
 class CarouselData extends React.Component {
@@ -43,6 +63,11 @@ class CarouselData extends React.Component {
 
             dataPropiedadCliente: {},
             dataProvinciaCliente: {},
+
+            dataPrecioProvincia: {},
+            dataPrecioPropiedad: {},
+            dataPrecioHabitaciones: {},
+            dataPrecioPisos: {},
 
             activeIndex: 0,
             time: Date.now(),
@@ -77,6 +102,11 @@ class CarouselData extends React.Component {
 
                 this.setState({dataPropiedadCliente:data.msg.dataPropiedadCliente});
                 this.setState({dataProvinciaCliente:data.msg.dataProvinciaCliente});
+
+                this.setState({dataPrecioProvincia:data.msg.dataPrecioProvincia});
+                this.setState({dataPrecioPropiedad:data.msg.dataPrecioPropiedad});
+                this.setState({dataPrecioHabitaciones:data.msg.dataPrecioHabitaciones});
+                this.setState({dataPrecioPisos:data.msg.dataPrecioPisos});
 
                 this.setState({showLoader:false});
                 this.forceUpdate();
@@ -129,6 +159,18 @@ class CarouselData extends React.Component {
                     break;
                 case "provinciaCliente":
                     dataType = this.state.dataProvinciaCliente;
+                    break;
+                case "precioProvincia":
+                    dataType = this.state.dataPrecioProvincia;
+                    break;
+                case "precioPropiedad":
+                    dataType = this.state.dataPrecioPropiedad;
+                    break;
+                case "precioHabitaciones":
+                    dataType = this.state.dataPrecioHabitaciones;
+                    break;
+                case "precioPisos":
+                    dataType = this.state.dataPrecioPisos;
                     break;
                 default: break;
             }

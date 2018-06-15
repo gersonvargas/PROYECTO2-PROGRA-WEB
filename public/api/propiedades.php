@@ -375,6 +375,50 @@ class Propiedad extends App
             }
             $data['dataProvinciaCliente'] = $dataProvinciaCliente;
 
+            $selectPrecioProvincia = "SELECT PROVINCIA, PRECIO, COUNT(*) as QTY FROM PROPIEDAD GROUP BY PRECIO ORDER BY COUNT(*) DESC;";
+            $stmt = $dbh->prepare($selectPrecioProvincia);
+            $stmt->execute();
+            $resultPrecioProvincia = $stmt->fetchAll();
+            $dataPrecioProvincia = array();
+            foreach ($resultPrecioProvincia as $ppc) {
+                $dataPrecioProvincia[$ppc['PROVINCIA']]['name'] = $ppc['PROVINCIA'];
+                $dataPrecioProvincia[$ppc['PROVINCIA']]['data'][$ppc['PRECIO']] = $ppc['QTY'];
+            }
+            $data['dataPrecioProvincia'] = array_values($dataPrecioProvincia);
+
+            $selectPrecioPropiedad = "SELECT TIPO_PROPIEDAD, PRECIO, COUNT(*) as QTY FROM PROPIEDAD GROUP BY PRECIO ORDER BY COUNT(*) DESC;";
+            $stmt = $dbh->prepare($selectPrecioPropiedad);
+            $stmt->execute();
+            $resultPrecioPropiedad = $stmt->fetchAll();
+            $dataPrecioPropiedad = array();
+            foreach ($resultPrecioPropiedad as $pp) {
+                $dataPrecioPropiedad[$pp['TIPO_PROPIEDAD']]['name'] = $pp['TIPO_PROPIEDAD'];
+                $dataPrecioPropiedad[$pp['TIPO_PROPIEDAD']]['data'][$pp['PRECIO']] = $pp['QTY'];
+            }
+            $data['dataPrecioPropiedad'] = array_values($dataPrecioPropiedad);
+
+            $selectPrecioHabitaciones = "SELECT CANTIDAD_HABITACIONES, PRECIO, COUNT(*) as QTY FROM PROPIEDAD WHERE CANTIDAD_HABITACIONES IS NOT NULL AND CANTIDAD_HABITACIONES != 0 GROUP BY PRECIO ORDER BY COUNT(*) DESC;";
+            $stmt = $dbh->prepare($selectPrecioHabitaciones);
+            $stmt->execute();
+            $resultPrecioHabitaciones = $stmt->fetchAll();
+            $dataPrecioHabitaciones = array();
+            foreach ($resultPrecioHabitaciones as $ph) {
+                $dataPrecioHabitaciones[$ph['CANTIDAD_HABITACIONES']]['name'] = $ph['CANTIDAD_HABITACIONES'];
+                $dataPrecioHabitaciones[$ph['CANTIDAD_HABITACIONES']]['data'][$ph['PRECIO']] = $ph['QTY'];
+            }
+            $data['dataPrecioHabitaciones'] = array_values($dataPrecioHabitaciones);
+
+            $selectPrecioPisos = "SELECT CANTIDAD_PISOS, PRECIO, COUNT(*) as QTY FROM PROPIEDAD GROUP BY PRECIO ORDER BY COUNT(*) DESC;";
+            $stmt = $dbh->prepare($selectPrecioPisos);
+            $stmt->execute();
+            $resultPrecioPisos = $stmt->fetchAll();
+            $dataPrecioPisos = array();
+            foreach ($resultPrecioPisos as $ppi) {
+                $dataPrecioPisos[$ppi['CANTIDAD_PISOS']]['name'] = $ppi['CANTIDAD_PISOS'];
+                $dataPrecioPisos[$ppi['CANTIDAD_PISOS']]['data'][$ppi['PRECIO']] = $ppi['QTY'];
+            }
+            $data['dataPrecioPisos'] = array_values($dataPrecioPisos);
+
             //Lets add some emotion
             sleep(1);
             return self::success($data);
